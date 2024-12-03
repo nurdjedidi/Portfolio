@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collab.io</title>
+</head>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <title>Connexion</title>
+</head>
+<body>
+    <section class="prompt">
+    <h1>Se connecter</h1>
+    <hr>
+    <form action="/login" method="POST" class="form-connect">
+        <div class="text">
+        <label for="username">Username</label>
+        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+        </div>
+        <div class="key">
+            <label for="key">Key</label>
+        <input type="password" name="key" placeholder="Clé d'authentification" required>
+        </div>
+        <button type="submit">Valider</button>
+    </form>
+    </section>
+</body>
+</html>

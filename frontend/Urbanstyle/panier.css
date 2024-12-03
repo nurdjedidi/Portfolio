@@ -1,0 +1,118 @@
+/* Général */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 5px;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+a { 
+    text-decoration: none;
+}
+
+/* Header settings */ 
+
+header { 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 5%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+.urban { 
+    width: auto;
+    height: 80px;
+}
+.intro { 
+    display: flex;
+    align-items: center;
+}
+.intro img {
+    width: 24px;
+    height: 24px;
+    margin-left: 20px;
+    transition: transform 0.3s ease;
+}
+.intro img:hover {
+    transform: scale(1.1);
+}
+.loupe, .profile, .panier { 
+    margin-right: 20px;
+}
+.search { 
+    display: none;
+    margin-right: 30px;
+}
+.link-container {
+    display: flex;
+    justify-content: center;
+    background-color: #f8f8f8;
+    padding: 10px 0;
+}
+.link-container a {
+    text-decoration: none;
+    margin: 0 15px;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.link-container a:hover {
+    color: #007bff;
+} 
+/* Panier config */
+#cart-count {
+    background-color: blue;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+}
+
+#cart-link {
+    position: relative;
+}
+
+#cart-content {
+    margin-top: 20px;
+}
+
+#cart-items li {
+    margin-bottom: 10px;
+}
+
+#cart-items button {
+    margin-left: 10px;
+}
+
+#payment-form {
+    width: 300px;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#card-element {
+    margin-bottom: 20px;
+}
+.button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+.button:hover {
+    background-color: #45a049;
+}
+#card-errors {
+    color: #fa755a;
+    margin-top: 10px;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/health/health.css">
+    <title>Health & fitness</title>
+</head>
+<body>
+    <main>
+    <form method="POST" action="/dashboard">
+        <h1>Infos nutritionels</h1>
+        <hr>
+        <label for="sexe">Sélectionnez un sexe</label>
+        <select name="sexe" required>
+            <option value="Homme">Homme</option>
+            <option value="Femme">Femme</option>
+        </select>
+        <label for="taille">Sélectionnez votre taille</label>
+        <input type="text" name="taille" minlength="3" maxlength="4" required>
+        <label for="age">Sélectionnez votre âge</label>
+        <input type="text" name="age" minlength="2" maxlength="3" required>
+        <label for="poids">Sélectionnez votre poids</label>
+        <input type="text" name="poids" required>
+        <label for="activity">Sélectionnez une activité</label>
+        <select name="activity" required>
+            <option value="Pas actif">Pas actif</option>
+            <option value="Peu actif">Peu actif</option>
+            <option value="Actif">Actif</option>
+            <option value="Très actif">Très actif</option>
+        </select>
+        <label for="objectif">Sélectionnez une objectif</label>
+        <select name="objectif" required>
+            <option value="0">Maintenir mon poids actuel</option>
+            <option value="0.5">Perte de 0.5kg/semaine</option>
+            <option value="1">Perte de 1kg/semaine</option>
+            <option value="1.5">gain de 0.5kg/semaine</option>
+            <option value="2">gain de 1kg/semaine</option>
+        </select>
+        <button type="submit">Soumettre</button>
+    </form>
+    </main>
+    <form action="/logout" method="POST">
+        <button type="submit">Log out</button>
+    </form>    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.prod.js"></script>
+</body>
+</html>
