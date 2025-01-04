@@ -1,5 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() { 
-    // AFfichage dans le panier 
+document.addEventListener('DOMContentLoaded', function() {  
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function displayCart() {
@@ -30,8 +29,6 @@ function displayCart() {
     totalElement.textContent = total.toFixed(2);
 }
 displayCart();
-
-        //Création interface de paiement
 
         const stripe = Stripe('pk_live_51QCQQhEbOWaFK5rOLLDonpFQX96rNK7xuRMYrV2Yo6utvlKEh6LrG0CYc6RXhnqIrFMMPcpTqwYre9nQeiZxDdsZ00aoH1WkhE');
         const elements = stripe.elements();
@@ -71,7 +68,6 @@ displayCart();
             submitButton.disabled = true;
             submitButton.textContent = 'Traitement en cours...';
 
-            // Simulons la récupération du clientSecret depuis le serveur
             getClientSecret().then(function(clientSecret) {
                 stripe.confirmCardPayment(clientSecret, {
                     payment_method: {
@@ -91,7 +87,6 @@ displayCart();
                         if (result.paymentIntent.status === 'succeeded') {
                             console.log('Paiement réussi !');
                             alert('Paiement réussi !');
-                            // Ici, vous pouvez rediriger l'utilisateur ou mettre à jour l'interface
                         }
                     }
                 });
@@ -103,16 +98,10 @@ displayCart();
                 submitButton.textContent = 'Payer';
             });
         });
-
-        // Fonction simulée pour obtenir le clientSecret
         function getClientSecret() {
-            // Dans un cas réel, cela ferait un appel à votre serveur
             return new Promise((resolve, reject) => {
-                // Simulons un délai réseau
                 setTimeout(() => {
-                    // Remplacez ceci par un vrai appel API dans un cas réel
                     resolve('votre_client_secret_ici');
-                    // En cas d'erreur, utilisez : reject(new Error('Erreur de récupération du clientSecret'));
                 }, 1000);
             });
         }

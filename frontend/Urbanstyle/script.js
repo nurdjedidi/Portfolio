@@ -46,8 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Display recherche
-
     function toggle() { 
         const isDisplayed = getComputedStyle(loupe).display !== 'none';
 
@@ -61,8 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     loupe.addEventListener('click', toggle);
-
-    // Card display 
 
     function toggleCard(event) {
         const clickedCardId = event.currentTarget.id.replace('card-', 'article-');
@@ -79,8 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
         card.addEventListener('click', toggleCard);
     });
 
-     // Fermer l'article
-
      function closeArticle() {
         articles.forEach(article => {
             article.classList.remove('active');
@@ -93,8 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
     retourButtons.forEach(button => {
         button.addEventListener('click', closeArticle);
     });
-    
-    // Vérrouillage de la sélection de la taille
     
     tailleButtons.forEach(button => {
         button.addEventListener('click', function() {
