@@ -33,7 +33,7 @@ const options = {
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || 'mot_de_passe',
-  database: process.env.DB_NAME || 'clients',
+  database: process.env.DB_DATABASE || 'clients',
 };
 
 const MySQLStore = MySQLStoreFactory(session);
