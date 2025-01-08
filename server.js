@@ -161,7 +161,7 @@ app.post('/send-mail', async (req, res) => {
         res.status(500).json({ error: "Erreur de connexion à la base de données." });
       });
 
-    await connection.execute('INSERT INTO messages_clients (nom, prenom, email, message) VALUES (?, ?, ?, ?)', [lastName, name, email, message]);
+    await connection.query('INSERT INTO messages_clients (nom, prenom, email, message) VALUES (?, ?, ?, ?)', [lastName, name, email, message]);
 
     await connection.end(); 
 
