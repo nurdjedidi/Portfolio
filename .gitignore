@@ -1,3 +1,5 @@
-node_modules
 node_modules/
+frontend/dashboard/node_modules/
+frontend/Taches/node_modules/
 *.dat
+*.exe

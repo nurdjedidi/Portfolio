@@ -1,14 +1,11 @@
-
 import express from 'express';
 import path from 'path';
-import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import http from 'http';
 import fs from 'fs';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-import { connectionPool } from './db.js'; 
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import cookieParser from 'cookie-parser';
@@ -19,16 +16,24 @@ import bodyParser from 'body-parser';
 import crypto from 'crypto';
 import useragent from 'useragent';
 import dayjs from 'dayjs';
+import nodemailer from 'nodemailer';
+import formData from 'form-data';
+import Mailgun from 'mailgun.js';
+import { Resend } from 'resend';
+import session from 'express-session';
+import mysql from 'mysql2/promise';
 
 
 const port = process.env.PORT || 5000; 
 const app = express();
+const resend = new Resend('re_X2UbNcnA_iEeo1tq81cJwfQdduNrTPvKX');
+
 
 const options = {
   host: 'localhost',
   user: 'root',
   password: '17/Juin/2006',
-  database: 'health_db',
+  database: 'clients',
 };
 
 const MySQLStore = MySQLStoreFactory(session);
@@ -38,7 +43,8 @@ const sessionStore = new MySQLStore(options);
 const server = http.createServer(app);
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.use(express.static(path.join(__dirname, 'frontend'))); 
+app.use(express.static(path.join(__dirname, 'Portfolio', 'dist')));
+app.use('/src', express.static(path.join(__dirname, 'Portfolio', 'src')));
 app.use(express.json());
 app.use(bodyParser.json()); 
 app.use(express.urlencoded({ extended: true }));
@@ -53,46 +59,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
-app.get('/', (req, res) => {
-  const userAgentString = req.headers['user-agent'];
-  const agent = useragent.parse(req.headers['user-agent']);
-
-  console.log('Parsed Agent:', agent);
-  const deviceType = userAgentString.toLowerCase().includes('mobile') ||
-                     agent.family.toLowerCase().includes('mobile')
-      ? 'phone'
-      : userAgentString.toLowerCase().includes('tablet') ||
-        agent.family.toLowerCase().includes('tablet')
-      ? 'tablet'
-      : 'desktop'; 
-
-      console.log('Device Type:', deviceType); 
-
-
-  if (deviceType === 'desktop') {
-    res.redirect('/desktop-home');
-  } else if (deviceType === 'phone') {
-    res.redirect('/mobile-home');
-  } else if (deviceType === 'tablet') {
-    res.redirect('/tablet-home');
-  } else {
-    res.status(400).send('Unknown device type');
-  }
-});
-
-app.get('/desktop-home', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'portfolio.html'));
-});
-
-app.get('/mobile-home', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'présentation.html'));
-});
-
-app.get('/tablet-home', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'tablet.html'));
-});
 
 passport.use(new LocalStrategy(async (username, password, done) => {
   console.log("Tentative de connexion avec username:", username);
@@ -172,19 +138,52 @@ function ensureAuthenticated(req, res, next) {
   res.status(401).json({ error: 'Utilisateur non authentifié' });
 };
 
-app.get('/health.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'health', 'health.html'));
+app.get('/accueil.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Portfolio', 'src', 'Urbanstyle', 'accueil.html'));
 });
 
-app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'health', 'login.html')); 
+app.get('/index.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Portfolio', 'src', 'vue', 'index.html'));
 });
 
-app.get('/dashboard.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'health', 'dashboard.html')); 
+app.get('/news.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Portfolio', 'src', 'news', 'news.html'));
 });
 
 
+app.post('/send-mail', async (req, res) => { 
+  try { 
+    const {name, lastName, email, message} = req.body;
+
+   
+const connection = await mysql.createConnection(options);
+
+    await connection.execute('INSERT INTO messages_clients (nom, prenom, email, message) VALUES (?, ?, ?, ?)', [lastName, name, email, message]);
+
+    await connection.end(); 
+
+    const response = await resend.emails.send({
+      from: 'noreply@portfolionurdjedd.com',
+      to: email,
+      subject: '[portfolionurdjedd.com]: your email has been successfully sent',
+      text: 'This is an automated message, please do not reply. ',
+    });
+
+    const question = await resend.emails.send({
+      from: 'noreply@portfolionurdjedd.com',
+      to: 'djedidinur@gmail.com',
+      subject: '[portfolionurdjedd.com]: New Message from Portfolio',
+      text: `${name} ${lastName}  ${email} wrote:\n\n${message}`,    
+    });
+
+    res.redirect('/');
+  } 
+  catch (err) { 
+    console.log("Erreur lors de l'envoie du mail");
+    console.log(err.message, err.stack);
+  }
+})
+ 
 app.post('/signup', async (req, res) => { 
   const { username, password, email } = req.body;
   try { 
@@ -344,6 +343,36 @@ const query = `UPDATE nutrition SET ${setClause} WHERE user_id = ?`;
   }
 });
 
+app.get('/news', async (req, res) => {
+  try {
+    const currentsapi = 'fcmIcQJ4nZ0pcw8KoQEz36Gkr_3YvkFeiyFHNbG_ae5tQsY-';
+      const language = req.get('Accept-Language') || 'en';
+
+    console.log(language);
+
+    const response = await axios.get('https://api.currentsapi.services/v1/search', {
+      params: {
+        apiKey: currentsapi, 
+        language: language.substring(0, 2)
+      },
+    });
+
+    console.log(response);
+
+    if (response.data && response.data.news) {
+      res.json({ news: response.data.news });  
+    } else {
+      res.status(404).json({ error: 'Aucune actualité trouvée.' });
+    }
+  } catch (error) {
+    console.error('Erreur lors de la récupération des actualités:', error.message);
+    res.status(500).json({ error: 'Impossible de récupérer les actualités pour le moment.' });
+  }
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Portfolio', 'dist', 'index.html'));
+});
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on http://localhost:${port}`);
