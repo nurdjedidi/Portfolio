@@ -1,4 +1,5 @@
 node_modules/
+node_modules/node/bin/node
 frontend/dashboard/node_modules/
 frontend/Taches/node_modules/
 *.dat
