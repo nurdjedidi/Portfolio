@@ -100,7 +100,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(50, 50, 50, 0.8));
   }
   .card-client {
     background: #282828;
