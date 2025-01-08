@@ -36,6 +36,8 @@ const options = {
   database: process.env.DB_DATABASE || 'clients',
 };
 
+console.log(options);
+
 const MySQLStore = MySQLStoreFactory(session);
 
 const sessionStore = new MySQLStore(options);
