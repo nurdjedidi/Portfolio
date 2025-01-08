@@ -167,6 +167,11 @@ app.post('/send-mail', async (req, res) => {
       to: email,
       subject: '[portfolionurdjedd.com]: your email has been successfully sent',
       text: 'This is an automated message, please do not reply. ',
+       .then(response => {
+    console.log('Email sent:', response);
+  })
+  .catch(error => {
+    console.error('Error sending email:', error);
     });
 
     const question = await resend.emails.send({
