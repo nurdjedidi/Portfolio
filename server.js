@@ -157,11 +157,6 @@ app.post('/send-mail', async (req, res) => {
   try { 
     const {name, lastName, email, message} = req.body;
 
-    const connection = await connectionPool.getConnection();
-    await connection.execute('INSERT INTO messages_clients (nom, prenom, email, message) VALUES (?, ?, ?, ?)', [lastName, name, email, message]);
-
-    await connection.release(); 
-
     const response = await resend.emails.send({
       from: 'noreply@portfolionurdjedd.com',
       to: email,
