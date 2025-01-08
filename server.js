@@ -36,7 +36,7 @@ const options = {
   database: process.env.DB_DATABASE || 'clients',
 };
 
-console.log(options);
+const connectionPool = mysql.createPool(options);
 
 const MySQLStore = MySQLStoreFactory(session);
 
@@ -157,15 +157,15 @@ app.post('/send-mail', async (req, res) => {
   try { 
     const {name, lastName, email, message} = req.body;
 
-    const connection = await mysql.createConnection(options)
+    const connection = await connectionPool.getConnection();
       .catch((err) => {
         console.error("Erreur de connexion à la base de données:", err.message);
         res.status(500).json({ error: "Erreur de connexion à la base de données." });
       });
 
-    await connection.query('INSERT INTO messages_clients (nom, prenom, email, message) VALUES (?, ?, ?, ?)', [lastName, name, email, message]);
+    await connection.execute('INSERT INTO messages_clients (nom, prenom, email, message) VALUES (?, ?, ?, ?)', [lastName, name, email, message]);
 
-    await connection.end(); 
+    await connection.release(); 
 
     const response = await resend.emails.send({
       from: 'noreply@portfolionurdjedd.com',
