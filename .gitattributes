@@ -1,2 +1,5 @@
 *.exe filter=lfs diff=lfs merge=lfs -text
 *.dat filter=lfs diff=lfs merge=lfs -text
+node_modules/**/*.exe filter=lfs diff=lfs merge=lfs -text
+node_modules/**/*.dat filter=lfs diff=lfs merge=lfs -text
+node_modules/node/bin/node filter=lfs diff=lfs merge=lfs -text
