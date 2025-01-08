@@ -27,7 +27,7 @@ import mysql from 'mysql2/promise';
 const port = process.env.PORT || 5000; 
 const app = express();
 const resend = new Resend(process.env.RESEND_API_KEY); 
-
+console.log(resend);
 
 const options = {
   host: process.env.DB_HOST || 'localhost',
