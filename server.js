@@ -26,14 +26,14 @@ import mysql from 'mysql2/promise';
 
 const port = process.env.PORT || 5000; 
 const app = express();
-const resend = new Resend('re_X2UbNcnA_iEeo1tq81cJwfQdduNrTPvKX');
+const resend = new Resend(process.env.RESEND_API_KEY); 
 
 
 const options = {
-  host: 'localhost',
-  user: 'root',
-  password: '17/Juin/2006',
-  database: 'clients',
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'mot_de_passe',
+  database: process.env.DB_NAME || 'clients',
 };
 
 const MySQLStore = MySQLStoreFactory(session);
