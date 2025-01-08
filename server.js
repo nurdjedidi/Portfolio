@@ -155,8 +155,11 @@ app.post('/send-mail', async (req, res) => {
   try { 
     const {name, lastName, email, message} = req.body;
 
-   
-const connection = await mysql.createConnection(options);
+    const connection = await mysql.createConnection(options)
+      .catch((err) => {
+        console.error("Erreur de connexion à la base de données:", err.message);
+        res.status(500).json({ error: "Erreur de connexion à la base de données." });
+      });
 
     await connection.execute('INSERT INTO messages_clients (nom, prenom, email, message) VALUES (?, ?, ?, ?)', [lastName, name, email, message]);
 
