@@ -71,7 +71,8 @@ form {
 
  input, textarea { 
     background-color: #181818;
-    border: 1px solid #ccc ;
+    border: none;
+    border-bottom: 1px solid #ccc ;
     border-radius: 6px;
     padding: 5px;
     resize: none;
