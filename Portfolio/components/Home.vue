@@ -128,7 +128,7 @@
     object-fit: cover;
     width: 5rem;
     height: 5rem;
-    border: 4px solid white;
+    border: 3px solid white;
     background-size: cover;
     border-radius: 999px;
     display: flex;
