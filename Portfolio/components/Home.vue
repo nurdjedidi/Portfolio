@@ -3,7 +3,7 @@
         <h2>Présentation</h2>
         <div class="card-client">
             <div class="user-picture">
-                <img src="/images/logo.avif" alt="logo">
+                <img src="/images/profil.avif" alt="logo">
             </div>
             <p class="name-client"> Nûr Djedidi
                 <span>Web developer
