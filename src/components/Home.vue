@@ -1,6 +1,6 @@
 <template>
     <section class="presentation">
-      <v-card max-width="400px" class="d-flex flex-column justify-center w-100" xs="w-20" sm="w-70" md="w-100" color="grey-darken-4">
+      <v-card max-width="400px" class="d-flex flex-column justify-center hover-transition w-100" xs="w-20" sm="w-70" md="w-100" color="grey-darken-4">
       <v-img 
         src="../images/Vignette.jpeg"
         class="profil-img"
@@ -179,7 +179,7 @@
 }
 
 .hover-transition:hover {
-  transform: translateY(-10px);
+  transform: scale(1..01)
 }
   .name-client span {
     display: block;
