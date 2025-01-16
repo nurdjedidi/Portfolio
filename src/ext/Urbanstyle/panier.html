@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" content="yes">
+    <link rel="stylesheet" href="panier.css">
+    <title>Panier - Urbanstyle</title>
+</head>
+<body>
+    <header>
+        <img class="urban" src="images/urban.png" alt="Urbanstyle">
+        <a href="accueil.html">Retour à la boutique</a>
+    </header>
+
+    <h1>Votre Panier</h1>
+
+    <div id="cart-content">
+        <ul id="cart-items"></ul>
+        <p>Total : <span id="cart-total">0</span> €</p>
+    </div>
+        <form id="payment-form">
+            <div id="card-element">
+                <!-- Les éléments Stripe seront insérés ici -->
+            </div>
+            <button class="button" id="submit">Payer</button>
+            <div id="card-errors" role="alert"></div>
+        </form>
+        <script src="https://js.stripe.com/v3/"></script>
+    <script src="panier.js" async></script>
+</body>
+</html>
