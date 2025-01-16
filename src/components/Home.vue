@@ -37,7 +37,7 @@
     </v-col>
   </v-row>
   <v-row class="gap-4">
-    <v-col xs="12" sm="12" md="4">
+    <v-col cols="12" sm="6" md="4">
       <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
         <v-img src="../images/urbanstyle.avif" loading="lazy" alt="Urbanstyle" class="card-image"></v-img>
         <v-card-text class="card-content d-flex flex-column flex-grow-1">
@@ -52,7 +52,7 @@
           <a href="../src/ext/Urbanstyle/accueil.html" class="card-link mt-auto">See the projects</a>
         </v-card-text>
       </v-card>
-    </v-col xs="12" sm="12" md="4">
+    </v-col cols="12" sm="6" md="4">
     <v-col>
       <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
         <v-img src="../images/news.avif" loading="lazy" alt="World news" class="card-image"></v-img>
@@ -71,7 +71,7 @@
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col xs="12" sm="12" md="4">
+    <v-col cols="12" sm="12" md="4">
       <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
         <v-img src="../images/fitness.avif" loading="lazy" alt="Health & fitness" class="card-image"></v-img>
         <v-card-text class="card-content d-flex flex-column flex-grow-1">
