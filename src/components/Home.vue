@@ -5,6 +5,7 @@
         src="../images/Vignette.avif"
         alt="Création de votre site web de A a Z"
         class="profil-img"
+        eager
       ></v-img>  
       <v-card-title>Nûr Djedidi</v-card-title>
       <v-card-subtitle>Full stack web developer</v-card-subtitle>
@@ -126,6 +127,13 @@
     justify-content: center;
     align-items: center;
   }
+
+  .profil-img {
+  width: 100%; 
+  max-width: 400px; 
+  height: auto; 
+}
+
 
   .hover-transition {
   transition: transform 0.3s ease-in-out;
