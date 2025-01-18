@@ -20,7 +20,7 @@
 
   <script>
   export default { 
-    name: Projects,
+    name: 'Projects',
     data() { 
         return {
             projects: [ 
