@@ -10,24 +10,24 @@
     <nav class="desktop-nav">
       <ul class="d-flex">
         <li class="mr-2">
-          <router-link to="/">Home</router-link>
+          <router-link to="/" aria-label="Home page">Home</router-link>
         </li>
         <li class="mr-2">
-          <router-link to="/skills">Skills</router-link>
+          <router-link to="/skills" aria-label="Skills page">Skills</router-link>
         </li>
         <li>
-          <router-link to="/animation">Animation</router-link>
+          <router-link to="/animation" aria-label="Animation page">Animation</router-link>
         </li>
       </ul>
     </nav>
     <v-navigation-drawer app :class="navVisible" class="d-flex flex-column" id="nav"
-style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'translateX(0)' : 'translateX(-100%)'}" color="white">
+style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'translateX(0)' : 'translateX(-100%)'}" color="white" aria-label="Main navigation">
         <v-list class="d-flex flex-column align-center justify-center">
-          <li class="line-top"></li>
-          <v-list-item><router-link to="/">Home</router-link></v-list-item>
-          <v-list-item><router-link to="/skills">Skills</router-link></v-list-item>
-          <v-list-item><router-link to="/animation">Animation</router-link></v-list-item>
-          <li class="line-bottom"></li>
+          <div class="line-top"></div>
+          <v-list-item><router-link to="/" aria-label="Home page">Home</router-link></v-list-item>
+          <v-list-item><router-link to="/skills" aria-label="Skills page">Skills</router-link></v-list-item>
+          <v-list-item><router-link to="/animation" aria-label="Animation page">Animation</router-link></v-list-item>
+          <div class="line-bottom"></div>
         </v-list>
       </v-navigation-drawer>
   </v-container>
