@@ -20,7 +20,8 @@
         </li>
       </ul>
     </nav>
-    <v-navigation-drawer app :class="navVisible" class="d-flex flex-column" id="nav" color="white" style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'translateX(0)' : 'translateX(-100%)'}">
+    <v-navigation-drawer app :class="navVisible" class="d-flex flex-column" id="nav"
+style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'translateX(0)' : 'translateX(-100%)'}">
         <v-list class="d-flex flex-column align-center justify-center">
           <li class="line-top"></li>
           <v-list-item><router-link to="/">Home</router-link></v-list-item>
@@ -106,6 +107,11 @@ methods: {
   float: right;
 }
 
+.v-list-item.router-link-active {
+    color: #007bff; 
+    font-weight: bold; 
+}
+
 .desktop-nav ul {
   display: flex;
   gap: 15px;
@@ -148,7 +154,6 @@ color: blue;
 .nav { 
   display: none;
 }
-
 
 @media (max-width: 768px) {
   .icon-nav { 
