@@ -173,7 +173,7 @@ p {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-img {
+.card-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
