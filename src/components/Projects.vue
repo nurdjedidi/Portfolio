@@ -1,16 +1,16 @@
 <template>
     <div>
       <v-row>
-        <v-col cols="12" sm="6" md="4" v-for="(project, index) in projects" :key="index">
+        <v-col cols="12" sm="6" md="4" v-for="(projects, index) in projects" :key="index">
           <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
-            <v-img :src="project.img" loading="lazy" :alt="project.title" class="card-image"></v-img>
+            <v-img :src="projects.img" loading="lazy" :alt="projects.title" class="card-image"></v-img>
             <v-card-text class="card-content d-flex flex-column flex-grow-1">
-              <h2 class="card-title">{{ project.title }}</h2>
-              <p class="card-description">{{ project.description }}</p>
+              <h2 class="card-title">{{ projects.title }}</h2>
+              <p class="card-description">{{ projects.description }}</p>
               <v-chip-group class="card-skill d-flex flex-wrap" column>
-                <v-chip v-for="(skill, skillIndex) in project.skills" :key="skillIndex" :prepend-icon="skill.icon" class="skill">{{ skill.name }}</v-chip>
+                <v-chip v-for="(skill, skillIndex) in projects.skills" :key="skillIndex" :prepend-icon="skill.icon" class="skill">{{ skill.name }}</v-chip>
               </v-chip-group>
-              <a :href="project.link" class="card-link mt-auto">See the projects</a>
+              <a :href="projects.link" class="card-link mt-auto">See the projects</a>
             </v-card-text>
           </v-card>
         </v-col>
