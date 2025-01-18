@@ -11,19 +11,19 @@
         <v-row class="align-center" no-gutters>
           <v-col>
             <v-icon icon="mdi-twitter" @click="twitter"></v-icon>
-            <v-tooltip activator="parent" location="bottom">Twitter</v-tooltip>
+            <v-tooltip activator="parent" location="bottom" aria-label="Voir sur twitter">Twitter</v-tooltip>
           </v-col>
           <v-col>
             <v-icon icon="mdi-code-tags" @click="codecademy"></v-icon>
-            <v-tooltip activator="parent" location="bottom">Codecademy</v-tooltip>
+            <v-tooltip activator="parent" location="bottom" aria-label="Voir sur codecademy">Codecademy</v-tooltip>
           </v-col>
           <v-col>
             <v-icon icon="mdi-github" @click="github"></v-icon>
-            <v-tooltip activator="parent" location="bottom">Github</v-tooltip>
+            <v-tooltip activator="parent" location="bottom" aria-label="Voir sur github">Github</v-tooltip>
           </v-col>
           <v-col>
             <v-icon icon="mdi-linkedin" @click="linkedin"></v-icon>
-            <v-tooltip activator="parent" location="bottom">Linkedin</v-tooltip>
+            <v-tooltip activator="parent" location="bottom" aria-label="Voir sur linkedin">Linkedin</v-tooltip>
           </v-col>
         </v-row>
       </v-card-text>

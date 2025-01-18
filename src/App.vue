@@ -3,8 +3,8 @@
     <header>
       <v-container fluid class="title d-flex justify-space-between align-center" color="grey-darken-4">
     <div class="d-flex align-center">
-      <v-icon icon="mdi-monitor" size="33" class="mr-2 d-none d-md-flex"></v-icon>
-      <v-icon icon="mdi-menu"  :class="{'icon-active': navVisible}" class="mr-2 d-flex d-sm-none" @click="toggleNav"></v-icon>
+      <v-icon icon="mdi-monitor" size="33" class="mr-2 d-none d-md-flex" aria-label="Desktop icon"></v-icon>
+      <v-icon icon="mdi-menu"  :class="{'icon-active': navVisible}" class="mr-2 d-flex d-sm-none" aria-label="Menu" @click="toggleNav"></v-icon>
       <h1 class="mb-0">Web Portfolio</h1>
     </div>
     <nav class="desktop-nav">
@@ -66,10 +66,10 @@ style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'tran
       </div>
       <v-form method="POST" action="/send-mail" class="w-100" style="max-width: 600px; margin: 20px 15px;">
         <h3 class="text-center mb-4">Need a site? Contact me</h3>
-        <v-text-field label="Name" name="name" class="w-100" required></v-text-field>
-        <v-text-field label="Last Name" name="lastName" class="w-100" required></v-text-field>
-        <v-text-field label="Email" name="email" type="email" class="w-100" required></v-text-field>
-        <v-textarea label="Message" name="message" rows="5"  class="w-100"required></v-textarea>
+        <v-text-field label="Name" name="name" aria-label="First name" class="w-100" required></v-text-field>
+        <v-text-field label="Last Name" name="lastName" aria-label="Last name" class="w-100" required></v-text-field>
+        <v-text-field label="Email" name="email" type="email" aria-label="Email address" class="w-100" required></v-text-field>
+        <v-textarea label="Message" name="message" rows="5" aria-label="Content" class="w-100"required></v-textarea>
         <v-btn
           id="mail"
           type="submit"
