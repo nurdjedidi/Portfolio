@@ -39,7 +39,7 @@
   <v-row class="gap-4">
     <v-col cols="12" sm="6" md="4">
       <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
-        <v-img src="../images/urbanstyle.avif" loading="lazy" alt="Urbanstyle" class="card-image w-100 h-100"></v-img>
+        <v-img src="../images/urbanstyle.avif" loading="lazy" alt="Urbanstyle" class="card-image"></v-img>
         <v-card-text class="card-content d-flex flex-column flex-grow-1">
           <h2 class="card-title">Urbanstyle</h2>
           <p class="card-description">Below is the link to a fictitious online shop that I designed.</p>
@@ -55,7 +55,7 @@
     </v-col cols="12" sm="6" md="4">
     <v-col>
       <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
-        <v-img src="../images/news.avif" loading="lazy" alt="World news" class="card-image w-100 h-100"></v-img>
+        <v-img src="../images/news.avif" loading="lazy" alt="World news" class="card-image"></v-img>
         <v-card-text class="card-content d-flex flex-column flex-grow-1">
           <h2 class="card-title">World news</h2>
           <p class="card-description">Below is a link to see the latest news in your country.</p>
@@ -73,7 +73,7 @@
     </v-col>
     <v-col cols="12" sm="12" md="4">
       <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
-        <v-img src="../images/fitness.avif" loading="lazy" alt="Health & fitness" class="card-image w-100 h-100"></v-img>
+        <v-img src="../images/fitness.avif" loading="lazy" alt="Health & fitness" class="card-image"></v-img>
         <v-card-text class="card-content d-flex flex-column flex-grow-1">
           <h2 class="card-title">Health & fitness (prototype)</h2>
           <p class="card-description">Below is the link to a fitness and health monitoring project.</p>
