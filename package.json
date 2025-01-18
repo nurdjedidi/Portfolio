@@ -9,6 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix",
+    "git": "npm run build && git add . && git commit -m \"release\" && git push origin main",
     "minify-css": "postcss style.css -o styles.min.css"
   },
   "dependencies": {
