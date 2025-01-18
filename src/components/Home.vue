@@ -11,23 +11,11 @@
       <v-card-subtitle>Full stack web developer</v-card-subtitle>
       <v-card-text>
         <v-row class="align-center" no-gutters>
-          <v-col>
-            <v-icon icon="mdi-twitter" role="button" aria-label="View twitter profile" @click="twitter"></v-icon>
-            <v-tooltip activator="parent" location="bottom" aria-label="View twitter profile">Twitter</v-tooltip>
-          </v-col>
-          <v-col>
-            <v-icon icon="mdi-code-tags" role="button" aria-label="View linkedin profile" @click="codecademy"></v-icon>
-            <v-tooltip activator="parent" location="bottom" aria-label="View codecademy profile">Codecademy</v-tooltip>
-          </v-col>
-          <v-col>
-            <v-icon icon="mdi-github" role="button" aria-label="View github profile" @click="github"></v-icon>
-            <v-tooltip activator="parent" location="bottom" aria-label="View github profile">Github</v-tooltip>
-          </v-col>
-          <v-col>
-            <v-icon icon="mdi-linkedin" role="button" aria-label="View linkedin profile" @click="linkedin"></v-icon>
-            <v-tooltip activator="parent" location="bottom" aria-label="View linkedin profile">Linkedin</v-tooltip>
-          </v-col>
-        </v-row>
+            <v-col v-for="(social, index) in socialLinks" :key="index" class="d-flex justify-center">
+              <v-icon :icon="social.icon" role="button" :aria-label="'View ' + social.name + ' profile'" @click="redirectTo(social.link)"></v-icon>
+              <v-tooltip :activator="'parent'" location="bottom" :aria-label="'View ' + social.name + ' profile'">{{ social.name }}</v-tooltip>
+            </v-col>
+          </v-row>
       </v-card-text>
     </v-card>
     </section>
@@ -99,23 +87,20 @@
   <script>
   export default {
     name: 'Home',
+    data() {
+    return {
+      socialLinks: [
+        { name: 'Twitter', icon: 'mdi-twitter', link: 'https://twitter.com' },
+        { name: 'Codecademy', icon: 'mdi-code-tags', link: 'https://www.codecademy.com' },
+        { name: 'GitHub', icon: 'mdi-github', link: 'https://github.com' },
+        { name: 'LinkedIn', icon: 'mdi-linkedin', link: 'https://www.linkedin.com' }
+      ]
+    };
+  },
     methods: { 
-      twitter () { 
-        const url = "https://x.com/DjedidiNur";
-        window.open(url, "_blank");
-      },
-      codecademy () { 
-        const url = "https://www.codecademy.com/profiles/Nur_djedd";
-        window.open(url, "_blank");
-      },
-      github () { 
-        const url = "https://github.com/nurdjedidi";
-        window.open(url, "_blank");
-      },
-      linkedin () { 
-        const url = "https://www.linkedin.com/in/n%C3%BBr-djedidi-829921236";
-        window.open(url, "_blank");
-      }
+      redirectTo(link) {
+      window.open(link, '_blank');
+    }
     }
   };
   </script>

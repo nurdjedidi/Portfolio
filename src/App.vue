@@ -7,29 +7,7 @@
       <v-icon icon="mdi-menu"  :class="{'icon-active': navVisible}" class="mr-2 d-flex d-sm-none" aria-label="Menu" @click="toggleNav"></v-icon>
       <h1 class="mb-0">Web Portfolio</h1>
     </div>
-    <nav class="desktop-nav">
-      <ul class="d-flex">
-        <li class="mr-2">
-          <router-link to="/" aria-label="Home page">Home</router-link>
-        </li>
-        <li class="mr-2">
-          <router-link to="/skills" aria-label="Skills page">Skills</router-link>
-        </li>
-        <li>
-          <router-link to="/animation" aria-label="Animation page">Animation</router-link>
-        </li>
-      </ul>
-    </nav>
-    <v-navigation-drawer app :class="navVisible" class="d-flex flex-column" id="nav"
-style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'translateX(0)' : 'translateX(-100%)'}" color="white" aria-label="Main navigation">
-        <v-list role="listbox" aria-label="Navigation" class="d-flex flex-column align-center justify-center">
-          <div class="line-top"></div>
-          <v-list-item><router-link to="/" aria-label="Home page">Home</router-link></v-list-item>
-          <v-list-item><router-link to="/skills" aria-label="Skills page">Skills</router-link></v-list-item>
-          <v-list-item><router-link to="/animation" aria-label="Animation page">Animation</router-link></v-list-item>
-          <div class="line-bottom"></div>
-        </v-list>
-      </v-navigation-drawer>
+    <Navigation :nav-visible="navVisible" @toggle-nav="toggleNav" />
   </v-container>
     </header>
     <main>
@@ -88,7 +66,12 @@ style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'tran
 </template>
 
 <script>
+import Navigation from './components/Navigation.vue';
+
 export default {
+  components: {
+    Navigation
+  },
   name: 'App',
   data() {
   return {
