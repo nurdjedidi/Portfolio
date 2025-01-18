@@ -53,7 +53,7 @@ import fitness from '../images/fitness.avif';
           link: '../src/ext/World/news.html'
         },
         { img: fitness, 
-          title: 'Health & fitness (prototype)', 
+          title: 'Health & fitness', 
           description: 'Below is the link to a fitness and health monitoring project.', 
           skills: [
             { name: 'HTML', icon: 'mdi-language-html5' },
