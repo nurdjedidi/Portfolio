@@ -22,7 +22,7 @@
     </nav>
     <v-navigation-drawer app :class="navVisible" class="d-flex flex-column" id="nav"
 style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'translateX(0)' : 'translateX(-100%)'}" color="white" aria-label="Main navigation">
-        <v-list class="d-flex flex-column align-center justify-center">
+        <v-list role="listbox" class="d-flex flex-column align-center justify-center">
           <div class="line-top"></div>
           <v-list-item><router-link to="/" aria-label="Home page">Home</router-link></v-list-item>
           <v-list-item><router-link to="/skills" aria-label="Skills page">Skills</router-link></v-list-item>
