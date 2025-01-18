@@ -26,7 +26,7 @@
       <p>Below is a selection of some of the most complex projects I've done:</p>
     </v-col>
   </v-row>
-  <section>
+  <section class="card-container">
     <Projects />
   </section>
 </v-container>

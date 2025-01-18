@@ -48,7 +48,8 @@ import fitness from '../images/fitness.avif';
             { name: 'HTML', icon: 'mdi-language-html5' },
             { name: 'CSS', icon: 'mdi-language-css3' },
             { name: 'JavaScript', icon: 'mdi-language-javascript' },
-            { name: 'Node.js', icon: 'mdi-nodejs' }
+            { name: 'Node.js', icon: 'mdi-nodejs' },
+            { name: 'API', icon: 'mdi-access-point' }
           ],
           link: '../src/ext/World/news.html'
         },
@@ -58,8 +59,10 @@ import fitness from '../images/fitness.avif';
           skills: [
             { name: 'HTML', icon: 'mdi-language-html5' },
             { name: 'CSS', icon: 'mdi-language-css3' },
-            { name: 'JavaScript', icon: 'mdi-language-javascript' },
-            { name: 'Node.js', icon: 'mdi-nodejs' }
+            { name: 'Vue.js', icon: 'mdi-nodejs' },
+            { name: 'Node.js', icon: 'mdi-nodejs' },
+            { name: 'MySQL', icon: 'mdi-database' },
+            { name: 'API', icon: 'mdi-access-point' }
           ],
           link: '#'
         }
