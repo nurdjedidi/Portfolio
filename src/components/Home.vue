@@ -11,20 +11,20 @@
       <v-card-text>
         <v-row class="align-center" no-gutters>
           <v-col>
-            <v-icon icon="mdi-twitter" @click="twitter"></v-icon>
-            <v-tooltip activator="parent" location="bottom" aria-label="Voir sur twitter">Twitter</v-tooltip>
+            <v-icon icon="mdi-twitter" role="button" aria-label="View twitter profile" @click="twitter"></v-icon>
+            <v-tooltip activator="parent" location="bottom" aria-label="View twitter profile">Twitter</v-tooltip>
           </v-col>
           <v-col>
-            <v-icon icon="mdi-code-tags" @click="codecademy"></v-icon>
-            <v-tooltip activator="parent" location="bottom" aria-label="Voir sur codecademy">Codecademy</v-tooltip>
+            <v-icon icon="mdi-code-tags" role="button" aria-label="View linkedin profile" @click="codecademy"></v-icon>
+            <v-tooltip activator="parent" location="bottom" aria-label="View codecademy profile">Codecademy</v-tooltip>
           </v-col>
           <v-col>
-            <v-icon icon="mdi-github" @click="github"></v-icon>
-            <v-tooltip activator="parent" location="bottom" aria-label="Voir sur github">Github</v-tooltip>
+            <v-icon icon="mdi-github" role="button" aria-label="View github profile" @click="github"></v-icon>
+            <v-tooltip activator="parent" location="bottom" aria-label="View github profile">Github</v-tooltip>
           </v-col>
           <v-col>
-            <v-icon icon="mdi-linkedin" @click="linkedin"></v-icon>
-            <v-tooltip activator="parent" location="bottom" aria-label="Voir sur linkedin">Linkedin</v-tooltip>
+            <v-icon icon="mdi-linkedin" role="button" aria-label="View linkedin profile" @click="linkedin"></v-icon>
+            <v-tooltip activator="parent" location="bottom" aria-label="View linkedin profile">Linkedin</v-tooltip>
           </v-col>
         </v-row>
       </v-card-text>

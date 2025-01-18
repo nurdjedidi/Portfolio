@@ -73,6 +73,7 @@ style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'tran
         <v-btn
           id="mail"
           type="submit"
+          aria-label="Submit the contact form"
           class="ma-2"
           color="primary"
           block
