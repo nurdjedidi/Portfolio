@@ -213,8 +213,6 @@ z-index: 1001;
     margin-bottom: 20px;
 }
 
-
-
 @media (max-width: 768px) {
 .sidebar { 
   display: block;

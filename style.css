@@ -23,7 +23,6 @@ header svg {
     height: auto;
 }
 
-
 /* footer settings */ 
 
 .footer {
@@ -138,23 +137,6 @@ header svg {
 
   .cls-1, .cls-2, .cls-3 {
     stroke-width: 0px;
-  }
-
-  #notification {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #4caf50;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 5px;
-    font-size: 18px;
-    text-align: center;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 1000;
   }
 
   @media (max-width: 768px) { 

@@ -125,55 +125,7 @@
     justify-content: center;
     align-items: center;
   }
-  .card-client {
-    background: #282828;
-    width: 15vw;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-bottom: 10px;
-    margin-top: 20px;
-    border: 1px solid white;
-    box-shadow: 0 6px 10px rgba(207, 212, 222, 0.3);
-    border-radius: 10px;
-    text-align: center;
-    color: #fff;
-    font-family: "Poppins", sans-serif;
-    transition: all 0.3s ease;
-  }
-  
-  .card-client:hover {
-    transform: translateY(-10px);
-  }
-  
-  .user-picture {
-    overflow: hidden;
-    object-fit: cover;
-    width: 5rem;
-    height: 5rem;
-    border: 3px solid white;
-    background-size: cover;
-    border-radius: 999px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-  }
-  
-  .user-picture img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center; 
-  }
-  .name-client {
-    margin: 0;
-    margin-top: 20px;
-    font-weight: 600;
-    font-size: 18px;
-    color: white;
-  }
+
   .hover-transition {
   transition: transform 0.3s ease-in-out;
 }
@@ -181,72 +133,6 @@
 .hover-transition:hover {
   transform: scale(1..01)
 }
-  .name-client span {
-    display: block;
-    font-weight: 200;
-    font-size: 16px;
-  }
-  
-  .social-media:before {
-    content: " ";
-    display: block;
-    width: 100%;
-    height: 2px;
-    margin: 20px 0;
-    background: white;
-  }
-  
-  .social-media a {
-    position: relative;
-    margin-right: 15px;
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .social-media a:last-child {
-    margin-right: 0;
-  }
-  
-  .social-media a svg {
-    width: 1.1rem;
-    fill: currentColor;
-  }
-  
-  .tooltip-social {
-    background: #262626;
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    padding: 0.5rem 0.4rem;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    opacity: 0;
-    transform: translate(-50%, -90%);
-    transition: all 0.2s ease;
-    z-index: 1;
-  }
-  
-  .tooltip-social:after {
-    content: " ";
-    position: absolute;
-    bottom: 1px;
-    left: 50%;
-    border: solid;
-    border-width: 10px 10px 0 10px;
-    border-color: transparent;
-    transform: translate(-50%, 100%);
-  }
-  
-  .social-media a .tooltip-social:after {
-    border-top-color: #262626;
-  }
-  
-  .social-media a:hover .tooltip-social {
-    opacity: 1;
-    transform: translate(-50%, -130%);
-  }
 
   section {
   margin: 50px ;
@@ -267,76 +153,6 @@ p {
   margin-bottom: 30px;
 }
 
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.card {
-  border: thin solid #333;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.card-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.card-content {
-  padding: 20px;
-}
-
-.card-title {
-  font-size: 1.6em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.card-description {
-  font-size: 1em;
-  color: #777;
-  margin-bottom: 15px;
-}
-
-.card-skill {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.skill {
-  font-size: 0.9em;
-  padding: 5px 10px;
-  background-color: #f1f1f1;
-  border-radius: 20px;
-  color: #555;
-}
-
-.card-link {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #3498db;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.card-link:hover {
-  background-color: #2980b9;
-}
 
 @media (max-width: 768px) { 
   .presentation {
@@ -348,87 +164,9 @@ p {
     padding: 20px; 
   }
 
-  .card-client {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    margin: 10px 0; 
-  }
-
-  .user-picture {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 15px;
-  }
-
-  .name-client {
-    font-size: 16px; 
-  }
-
-  .social-media {
-    margin-top: 15px;
-  }
-
   section {
     margin: 0; 
     padding: 20px;
-  }
-
-  .projets {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
-
-  .card-container {
-    display: grid;
-    grid-template-columns: 1fr; 
-    gap: 20px;
-  }
-
-  .card {
-    width: 100%;
-    padding: 0; 
-  }
-
-  .card-image {
-    height: 180px; 
-  }
-
-  .card-title {
-    font-size: 1.4em; 
-  }
-
-  .card-description {
-    font-size: 1em;
-  }
-
-  .card-skill {
-    flex-direction: row; 
-    justify-content: center;
-  }
-
-  .skill {
-    font-size: 0.8em;
-    padding: 3px 8px; 
-  }
-
-  .card-link {
-    font-size: 1em;
-    padding: 8px 18px;
-  }
-
-  .social-media a svg {
-    width: 1.5rem; 
-  }
-
-
-  .social-media {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
   }
 }
   </style>
