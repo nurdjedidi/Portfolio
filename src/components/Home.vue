@@ -187,7 +187,6 @@ p {
 
 .card-description {
   font-size: 1em;
-  color: #777;
   margin-bottom: 15px;
 }
 
