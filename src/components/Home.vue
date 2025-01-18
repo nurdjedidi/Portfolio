@@ -135,14 +135,6 @@ p {
   margin-bottom: 15px;
 }
 
-.skill {
-  font-size: 0.9em;
-  padding: 5px 10px;
-  background-color: #f1f1f1;
-  border-radius: 20px;
-  color: #555;
-}
-
 .card-link {
   display: inline-block;
   padding: 10px 20px;
