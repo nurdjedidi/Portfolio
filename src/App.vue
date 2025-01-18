@@ -21,7 +21,7 @@
       </ul>
     </nav>
     <v-navigation-drawer app :class="navVisible" class="d-flex flex-column" id="nav"
-style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'translateX(0)' : 'translateX(-100%)'}">
+style="transition: transform 0.3s ease;" :style="{ transform: navVisible ? 'translateX(0)' : 'translateX(-100%)'}" color="white">
         <v-list class="d-flex flex-column align-center justify-center">
           <li class="line-top"></li>
           <v-list-item><router-link to="/">Home</router-link></v-list-item>
