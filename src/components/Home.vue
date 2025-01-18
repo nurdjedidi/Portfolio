@@ -158,7 +158,7 @@
 
 p {
   font-size: 1.1em;
-  color: #555;
+  color: #bbb;
   margin-bottom: 30px;
 }
 
@@ -167,18 +167,6 @@ p {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   margin-top: 30px;
-}
-
-.card {
-  border: thin solid #333;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .card-image {
@@ -221,7 +209,7 @@ p {
 .card-link {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #3498db;
+  background-color: #0056b3;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
@@ -230,7 +218,7 @@ p {
 }
 
 .card-link:hover {
-  background-color: #2980b9;
+  background-color: #003f88;
 }
 
 @media (max-width: 768px) { 
@@ -241,30 +229,6 @@ p {
     justify-content: center;
     text-align: center;
     padding: 20px; 
-  }
-
-  .card-client {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    margin: 10px 0; 
-  }
-
-  .user-picture {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 15px;
-  }
-
-  .name-client {
-    font-size: 16px; 
-  }
-
-  .social-media {
-    margin-top: 15px;
   }
 
   section {
