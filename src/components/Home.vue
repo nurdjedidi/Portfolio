@@ -179,32 +179,6 @@ p {
   padding: 20px;
 }
 
-.card-title {
-  font-size: 1.6em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.card-description {
-  font-size: 1em;
-  margin-bottom: 15px;
-}
-
-.card-skill {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.skill {
-  font-size: 0.9em;
-  padding: 5px 10px;
-  background-color: #f1f1f1;
-  border-radius: 20px;
-  color: #555;
-}
-
 .card-link {
   display: inline-block;
   padding: 10px 20px;
@@ -249,18 +223,6 @@ p {
   .card {
     width: 100%;
     padding: 0; 
-  }
-
-  .card-image {
-    height: 180px; 
-  }
-
-  .card-title {
-    font-size: 1.4em; 
-  }
-
-  .card-description {
-    font-size: 1em;
   }
 
   .card-skill {
