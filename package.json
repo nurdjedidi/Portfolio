@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-     "start": "npm run build && node server/index.mjs"
+    "start": "npm run build && nodemon server.js"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
