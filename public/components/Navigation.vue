@@ -48,6 +48,9 @@
 .nav.visible {
   display: block;
 }
+.nav {
+    display: block;  
+  }
 }
 
 </style>

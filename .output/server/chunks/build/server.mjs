@@ -1,4 +1,4 @@
-import { version as version$1, unref, inject as inject$1, watch, onScopeDispose, reactive, computed, watchEffect, toRefs, shallowRef, warn, getCurrentInstance as getCurrentInstance$1, ref, provide, defineComponent as defineComponent$1, capitalize, camelize, h, toRaw, createVNode, mergeProps, readonly, shallowReactive, Suspense, nextTick, Fragment, Transition, toRef, withDirectives, vShow, isRef, Text, resolveDirective, resolveDynamicComponent, cloneVNode, vModelText, effectScope, resolveComponent, TransitionGroup, useSSRContext, markRaw, createApp, getCurrentScope, hasInjectionContext, onErrorCaptured, onServerPrefetch, defineAsyncComponent, isReadonly, withCtx, createTextVNode, openBlock, createBlock, withModifiers, isShallow, isReactive } from 'vue';
+import { version as version$1, unref, inject as inject$1, watch, onScopeDispose, reactive, computed, watchEffect, toRefs, shallowRef, warn, getCurrentInstance as getCurrentInstance$1, ref, provide, defineComponent as defineComponent$1, capitalize, camelize, h, toRaw, createVNode, mergeProps, readonly, shallowReactive, Suspense, nextTick, Fragment, Transition, toRef, withDirectives, vShow, isRef, Text, resolveDirective, resolveDynamicComponent, cloneVNode, vModelText, effectScope, resolveComponent, TransitionGroup, useSSRContext, markRaw, createApp, getCurrentScope, hasInjectionContext, onErrorCaptured, onServerPrefetch, withCtx, createTextVNode, openBlock, createBlock, withModifiers, defineAsyncComponent, isReadonly, isShallow, isReactive } from 'vue';
 import { $ as $fetch$1, l as defu, p as parseQuery, m as createHooks, f as createError$1, n as hasProtocol, o as joinURL, q as getContext, v as isScriptProtocol, w as withQuery, x as sanitizeStatusCode, y as withTrailingSlash, z as withoutTrailingSlash, A as toRouteMatcher, B as createRouter$1 } from '../_/nitro.mjs';
 import { b as baseURL } from '../routes/renderer.mjs';
 import { getActiveHead, CapoPlugin } from 'unhead';
@@ -7734,7 +7734,7 @@ const _sfc_main$3 = {
     }
   }
 };
-function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_NuxtLink = __nuxt_component_0;
   _push(`<div${ssrRenderAttrs(_attrs)}>`);
   if (!$props.navVisible) {
@@ -8030,7 +8030,7 @@ _sfc_main$3.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("public/components/Navigation.vue");
   return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : undefined;
 };
-const Navigation = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["ssrRender", _sfc_ssrRender$1]]);
+const Navigation = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["ssrRender", _sfc_ssrRender]]);
 const makeVAppProps = propsFactory({
   ...makeComponentProps(),
   ...makeLayoutProps({
@@ -10584,197 +10584,388 @@ const VTextarea = genericComponent()({
   }
 });
 const _sfc_main$2 = {
-  components: {
-    Navigation
-  },
-  data() {
-    return {
-      form: {
-        name: "",
-        lastName: "",
-        email: "",
-        message: ""
-      },
-      status: null,
-      statusMessage: ""
+  __name: "app",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const navVisible = ref(false);
+    const form = ref({
+      name: "",
+      lastName: "",
+      email: "",
+      message: ""
+    });
+    const status = ref(null);
+    const statusMessage = ref("");
+    const toggleNav = () => {
+      navVisible.value = !navVisible.value;
     };
-  },
-  methods: {
-    toggleNav() {
-      this.navVisible = !this.navVisible;
-    },
-    async sendMail() {
+    const sendMail = async () => {
       try {
         const response = await $fetch("/api/send-mail", {
           method: "POST",
-          body: this.form
+          body: form.value
         });
         if (response.status === "success") {
-          this.status = "success";
-          this.statusMessage = "Votre message a été envoyé avec succès !";
-          this.form = { name: "", lastName: "", email: "", message: "" };
+          status.value = "success";
+          statusMessage.value = "Votre message a été envoyé avec succès !";
+          form.value = { name: "", lastName: "", email: "", message: "" };
           (void 0).location.href = "/";
         } else {
-          this.status = "error";
-          this.statusMessage = "Une erreur est survenue lors de l'envoi du message.";
+          status.value = "error";
+          statusMessage.value = "Une erreur est survenue lors de l'envoi du message.";
         }
       } catch (error) {
         console.error("Erreur lors de l'envoi du mail:", error);
-        this.status = "error";
-        this.statusMessage = "Une erreur est survenue lors de l'envoi du message.";
+        status.value = "error";
+        statusMessage.value = "Une erreur est survenue lors de l'envoi du message.";
       }
-    }
-  }
-};
-function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_Navigation = resolveComponent("Navigation");
-  const _component_NuxtPage = __nuxt_component_0$1;
-  _push(ssrRenderComponent(VApp, mergeProps({ class: "app-layout" }, _attrs), {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<header${_scopeId}>`);
-        _push2(ssrRenderComponent(VContainer, {
-          fluid: "",
-          class: "title d-flex justify-space-between align-center",
-          color: "grey-darken-4"
-        }, {
-          default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(`<div class="d-flex align-center"${_scopeId2}>`);
-              _push3(ssrRenderComponent(VIcon, {
-                icon: "mdi-monitor",
-                size: "33",
-                class: "mr-2 d-none d-md-flex",
-                "aria-label": "Desktop icon"
-              }, null, _parent3, _scopeId2));
-              _push3(ssrRenderComponent(VIcon, {
-                icon: "mdi-menu",
-                class: [{ "icon-active": _ctx.navVisible }, "mr-2 d-flex d-sm-none"],
-                "aria-label": "Menu",
-                onClick: $options.toggleNav
-              }, null, _parent3, _scopeId2));
-              _push3(`<h1 class="mb-0"${_scopeId2}>Web Portfolio</h1></div>`);
-              _push3(ssrRenderComponent(_component_Navigation, {
-                "nav-visible": _ctx.navVisible,
-                onToggleNav: $options.toggleNav
-              }, null, _parent3, _scopeId2));
-            } else {
-              return [
-                createVNode("div", { class: "d-flex align-center" }, [
-                  createVNode(VIcon, {
+    };
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_NuxtPage = __nuxt_component_0$1;
+      _push(ssrRenderComponent(VApp, mergeProps({ class: "app-layout" }, _attrs), {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<header${_scopeId}>`);
+            _push2(ssrRenderComponent(VContainer, {
+              fluid: "",
+              class: "title d-flex justify-space-between align-center",
+              color: "grey-darken-4"
+            }, {
+              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(`<div class="d-flex align-center"${_scopeId2}>`);
+                  _push3(ssrRenderComponent(VIcon, {
                     icon: "mdi-monitor",
                     size: "33",
                     class: "mr-2 d-none d-md-flex",
                     "aria-label": "Desktop icon"
-                  }),
-                  createVNode(VIcon, {
+                  }, null, _parent3, _scopeId2));
+                  _push3(ssrRenderComponent(VIcon, {
                     icon: "mdi-menu",
-                    class: [{ "icon-active": _ctx.navVisible }, "mr-2 d-flex d-sm-none"],
+                    class: [{ "icon-active": navVisible.value }, "mr-2 d-flex d-sm-none"],
                     "aria-label": "Menu",
-                    onClick: $options.toggleNav
-                  }, null, 8, ["class", "onClick"]),
-                  createVNode("h1", { class: "mb-0" }, "Web Portfolio")
-                ]),
-                createVNode(_component_Navigation, {
-                  "nav-visible": _ctx.navVisible,
-                  onToggleNav: $options.toggleNav
-                }, null, 8, ["nav-visible", "onToggleNav"])
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-        _push2(`</header><main${_scopeId}>`);
-        _push2(ssrRenderComponent(_component_NuxtPage, null, null, _parent2, _scopeId));
-        _push2(`</main>`);
-        _push2(ssrRenderComponent(VFooter, {
-          class: "footer",
-          padless: "",
-          color: "grey-darken-4"
-        }, {
-          default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-            if (_push3) {
-              _push3(ssrRenderComponent(VContainer, {
-                fluid: "",
-                class: "d-flex align-center"
-              }, {
-                default: withCtx((_3, _push4, _parent4, _scopeId3) => {
-                  if (_push4) {
-                    _push4(`<div id="triangle" class="d-none d-md-flex justify-center mb-4"${_scopeId3}><svg id="Layer_1" data-name="Layer 1" version="1.1" viewBox="0 0 2000 2000"${_scopeId3}><polygon class="cls-1" points="928 781 1021 951 784.5 1371.97 1618 1371.97 1530.32 1544 509 1539 928 781"${_scopeId3}></polygon><polygon class="cls-3" points="1618 1371.97 784.5 1371.97 874.93 1211 1346 1211 923.1 456 1110.06 456 1618 1371.97"${_scopeId3}></polygon><g id="Layer_2" data-name="Layer 2"${_scopeId3}><polygon class="cls-2" points="418 1372.74 509 1539 928 781 1162.32 1211 1346 1211 923.1 456 418 1372.74"${_scopeId3}></polygon></g></svg></div>`);
-                    _push4(ssrRenderComponent(VForm, {
-                      onSubmit: $options.sendMail,
-                      class: "w-100",
-                      style: { "max-width": "600px", "margin": "20px 15px" }
-                    }, {
-                      default: withCtx((_4, _push5, _parent5, _scopeId4) => {
-                        if (_push5) {
-                          _push5(`<h3 class="text-center mb-4"${_scopeId4}>Need a site? Contact me</h3>`);
-                          _push5(ssrRenderComponent(VTextField, {
-                            label: "Name",
-                            name: "name",
-                            modelValue: $data.form.name,
-                            "onUpdate:modelValue": ($event) => $data.form.name = $event,
-                            "aria-label": "First name",
+                    onClick: toggleNav
+                  }, null, _parent3, _scopeId2));
+                  _push3(`<h1 class="mb-0"${_scopeId2}>Web Portfolio</h1></div>`);
+                  _push3(ssrRenderComponent(Navigation, {
+                    "nav-visible": navVisible.value,
+                    onToggleNav: toggleNav
+                  }, null, _parent3, _scopeId2));
+                } else {
+                  return [
+                    createVNode("div", { class: "d-flex align-center" }, [
+                      createVNode(VIcon, {
+                        icon: "mdi-monitor",
+                        size: "33",
+                        class: "mr-2 d-none d-md-flex",
+                        "aria-label": "Desktop icon"
+                      }),
+                      createVNode(VIcon, {
+                        icon: "mdi-menu",
+                        class: [{ "icon-active": navVisible.value }, "mr-2 d-flex d-sm-none"],
+                        "aria-label": "Menu",
+                        onClick: toggleNav
+                      }, null, 8, ["class"]),
+                      createVNode("h1", { class: "mb-0" }, "Web Portfolio")
+                    ]),
+                    createVNode(Navigation, {
+                      "nav-visible": navVisible.value,
+                      onToggleNav: toggleNav
+                    }, null, 8, ["nav-visible"])
+                  ];
+                }
+              }),
+              _: 1
+            }, _parent2, _scopeId));
+            _push2(`</header><main${_scopeId}>`);
+            _push2(ssrRenderComponent(_component_NuxtPage, null, null, _parent2, _scopeId));
+            _push2(`</main>`);
+            _push2(ssrRenderComponent(VFooter, {
+              class: "footer",
+              padless: "",
+              color: "grey-darken-4"
+            }, {
+              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(ssrRenderComponent(VContainer, {
+                    fluid: "",
+                    class: "d-flex align-center"
+                  }, {
+                    default: withCtx((_3, _push4, _parent4, _scopeId3) => {
+                      if (_push4) {
+                        _push4(`<div id="triangle" class="d-none d-md-flex justify-center mb-4"${_scopeId3}><svg id="Layer_1" data-name="Layer 1" version="1.1" viewBox="0 0 2000 2000"${_scopeId3}><polygon class="cls-1" points="928 781 1021 951 784.5 1371.97 1618 1371.97 1530.32 1544 509 1539 928 781"${_scopeId3}></polygon><polygon class="cls-3" points="1618 1371.97 784.5 1371.97 874.93 1211 1346 1211 923.1 456 1110.06 456 1618 1371.97"${_scopeId3}></polygon><g id="Layer_2" data-name="Layer 2"${_scopeId3}><polygon class="cls-2" points="418 1372.74 509 1539 928 781 1162.32 1211 1346 1211 923.1 456 418 1372.74"${_scopeId3}></polygon></g></svg></div>`);
+                        _push4(ssrRenderComponent(VForm, {
+                          onSubmit: sendMail,
+                          class: "w-100",
+                          style: { "max-width": "600px", "margin": "20px 15px" }
+                        }, {
+                          default: withCtx((_4, _push5, _parent5, _scopeId4) => {
+                            if (_push5) {
+                              _push5(`<h3 class="text-center mb-4"${_scopeId4}>Need a site? Contact me</h3>`);
+                              _push5(ssrRenderComponent(VTextField, {
+                                label: "Name",
+                                name: "name",
+                                modelValue: form.value.name,
+                                "onUpdate:modelValue": ($event) => form.value.name = $event,
+                                "aria-label": "First name",
+                                class: "w-100",
+                                required: ""
+                              }, null, _parent5, _scopeId4));
+                              _push5(ssrRenderComponent(VTextField, {
+                                label: "Last Name",
+                                name: "lastName",
+                                modelValue: form.value.lastName,
+                                "onUpdate:modelValue": ($event) => form.value.lastName = $event,
+                                "aria-label": "Last name",
+                                class: "w-100",
+                                required: ""
+                              }, null, _parent5, _scopeId4));
+                              _push5(ssrRenderComponent(VTextField, {
+                                label: "Email",
+                                name: "email",
+                                type: "email",
+                                modelValue: form.value.email,
+                                "onUpdate:modelValue": ($event) => form.value.email = $event,
+                                "aria-label": "Email address",
+                                class: "w-100",
+                                required: ""
+                              }, null, _parent5, _scopeId4));
+                              _push5(ssrRenderComponent(VTextarea, {
+                                label: "Message",
+                                name: "message",
+                                rows: "5",
+                                modelValue: form.value.message,
+                                "onUpdate:modelValue": ($event) => form.value.message = $event,
+                                "aria-label": "Content",
+                                class: "w-100",
+                                required: ""
+                              }, null, _parent5, _scopeId4));
+                              _push5(ssrRenderComponent(VBtn, {
+                                id: "mail",
+                                type: "submit",
+                                "aria-label": "Submit the contact form",
+                                class: "ma-2",
+                                color: "primary",
+                                block: ""
+                              }, {
+                                default: withCtx((_5, _push6, _parent6, _scopeId5) => {
+                                  if (_push6) {
+                                    _push6(` Send `);
+                                  } else {
+                                    return [
+                                      createTextVNode(" Send ")
+                                    ];
+                                  }
+                                }),
+                                _: 1
+                              }, _parent5, _scopeId4));
+                              _push5(`<p class="white--text text-center mt-4"${_scopeId4}>© Nûr Djedidi 2024</p>`);
+                            } else {
+                              return [
+                                createVNode("h3", { class: "text-center mb-4" }, "Need a site? Contact me"),
+                                createVNode(VTextField, {
+                                  label: "Name",
+                                  name: "name",
+                                  modelValue: form.value.name,
+                                  "onUpdate:modelValue": ($event) => form.value.name = $event,
+                                  "aria-label": "First name",
+                                  class: "w-100",
+                                  required: ""
+                                }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+                                createVNode(VTextField, {
+                                  label: "Last Name",
+                                  name: "lastName",
+                                  modelValue: form.value.lastName,
+                                  "onUpdate:modelValue": ($event) => form.value.lastName = $event,
+                                  "aria-label": "Last name",
+                                  class: "w-100",
+                                  required: ""
+                                }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+                                createVNode(VTextField, {
+                                  label: "Email",
+                                  name: "email",
+                                  type: "email",
+                                  modelValue: form.value.email,
+                                  "onUpdate:modelValue": ($event) => form.value.email = $event,
+                                  "aria-label": "Email address",
+                                  class: "w-100",
+                                  required: ""
+                                }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+                                createVNode(VTextarea, {
+                                  label: "Message",
+                                  name: "message",
+                                  rows: "5",
+                                  modelValue: form.value.message,
+                                  "onUpdate:modelValue": ($event) => form.value.message = $event,
+                                  "aria-label": "Content",
+                                  class: "w-100",
+                                  required: ""
+                                }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+                                createVNode(VBtn, {
+                                  id: "mail",
+                                  type: "submit",
+                                  "aria-label": "Submit the contact form",
+                                  class: "ma-2",
+                                  color: "primary",
+                                  block: ""
+                                }, {
+                                  default: withCtx(() => [
+                                    createTextVNode(" Send ")
+                                  ]),
+                                  _: 1
+                                }),
+                                createVNode("p", { class: "white--text text-center mt-4" }, "© Nûr Djedidi 2024")
+                              ];
+                            }
+                          }),
+                          _: 1
+                        }, _parent4, _scopeId3));
+                      } else {
+                        return [
+                          createVNode("div", {
+                            id: "triangle",
+                            class: "d-none d-md-flex justify-center mb-4"
+                          }, [
+                            (openBlock(), createBlock("svg", {
+                              id: "Layer_1",
+                              "data-name": "Layer 1",
+                              version: "1.1",
+                              viewBox: "0 0 2000 2000"
+                            }, [
+                              createVNode("polygon", {
+                                class: "cls-1",
+                                points: "928 781 1021 951 784.5 1371.97 1618 1371.97 1530.32 1544 509 1539 928 781"
+                              }),
+                              createVNode("polygon", {
+                                class: "cls-3",
+                                points: "1618 1371.97 784.5 1371.97 874.93 1211 1346 1211 923.1 456 1110.06 456 1618 1371.97"
+                              }),
+                              createVNode("g", {
+                                id: "Layer_2",
+                                "data-name": "Layer 2"
+                              }, [
+                                createVNode("polygon", {
+                                  class: "cls-2",
+                                  points: "418 1372.74 509 1539 928 781 1162.32 1211 1346 1211 923.1 456 418 1372.74"
+                                })
+                              ])
+                            ]))
+                          ]),
+                          createVNode(VForm, {
+                            onSubmit: withModifiers(sendMail, ["prevent"]),
                             class: "w-100",
-                            required: ""
-                          }, null, _parent5, _scopeId4));
-                          _push5(ssrRenderComponent(VTextField, {
-                            label: "Last Name",
-                            name: "lastName",
-                            modelValue: $data.form.lastName,
-                            "onUpdate:modelValue": ($event) => $data.form.lastName = $event,
-                            "aria-label": "Last name",
-                            class: "w-100",
-                            required: ""
-                          }, null, _parent5, _scopeId4));
-                          _push5(ssrRenderComponent(VTextField, {
-                            label: "Email",
-                            name: "email",
-                            type: "email",
-                            modelValue: $data.form.email,
-                            "onUpdate:modelValue": ($event) => $data.form.email = $event,
-                            "aria-label": "Email address",
-                            class: "w-100",
-                            required: ""
-                          }, null, _parent5, _scopeId4));
-                          _push5(ssrRenderComponent(VTextarea, {
-                            label: "Message",
-                            name: "message",
-                            rows: "5",
-                            modelValue: $data.form.message,
-                            "onUpdate:modelValue": ($event) => $data.form.message = $event,
-                            "aria-label": "Content",
-                            class: "w-100",
-                            required: ""
-                          }, null, _parent5, _scopeId4));
-                          _push5(ssrRenderComponent(VBtn, {
-                            id: "mail",
-                            type: "submit",
-                            "aria-label": "Submit the contact form",
-                            class: "ma-2",
-                            color: "primary",
-                            block: ""
+                            style: { "max-width": "600px", "margin": "20px 15px" }
                           }, {
-                            default: withCtx((_5, _push6, _parent6, _scopeId5) => {
-                              if (_push6) {
-                                _push6(` Send `);
-                              } else {
-                                return [
+                            default: withCtx(() => [
+                              createVNode("h3", { class: "text-center mb-4" }, "Need a site? Contact me"),
+                              createVNode(VTextField, {
+                                label: "Name",
+                                name: "name",
+                                modelValue: form.value.name,
+                                "onUpdate:modelValue": ($event) => form.value.name = $event,
+                                "aria-label": "First name",
+                                class: "w-100",
+                                required: ""
+                              }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+                              createVNode(VTextField, {
+                                label: "Last Name",
+                                name: "lastName",
+                                modelValue: form.value.lastName,
+                                "onUpdate:modelValue": ($event) => form.value.lastName = $event,
+                                "aria-label": "Last name",
+                                class: "w-100",
+                                required: ""
+                              }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+                              createVNode(VTextField, {
+                                label: "Email",
+                                name: "email",
+                                type: "email",
+                                modelValue: form.value.email,
+                                "onUpdate:modelValue": ($event) => form.value.email = $event,
+                                "aria-label": "Email address",
+                                class: "w-100",
+                                required: ""
+                              }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+                              createVNode(VTextarea, {
+                                label: "Message",
+                                name: "message",
+                                rows: "5",
+                                modelValue: form.value.message,
+                                "onUpdate:modelValue": ($event) => form.value.message = $event,
+                                "aria-label": "Content",
+                                class: "w-100",
+                                required: ""
+                              }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+                              createVNode(VBtn, {
+                                id: "mail",
+                                type: "submit",
+                                "aria-label": "Submit the contact form",
+                                class: "ma-2",
+                                color: "primary",
+                                block: ""
+                              }, {
+                                default: withCtx(() => [
                                   createTextVNode(" Send ")
-                                ];
-                              }
-                            }),
+                                ]),
+                                _: 1
+                              }),
+                              createVNode("p", { class: "white--text text-center mt-4" }, "© Nûr Djedidi 2024")
+                            ]),
                             _: 1
-                          }, _parent5, _scopeId4));
-                          _push5(`<p class="white--text text-center mt-4"${_scopeId4}>© Nûr Djedidi 2024</p>`);
-                        } else {
-                          return [
+                          })
+                        ];
+                      }
+                    }),
+                    _: 1
+                  }, _parent3, _scopeId2));
+                } else {
+                  return [
+                    createVNode(VContainer, {
+                      fluid: "",
+                      class: "d-flex align-center"
+                    }, {
+                      default: withCtx(() => [
+                        createVNode("div", {
+                          id: "triangle",
+                          class: "d-none d-md-flex justify-center mb-4"
+                        }, [
+                          (openBlock(), createBlock("svg", {
+                            id: "Layer_1",
+                            "data-name": "Layer 1",
+                            version: "1.1",
+                            viewBox: "0 0 2000 2000"
+                          }, [
+                            createVNode("polygon", {
+                              class: "cls-1",
+                              points: "928 781 1021 951 784.5 1371.97 1618 1371.97 1530.32 1544 509 1539 928 781"
+                            }),
+                            createVNode("polygon", {
+                              class: "cls-3",
+                              points: "1618 1371.97 784.5 1371.97 874.93 1211 1346 1211 923.1 456 1110.06 456 1618 1371.97"
+                            }),
+                            createVNode("g", {
+                              id: "Layer_2",
+                              "data-name": "Layer 2"
+                            }, [
+                              createVNode("polygon", {
+                                class: "cls-2",
+                                points: "418 1372.74 509 1539 928 781 1162.32 1211 1346 1211 923.1 456 418 1372.74"
+                              })
+                            ])
+                          ]))
+                        ]),
+                        createVNode(VForm, {
+                          onSubmit: withModifiers(sendMail, ["prevent"]),
+                          class: "w-100",
+                          style: { "max-width": "600px", "margin": "20px 15px" }
+                        }, {
+                          default: withCtx(() => [
                             createVNode("h3", { class: "text-center mb-4" }, "Need a site? Contact me"),
                             createVNode(VTextField, {
                               label: "Name",
                               name: "name",
-                              modelValue: $data.form.name,
-                              "onUpdate:modelValue": ($event) => $data.form.name = $event,
+                              modelValue: form.value.name,
+                              "onUpdate:modelValue": ($event) => form.value.name = $event,
                               "aria-label": "First name",
                               class: "w-100",
                               required: ""
@@ -10782,8 +10973,8 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                             createVNode(VTextField, {
                               label: "Last Name",
                               name: "lastName",
-                              modelValue: $data.form.lastName,
-                              "onUpdate:modelValue": ($event) => $data.form.lastName = $event,
+                              modelValue: form.value.lastName,
+                              "onUpdate:modelValue": ($event) => form.value.lastName = $event,
                               "aria-label": "Last name",
                               class: "w-100",
                               required: ""
@@ -10792,8 +10983,8 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                               label: "Email",
                               name: "email",
                               type: "email",
-                              modelValue: $data.form.email,
-                              "onUpdate:modelValue": ($event) => $data.form.email = $event,
+                              modelValue: form.value.email,
+                              "onUpdate:modelValue": ($event) => form.value.email = $event,
                               "aria-label": "Email address",
                               class: "w-100",
                               required: ""
@@ -10802,8 +10993,8 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                               label: "Message",
                               name: "message",
                               rows: "5",
-                              modelValue: $data.form.message,
-                              "onUpdate:modelValue": ($event) => $data.form.message = $event,
+                              modelValue: form.value.message,
+                              "onUpdate:modelValue": ($event) => form.value.message = $event,
                               "aria-label": "Content",
                               class: "w-100",
                               required: ""
@@ -10822,13 +11013,63 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                               _: 1
                             }),
                             createVNode("p", { class: "white--text text-center mt-4" }, "© Nûr Djedidi 2024")
-                          ];
-                        }
-                      }),
+                          ]),
+                          _: 1
+                        })
+                      ]),
                       _: 1
-                    }, _parent4, _scopeId3));
-                  } else {
-                    return [
+                    })
+                  ];
+                }
+              }),
+              _: 1
+            }, _parent2, _scopeId));
+          } else {
+            return [
+              createVNode("header", null, [
+                createVNode(VContainer, {
+                  fluid: "",
+                  class: "title d-flex justify-space-between align-center",
+                  color: "grey-darken-4"
+                }, {
+                  default: withCtx(() => [
+                    createVNode("div", { class: "d-flex align-center" }, [
+                      createVNode(VIcon, {
+                        icon: "mdi-monitor",
+                        size: "33",
+                        class: "mr-2 d-none d-md-flex",
+                        "aria-label": "Desktop icon"
+                      }),
+                      createVNode(VIcon, {
+                        icon: "mdi-menu",
+                        class: [{ "icon-active": navVisible.value }, "mr-2 d-flex d-sm-none"],
+                        "aria-label": "Menu",
+                        onClick: toggleNav
+                      }, null, 8, ["class"]),
+                      createVNode("h1", { class: "mb-0" }, "Web Portfolio")
+                    ]),
+                    createVNode(Navigation, {
+                      "nav-visible": navVisible.value,
+                      onToggleNav: toggleNav
+                    }, null, 8, ["nav-visible"])
+                  ]),
+                  _: 1
+                })
+              ]),
+              createVNode("main", null, [
+                createVNode(_component_NuxtPage)
+              ]),
+              createVNode(VFooter, {
+                class: "footer",
+                padless: "",
+                color: "grey-darken-4"
+              }, {
+                default: withCtx(() => [
+                  createVNode(VContainer, {
+                    fluid: "",
+                    class: "d-flex align-center"
+                  }, {
+                    default: withCtx(() => [
                       createVNode("div", {
                         id: "triangle",
                         class: "d-none d-md-flex justify-center mb-4"
@@ -10859,7 +11100,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         ]))
                       ]),
                       createVNode(VForm, {
-                        onSubmit: withModifiers($options.sendMail, ["prevent"]),
+                        onSubmit: withModifiers(sendMail, ["prevent"]),
                         class: "w-100",
                         style: { "max-width": "600px", "margin": "20px 15px" }
                       }, {
@@ -10868,8 +11109,8 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           createVNode(VTextField, {
                             label: "Name",
                             name: "name",
-                            modelValue: $data.form.name,
-                            "onUpdate:modelValue": ($event) => $data.form.name = $event,
+                            modelValue: form.value.name,
+                            "onUpdate:modelValue": ($event) => form.value.name = $event,
                             "aria-label": "First name",
                             class: "w-100",
                             required: ""
@@ -10877,8 +11118,8 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           createVNode(VTextField, {
                             label: "Last Name",
                             name: "lastName",
-                            modelValue: $data.form.lastName,
-                            "onUpdate:modelValue": ($event) => $data.form.lastName = $event,
+                            modelValue: form.value.lastName,
+                            "onUpdate:modelValue": ($event) => form.value.lastName = $event,
                             "aria-label": "Last name",
                             class: "w-100",
                             required: ""
@@ -10887,8 +11128,8 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                             label: "Email",
                             name: "email",
                             type: "email",
-                            modelValue: $data.form.email,
-                            "onUpdate:modelValue": ($event) => $data.form.email = $event,
+                            modelValue: form.value.email,
+                            "onUpdate:modelValue": ($event) => form.value.email = $event,
                             "aria-label": "Email address",
                             class: "w-100",
                             required: ""
@@ -10897,8 +11138,8 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                             label: "Message",
                             name: "message",
                             rows: "5",
-                            modelValue: $data.form.message,
-                            "onUpdate:modelValue": ($event) => $data.form.message = $event,
+                            modelValue: form.value.message,
+                            "onUpdate:modelValue": ($event) => form.value.message = $event,
                             "aria-label": "Content",
                             class: "w-100",
                             required: ""
@@ -10919,274 +11160,27 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           createVNode("p", { class: "white--text text-center mt-4" }, "© Nûr Djedidi 2024")
                         ]),
                         _: 1
-                      }, 8, ["onSubmit"])
-                    ];
-                  }
-                }),
-                _: 1
-              }, _parent3, _scopeId2));
-            } else {
-              return [
-                createVNode(VContainer, {
-                  fluid: "",
-                  class: "d-flex align-center"
-                }, {
-                  default: withCtx(() => [
-                    createVNode("div", {
-                      id: "triangle",
-                      class: "d-none d-md-flex justify-center mb-4"
-                    }, [
-                      (openBlock(), createBlock("svg", {
-                        id: "Layer_1",
-                        "data-name": "Layer 1",
-                        version: "1.1",
-                        viewBox: "0 0 2000 2000"
-                      }, [
-                        createVNode("polygon", {
-                          class: "cls-1",
-                          points: "928 781 1021 951 784.5 1371.97 1618 1371.97 1530.32 1544 509 1539 928 781"
-                        }),
-                        createVNode("polygon", {
-                          class: "cls-3",
-                          points: "1618 1371.97 784.5 1371.97 874.93 1211 1346 1211 923.1 456 1110.06 456 1618 1371.97"
-                        }),
-                        createVNode("g", {
-                          id: "Layer_2",
-                          "data-name": "Layer 2"
-                        }, [
-                          createVNode("polygon", {
-                            class: "cls-2",
-                            points: "418 1372.74 509 1539 928 781 1162.32 1211 1346 1211 923.1 456 418 1372.74"
-                          })
-                        ])
-                      ]))
-                    ]),
-                    createVNode(VForm, {
-                      onSubmit: withModifiers($options.sendMail, ["prevent"]),
-                      class: "w-100",
-                      style: { "max-width": "600px", "margin": "20px 15px" }
-                    }, {
-                      default: withCtx(() => [
-                        createVNode("h3", { class: "text-center mb-4" }, "Need a site? Contact me"),
-                        createVNode(VTextField, {
-                          label: "Name",
-                          name: "name",
-                          modelValue: $data.form.name,
-                          "onUpdate:modelValue": ($event) => $data.form.name = $event,
-                          "aria-label": "First name",
-                          class: "w-100",
-                          required: ""
-                        }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                        createVNode(VTextField, {
-                          label: "Last Name",
-                          name: "lastName",
-                          modelValue: $data.form.lastName,
-                          "onUpdate:modelValue": ($event) => $data.form.lastName = $event,
-                          "aria-label": "Last name",
-                          class: "w-100",
-                          required: ""
-                        }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                        createVNode(VTextField, {
-                          label: "Email",
-                          name: "email",
-                          type: "email",
-                          modelValue: $data.form.email,
-                          "onUpdate:modelValue": ($event) => $data.form.email = $event,
-                          "aria-label": "Email address",
-                          class: "w-100",
-                          required: ""
-                        }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                        createVNode(VTextarea, {
-                          label: "Message",
-                          name: "message",
-                          rows: "5",
-                          modelValue: $data.form.message,
-                          "onUpdate:modelValue": ($event) => $data.form.message = $event,
-                          "aria-label": "Content",
-                          class: "w-100",
-                          required: ""
-                        }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                        createVNode(VBtn, {
-                          id: "mail",
-                          type: "submit",
-                          "aria-label": "Submit the contact form",
-                          class: "ma-2",
-                          color: "primary",
-                          block: ""
-                        }, {
-                          default: withCtx(() => [
-                            createTextVNode(" Send ")
-                          ]),
-                          _: 1
-                        }),
-                        createVNode("p", { class: "white--text text-center mt-4" }, "© Nûr Djedidi 2024")
-                      ]),
-                      _: 1
-                    }, 8, ["onSubmit"])
-                  ]),
-                  _: 1
-                })
-              ];
-            }
-          }),
-          _: 1
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode("header", null, [
-            createVNode(VContainer, {
-              fluid: "",
-              class: "title d-flex justify-space-between align-center",
-              color: "grey-darken-4"
-            }, {
-              default: withCtx(() => [
-                createVNode("div", { class: "d-flex align-center" }, [
-                  createVNode(VIcon, {
-                    icon: "mdi-monitor",
-                    size: "33",
-                    class: "mr-2 d-none d-md-flex",
-                    "aria-label": "Desktop icon"
-                  }),
-                  createVNode(VIcon, {
-                    icon: "mdi-menu",
-                    class: [{ "icon-active": _ctx.navVisible }, "mr-2 d-flex d-sm-none"],
-                    "aria-label": "Menu",
-                    onClick: $options.toggleNav
-                  }, null, 8, ["class", "onClick"]),
-                  createVNode("h1", { class: "mb-0" }, "Web Portfolio")
-                ]),
-                createVNode(_component_Navigation, {
-                  "nav-visible": _ctx.navVisible,
-                  onToggleNav: $options.toggleNav
-                }, null, 8, ["nav-visible", "onToggleNav"])
-              ]),
-              _: 1
-            })
-          ]),
-          createVNode("main", null, [
-            createVNode(_component_NuxtPage)
-          ]),
-          createVNode(VFooter, {
-            class: "footer",
-            padless: "",
-            color: "grey-darken-4"
-          }, {
-            default: withCtx(() => [
-              createVNode(VContainer, {
-                fluid: "",
-                class: "d-flex align-center"
-              }, {
-                default: withCtx(() => [
-                  createVNode("div", {
-                    id: "triangle",
-                    class: "d-none d-md-flex justify-center mb-4"
-                  }, [
-                    (openBlock(), createBlock("svg", {
-                      id: "Layer_1",
-                      "data-name": "Layer 1",
-                      version: "1.1",
-                      viewBox: "0 0 2000 2000"
-                    }, [
-                      createVNode("polygon", {
-                        class: "cls-1",
-                        points: "928 781 1021 951 784.5 1371.97 1618 1371.97 1530.32 1544 509 1539 928 781"
-                      }),
-                      createVNode("polygon", {
-                        class: "cls-3",
-                        points: "1618 1371.97 784.5 1371.97 874.93 1211 1346 1211 923.1 456 1110.06 456 1618 1371.97"
-                      }),
-                      createVNode("g", {
-                        id: "Layer_2",
-                        "data-name": "Layer 2"
-                      }, [
-                        createVNode("polygon", {
-                          class: "cls-2",
-                          points: "418 1372.74 509 1539 928 781 1162.32 1211 1346 1211 923.1 456 418 1372.74"
-                        })
-                      ])
-                    ]))
-                  ]),
-                  createVNode(VForm, {
-                    onSubmit: withModifiers($options.sendMail, ["prevent"]),
-                    class: "w-100",
-                    style: { "max-width": "600px", "margin": "20px 15px" }
-                  }, {
-                    default: withCtx(() => [
-                      createVNode("h3", { class: "text-center mb-4" }, "Need a site? Contact me"),
-                      createVNode(VTextField, {
-                        label: "Name",
-                        name: "name",
-                        modelValue: $data.form.name,
-                        "onUpdate:modelValue": ($event) => $data.form.name = $event,
-                        "aria-label": "First name",
-                        class: "w-100",
-                        required: ""
-                      }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                      createVNode(VTextField, {
-                        label: "Last Name",
-                        name: "lastName",
-                        modelValue: $data.form.lastName,
-                        "onUpdate:modelValue": ($event) => $data.form.lastName = $event,
-                        "aria-label": "Last name",
-                        class: "w-100",
-                        required: ""
-                      }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                      createVNode(VTextField, {
-                        label: "Email",
-                        name: "email",
-                        type: "email",
-                        modelValue: $data.form.email,
-                        "onUpdate:modelValue": ($event) => $data.form.email = $event,
-                        "aria-label": "Email address",
-                        class: "w-100",
-                        required: ""
-                      }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                      createVNode(VTextarea, {
-                        label: "Message",
-                        name: "message",
-                        rows: "5",
-                        modelValue: $data.form.message,
-                        "onUpdate:modelValue": ($event) => $data.form.message = $event,
-                        "aria-label": "Content",
-                        class: "w-100",
-                        required: ""
-                      }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                      createVNode(VBtn, {
-                        id: "mail",
-                        type: "submit",
-                        "aria-label": "Submit the contact form",
-                        class: "ma-2",
-                        color: "primary",
-                        block: ""
-                      }, {
-                        default: withCtx(() => [
-                          createTextVNode(" Send ")
-                        ]),
-                        _: 1
-                      }),
-                      createVNode("p", { class: "white--text text-center mt-4" }, "© Nûr Djedidi 2024")
+                      })
                     ]),
                     _: 1
-                  }, 8, ["onSubmit"])
+                  })
                 ]),
                 _: 1
               })
-            ]),
-            _: 1
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-}
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+    };
+  }
+};
 const _sfc_setup$2 = _sfc_main$2.setup;
 _sfc_main$2.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("app.vue");
   return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : undefined;
 };
-const AppComponent = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["ssrRender", _sfc_ssrRender]]);
 const _sfc_main$1 = {
   __name: "nuxt-error-page",
   __ssrInlineRender: true,
@@ -11256,7 +11250,7 @@ const _sfc_main = {
           } else if (unref(SingleRenderer)) {
             ssrRenderVNode(_push, createVNode(resolveDynamicComponent(unref(SingleRenderer)), null, null), _parent);
           } else {
-            _push(ssrRenderComponent(unref(AppComponent), null, null, _parent));
+            _push(ssrRenderComponent(unref(_sfc_main$2), null, null, _parent));
           }
         },
         _: 1

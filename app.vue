@@ -65,52 +65,44 @@
   </v-app>
 </template>
 
-<script>
-import Navigation from './public/components/Navigation.vue';
+<script setup>
 import { ref } from 'vue';
+import Navigation from './public/components/Navigation.vue';
 
-export default {
-  components: {
-    Navigation
-  },
-  data() {
-    return {
-      form: {
-        name: '',
-        lastName: '',
-        email: '',
-        message: ''
-      },
-      status: null,
-      statusMessage: ''
-    };
-  },
-  methods: {
-    toggleNav() {
-    this.navVisible = !this.navVisible; 
-  },
-    async sendMail() {
-      try {
-        const response = await $fetch('/api/send-mail', {
-          method: 'POST',
-          body: this.form
-        });
+const navVisible = ref(false);
+const form = ref({
+  name: '',
+  lastName: '',
+  email: '',
+  message: ''
+});
+const status = ref(null);
+const statusMessage = ref('');
 
-        if (response.status === 'success') {
-          this.status = 'success';
-          this.statusMessage = 'Votre message a été envoyé avec succès !';
-          this.form = { name: '', lastName: '', email: '', message: '' };
-          window.location.href = '/'; 
-        } else {
-          this.status = 'error';
-          this.statusMessage = 'Une erreur est survenue lors de l\'envoi du message.';
-        }
-      } catch (error) {
-        console.error('Erreur lors de l\'envoi du mail:', error);
-        this.status = 'error';
-        this.statusMessage = 'Une erreur est survenue lors de l\'envoi du message.';
-      }
+const toggleNav = () => {
+  navVisible.value = !navVisible.value;
+};
+
+const sendMail = async () => {
+  try {
+    const response = await $fetch('/api/send-mail', {
+      method: 'POST',
+      body: form.value
+    });
+
+    if (response.status === 'success') {
+      status.value = 'success';
+      statusMessage.value = 'Votre message a été envoyé avec succès !';
+      form.value = { name: '', lastName: '', email: '', message: '' }; 
+      window.location.href = '/'; 
+    } else {
+      status.value = 'error';
+      statusMessage.value = 'Une erreur est survenue lors de l\'envoi du message.';
     }
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi du mail:', error);
+    status.value = 'error';
+    statusMessage.value = 'Une erreur est survenue lors de l\'envoi du message.';
   }
 };
 </script>
