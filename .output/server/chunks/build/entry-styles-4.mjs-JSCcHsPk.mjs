@@ -1,0 +1,4 @@
+const Navigation_vue_vue_type_style_index_0_lang = ".nav.visible{display:none}@media (max-width:768px){.icon-nav{display:block}.title{display:flex;gap:20px}.sidebar{cursor:pointer;display:block;z-index:1001}.nav{display:block;height:100vh;left:0;position:absolute;top:0;width:60vw;z-index:1000}.v-list{align-items:center;display:flex;flex-direction:column;height:100%;justify-content:center;list-style-type:none;width:50vw}.v-navigation-drawer *{color:#000}.nav li{margin:10px}.nav a{text-decoration:none}.line-bottom{margin-top:20px}.line-bottom,.line-top{background-color:#000;height:1px;width:40vw}.line-top{margin-bottom:20px}.sidebar{display:block}.icon,.nav{display:none}.nav.visible{display:block}.sidebar{margin-left:0;position:relative;z-index:1001}.desktop-nav{display:none}}";
+
+export { Navigation_vue_vue_type_style_index_0_lang as N };
+//# sourceMappingURL=entry-styles-4.mjs-JSCcHsPk.mjs.map

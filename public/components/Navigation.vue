@@ -45,12 +45,90 @@
 } 
 
 @media (max-width: 768px) {
+  .icon-nav { 
+    display: block;
+  }
+
+  .title { 
+    display: flex;
+    gap: 20px;
+  }
+
+.sidebar { 
+display: block;
+cursor: pointer;
+z-index: 1001;
+}
+
+.nav {
+    display: block;
+    height: 100vh;
+    width: 60vw;
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+}
+
+.v-list {
+    height: 100%;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+}
+.v-navigation-drawer * { 
+    color: black;
+}
+.nav li { 
+    margin: 10px; 
+}
+.nav a { 
+    text-decoration: none;
+}
+
+.line-bottom { 
+    height: 1px; 
+    width: 40vw; 
+    background-color: black; 
+    margin-top: 20px;
+}
+.line-top { 
+    height: 1px; 
+    width: 40vw; 
+    background-color: black; 
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+.sidebar { 
+  display: block;
+}
+
+.icon {
+  display: none;
+}
+
+.nav {
+  display: none;
+}
+
 .nav.visible {
   display: block;
 }
-.nav {
-    display: block;  
-  }
+
+.sidebar {
+  position: relative;
+  margin-left: 0;
+  z-index: 1001;
+}
+
+.desktop-nav {
+  display: none;
+}
+}
 }
 
 </style>

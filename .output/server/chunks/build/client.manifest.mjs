@@ -1,21 +1,28 @@
 const client_manifest = {
-  "_DdWV11Rx.js": {
+  "_CS17ydpS.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DdWV11Rx.js",
+    "file": "CS17ydpS.js",
     "name": "vue.-sixQ7xP",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ]
   },
-  "_Fn4kYPFD.js": {
+  "_VCard.8Js4-u2y.css": {
+    "resourceType": "style",
+    "prefetch": true,
+    "preload": true,
+    "file": "VCard.8Js4-u2y.css",
+    "src": "_VCard.8Js4-u2y.css"
+  },
+  "_VrnfXwzN.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "Fn4kYPFD.js",
+    "file": "VrnfXwzN.js",
     "name": "VCard",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
@@ -29,13 +36,6 @@ const client_manifest = {
     "resourceType": "style",
     "prefetch": true,
     "preload": true
-  },
-  "_VCard.8Js4-u2y.css": {
-    "resourceType": "style",
-    "prefetch": true,
-    "preload": true,
-    "file": "VCard.8Js4-u2y.css",
-    "src": "_VCard.8Js4-u2y.css"
   },
   "node_modules/@mdi/font/fonts/materialdesignicons-webfont.eot": {
     "resourceType": "font",
@@ -66,13 +66,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "z53i7OF1.js",
+    "file": "Duh5A6_n.js",
     "name": "error-404",
     "src": "node_modules/nuxt/dist/app/components/error-404.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_DdWV11Rx.js"
+      "_CS17ydpS.js"
     ],
     "css": []
   },
@@ -87,13 +87,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "De-9il7-.js",
+    "file": "DYnhoE62.js",
     "name": "error-500",
     "src": "node_modules/nuxt/dist/app/components/error-500.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_DdWV11Rx.js"
+      "_CS17ydpS.js"
     ],
     "css": []
   },
@@ -108,7 +108,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CXKv-2Jh.js",
+    "file": "exsfUSGz.js",
     "name": "entry",
     "src": "node_modules/nuxt/dist/app/entry.js",
     "isEntry": true,
@@ -117,7 +117,7 @@ const client_manifest = {
       "node_modules/nuxt/dist/app/components/error-500.vue"
     ],
     "css": [
-      "entry.D3r6N11G.css"
+      "entry.a3fVNRjW.css"
     ],
     "assets": [
       "materialdesignicons-webfont.CSr8KVlo.eot",
@@ -127,8 +127,8 @@ const client_manifest = {
     ],
     "_globalCSS": true
   },
-  "entry.D3r6N11G.css": {
-    "file": "entry.D3r6N11G.css",
+  "entry.a3fVNRjW.css": {
+    "file": "entry.a3fVNRjW.css",
     "resourceType": "style",
     "prefetch": true,
     "preload": true
@@ -158,7 +158,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "BHKoKyo3.js",
+    "file": "CkzJ6oTN.js",
     "name": "animation",
     "src": "pages/animation.vue",
     "isDynamicEntry": true,
@@ -178,13 +178,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CCvw0Ohe.js",
+    "file": "DbuPUyZG.js",
     "name": "index",
     "src": "pages/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_Fn4kYPFD.js"
+      "_VrnfXwzN.js"
     ],
     "css": [],
     "assets": [
@@ -221,7 +221,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DgY2QKTl.js",
+    "file": "7cc6iubd.js",
     "name": "news",
     "src": "pages/news.vue",
     "isDynamicEntry": true,
@@ -241,13 +241,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "B6T8Na1q.js",
+    "file": "DgI7L9UB.js",
     "name": "skills",
     "src": "pages/skills.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_Fn4kYPFD.js"
+      "_VrnfXwzN.js"
     ],
     "css": []
   },
