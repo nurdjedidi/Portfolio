@@ -1,5 +1,5 @@
 import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'vue-bundle-renderer/runtime';
-import { j as joinRelativeURL, u as useRuntimeConfig, c as defineRenderHandler, g as getQuery, e as createError, f as getRouteRules, h as getResponseStatus, i as getResponseStatusText, b as useNitroApp } from '../_/nitro.mjs';
+import { j as joinRelativeURL, u as useRuntimeConfig, e as defineRenderHandler, g as getQuery, f as createError, h as getRouteRules, i as getResponseStatus, k as getResponseStatusText, b as useNitroApp } from '../_/nitro.mjs';
 import { stringify, uneval } from 'devalue';
 import { renderToString } from 'vue/server-renderer';
 import { propsToString, renderSSRHead } from '@unhead/ssr';
@@ -70,7 +70,7 @@ const unheadPlugins = true ? [CapoPlugin({ track: true })] : [];
 
 const renderSSRHeadOptions = {"omitLineBreaks":false};
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
+const appHead = {"meta":[{"charset":"UTF-8"},{"name":"viewport","content":"width=device-width, initial-scale=1.0, viewport-fit=cover"},{"name":"author","content":"Nûr"},{"name":"description","content":"Je suis Nûr, développeur web spécialisé en programmation fullstack. Découvrez mes projets, compétences, et comment me contacter."},{"name":"keywords","content":"développeur web fullstack, HTML, CSS, JavaScript, Vue, Node.js, MySQL, API"},{"name":"robots","content":"index, follow"},{"name":"referrer","content":"no-referrer"},{"property":"og:title","content":"Portfolio de Nûr - Développeur Web"},{"property":"og:description","content":"Découvrez mes projets en développement web, mes compétences en HTML, CSS, JavaScript, et plus encore."},{"property":"og:url","content":"https://portfolionurdjedd.com"},{"property":"og:type","content":"website"},{"property":"og:site_name","content":"Portfolio | Nûr"},{"property":"og:image","content":"/images/Vignette.avif"},{"property":"og:image:type","content":"image/jpeg"},{"property":"og:image:width","content":"1200"},{"property":"og:image:height","content":"630"},{"property":"og:locale","content":"fr_FR"}],"link":[{"rel":"icon","type":"image/x-icon","href":"/favicon.ico"},{"rel":"preload","href":"/images/urbanstyle.avif","as":"image"},{"rel":"preload","href":"/images/Vignette.avif","as":"image"}],"style":[],"script":[{"defer":true,"data-domain":"portfolionurdjedd.com","src":"https://plausible.io/js/script.outbound-links.js"}],"noscript":[],"htmlAttrs":{"lang":"en"},"title":"Portfolio | Nûr"};
 
 const appRootTag = "div";
 

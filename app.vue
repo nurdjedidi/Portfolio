@@ -42,12 +42,12 @@
           </g>
         </svg>
       </div>
-      <v-form method="POST" action="/send-mail" class="w-100" style="max-width: 600px; margin: 20px 15px;">
+      <v-form @submit.prevent="sendMail" class="w-100" style="max-width: 600px; margin: 20px 15px;">
         <h3 class="text-center mb-4">Need a site? Contact me</h3>
-        <v-text-field label="Name" name="name" aria-label="First name" class="w-100" required></v-text-field>
-        <v-text-field label="Last Name" name="lastName" aria-label="Last name" class="w-100" required></v-text-field>
-        <v-text-field label="Email" name="email" type="email" aria-label="Email address" class="w-100" required></v-text-field>
-        <v-textarea label="Message" name="message" rows="5" aria-label="Content" class="w-100"required></v-textarea>
+        <v-text-field label="Name" name="name" v-model="form.name" aria-label="First name" class="w-100" required></v-text-field>
+        <v-text-field label="Last Name" name="lastName" v-model="form.lastName" aria-label="Last name" class="w-100" required></v-text-field>
+        <v-text-field label="Email" name="email" type="email" v-model="form.email" aria-label="Email address" class="w-100" required></v-text-field>
+        <v-textarea label="Message" name="message" rows="5" v-model="form.message" aria-label="Content" class="w-100"required></v-textarea>
         <v-btn
           id="mail"
           type="submit"
@@ -67,22 +67,48 @@
 
 <script>
 import Navigation from './public/components/Navigation.vue';
+import { ref } from 'vue';
 
 export default {
   components: {
     Navigation
   },
-  name: 'App',
   data() {
-  return {
-    navVisible: false, 
-  };
-},
-methods: {
-  toggleNav() {
-    this.navVisible = !this.navVisible; 
+    return {
+      form: {
+        name: '',
+        lastName: '',
+        email: '',
+        message: ''
+      },
+      status: null,
+      statusMessage: ''
+    };
   },
-},
+  methods: {
+    async sendMail() {
+      try {
+        const response = await $fetch('/api/send-mail', {
+          method: 'POST',
+          body: this.form
+        });
+
+        if (response.status === 'success') {
+          this.status = 'success';
+          this.statusMessage = 'Votre message a été envoyé avec succès !';
+          this.form = { name: '', lastName: '', email: '', message: '' };
+          window.location.href = '/'; 
+        } else {
+          this.status = 'error';
+          this.statusMessage = 'Une erreur est survenue lors de l\'envoi du message.';
+        }
+      } catch (error) {
+        console.error('Erreur lors de l\'envoi du mail:', error);
+        this.status = 'error';
+        this.statusMessage = 'Une erreur est survenue lors de l\'envoi du message.';
+      }
+    }
+  }
 };
 </script>
 

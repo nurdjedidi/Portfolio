@@ -763,7 +763,7 @@ const _sfc_main$1 = {
   }
 };
 function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  _push(`<div${ssrRenderAttrs(_attrs)}><!-- Projects -->`);
+  _push(`<div${ssrRenderAttrs(_attrs)}>`);
   _push(ssrRenderComponent(VRow, null, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
@@ -814,105 +814,58 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                                           _push7(`${ssrInterpolate(skill.name)}`);
                                         } else {
                                           return [
-                                            createTextVNode(
-                                              toDisplayString(skill.name),
-                                              1
-                                              /* TEXT */
-                                            )
+                                            createTextVNode(toDisplayString(skill.name), 1)
                                           ];
                                         }
                                       }),
                                       _: 2
-                                      /* DYNAMIC */
                                     }, _parent6, _scopeId5));
                                   });
                                   _push6(`<!--]-->`);
                                 } else {
                                   return [
-                                    (openBlock(true), createBlock(
-                                      Fragment,
-                                      null,
-                                      renderList(projects.skills, (skill, skillIndex) => {
-                                        return openBlock(), createBlock(VChip, {
-                                          key: skillIndex,
-                                          "prepend-icon": skill.icon,
-                                          class: "d-flex"
-                                        }, {
-                                          default: withCtx(() => [
-                                            createTextVNode(
-                                              toDisplayString(skill.name),
-                                              1
-                                              /* TEXT */
-                                            )
-                                          ]),
-                                          _: 2
-                                          /* DYNAMIC */
-                                        }, 1032, ["prepend-icon"]);
-                                      }),
-                                      128
-                                      /* KEYED_FRAGMENT */
-                                    ))
+                                    (openBlock(true), createBlock(Fragment, null, renderList(projects.skills, (skill, skillIndex) => {
+                                      return openBlock(), createBlock(VChip, {
+                                        key: skillIndex,
+                                        "prepend-icon": skill.icon,
+                                        class: "d-flex"
+                                      }, {
+                                        default: withCtx(() => [
+                                          createTextVNode(toDisplayString(skill.name), 1)
+                                        ]),
+                                        _: 2
+                                      }, 1032, ["prepend-icon"]);
+                                    }), 128))
                                   ];
                                 }
                               }),
                               _: 2
-                              /* DYNAMIC */
                             }, _parent5, _scopeId4));
                             _push5(`<a${ssrRenderAttr("href", projects.link)} class="card-link mt-auto"${_scopeId4}>See the projects</a>`);
                           } else {
                             return [
-                              createVNode(
-                                "h2",
-                                { class: "card-title" },
-                                toDisplayString(projects.title),
-                                1
-                                /* TEXT */
-                              ),
-                              createVNode(
-                                "p",
-                                { class: "card-description" },
-                                toDisplayString(projects.description),
-                                1
-                                /* TEXT */
-                              ),
-                              createVNode(
-                                VChipGroup,
-                                {
-                                  class: "card-skill d-flex flex-wrap",
-                                  column: ""
-                                },
-                                {
-                                  default: withCtx(() => [
-                                    (openBlock(true), createBlock(
-                                      Fragment,
-                                      null,
-                                      renderList(projects.skills, (skill, skillIndex) => {
-                                        return openBlock(), createBlock(VChip, {
-                                          key: skillIndex,
-                                          "prepend-icon": skill.icon,
-                                          class: "d-flex"
-                                        }, {
-                                          default: withCtx(() => [
-                                            createTextVNode(
-                                              toDisplayString(skill.name),
-                                              1
-                                              /* TEXT */
-                                            )
-                                          ]),
-                                          _: 2
-                                          /* DYNAMIC */
-                                        }, 1032, ["prepend-icon"]);
-                                      }),
-                                      128
-                                      /* KEYED_FRAGMENT */
-                                    ))
-                                  ]),
-                                  _: 2
-                                  /* DYNAMIC */
-                                },
-                                1024
-                                /* DYNAMIC_SLOTS */
-                              ),
+                              createVNode("h2", { class: "card-title" }, toDisplayString(projects.title), 1),
+                              createVNode("p", { class: "card-description" }, toDisplayString(projects.description), 1),
+                              createVNode(VChipGroup, {
+                                class: "card-skill d-flex flex-wrap",
+                                column: ""
+                              }, {
+                                default: withCtx(() => [
+                                  (openBlock(true), createBlock(Fragment, null, renderList(projects.skills, (skill, skillIndex) => {
+                                    return openBlock(), createBlock(VChip, {
+                                      key: skillIndex,
+                                      "prepend-icon": skill.icon,
+                                      class: "d-flex"
+                                    }, {
+                                      default: withCtx(() => [
+                                        createTextVNode(toDisplayString(skill.name), 1)
+                                      ]),
+                                      _: 2
+                                    }, 1032, ["prepend-icon"]);
+                                  }), 128))
+                                ]),
+                                _: 2
+                              }, 1024),
                               createVNode("a", {
                                 href: projects.link,
                                 class: "card-link mt-auto"
@@ -921,7 +874,6 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                           }
                         }),
                         _: 2
-                        /* DYNAMIC */
                       }, _parent4, _scopeId3));
                     } else {
                       return [
@@ -933,306 +885,165 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                           alt: projects.title,
                           class: "card-image"
                         }, null, 8, ["src", "alt"]),
-                        createVNode(
-                          VCardText,
-                          { class: "card-content d-flex flex-column flex-grow-1" },
-                          {
-                            default: withCtx(() => [
-                              createVNode(
-                                "h2",
-                                { class: "card-title" },
-                                toDisplayString(projects.title),
-                                1
-                                /* TEXT */
-                              ),
-                              createVNode(
-                                "p",
-                                { class: "card-description" },
-                                toDisplayString(projects.description),
-                                1
-                                /* TEXT */
-                              ),
-                              createVNode(
-                                VChipGroup,
-                                {
-                                  class: "card-skill d-flex flex-wrap",
-                                  column: ""
-                                },
-                                {
-                                  default: withCtx(() => [
-                                    (openBlock(true), createBlock(
-                                      Fragment,
-                                      null,
-                                      renderList(projects.skills, (skill, skillIndex) => {
-                                        return openBlock(), createBlock(VChip, {
-                                          key: skillIndex,
-                                          "prepend-icon": skill.icon,
-                                          class: "d-flex"
-                                        }, {
-                                          default: withCtx(() => [
-                                            createTextVNode(
-                                              toDisplayString(skill.name),
-                                              1
-                                              /* TEXT */
-                                            )
-                                          ]),
-                                          _: 2
-                                          /* DYNAMIC */
-                                        }, 1032, ["prepend-icon"]);
-                                      }),
-                                      128
-                                      /* KEYED_FRAGMENT */
-                                    ))
-                                  ]),
-                                  _: 2
-                                  /* DYNAMIC */
-                                },
-                                1024
-                                /* DYNAMIC_SLOTS */
-                              ),
-                              createVNode("a", {
-                                href: projects.link,
-                                class: "card-link mt-auto"
-                              }, "See the projects", 8, ["href"])
-                            ]),
-                            _: 2
-                            /* DYNAMIC */
-                          },
-                          1024
-                          /* DYNAMIC_SLOTS */
-                        )
+                        createVNode(VCardText, { class: "card-content d-flex flex-column flex-grow-1" }, {
+                          default: withCtx(() => [
+                            createVNode("h2", { class: "card-title" }, toDisplayString(projects.title), 1),
+                            createVNode("p", { class: "card-description" }, toDisplayString(projects.description), 1),
+                            createVNode(VChipGroup, {
+                              class: "card-skill d-flex flex-wrap",
+                              column: ""
+                            }, {
+                              default: withCtx(() => [
+                                (openBlock(true), createBlock(Fragment, null, renderList(projects.skills, (skill, skillIndex) => {
+                                  return openBlock(), createBlock(VChip, {
+                                    key: skillIndex,
+                                    "prepend-icon": skill.icon,
+                                    class: "d-flex"
+                                  }, {
+                                    default: withCtx(() => [
+                                      createTextVNode(toDisplayString(skill.name), 1)
+                                    ]),
+                                    _: 2
+                                  }, 1032, ["prepend-icon"]);
+                                }), 128))
+                              ]),
+                              _: 2
+                            }, 1024),
+                            createVNode("a", {
+                              href: projects.link,
+                              class: "card-link mt-auto"
+                            }, "See the projects", 8, ["href"])
+                          ]),
+                          _: 2
+                        }, 1024)
                       ];
                     }
                   }),
                   _: 2
-                  /* DYNAMIC */
                 }, _parent3, _scopeId2));
               } else {
                 return [
-                  createVNode(
-                    VCard,
-                    {
-                      rounded: "lg",
-                      color: "#FFFFFF00",
-                      class: "border-thin d-flex flex-column hover-transition"
-                    },
-                    {
-                      default: withCtx(() => [
-                        createVNode(VImg, {
-                          height: "200px",
-                          width: "100%",
-                          src: projects.img,
-                          loading: "lazy",
-                          alt: projects.title,
-                          class: "card-image"
-                        }, null, 8, ["src", "alt"]),
-                        createVNode(
-                          VCardText,
-                          { class: "card-content d-flex flex-column flex-grow-1" },
-                          {
+                  createVNode(VCard, {
+                    rounded: "lg",
+                    color: "#FFFFFF00",
+                    class: "border-thin d-flex flex-column hover-transition"
+                  }, {
+                    default: withCtx(() => [
+                      createVNode(VImg, {
+                        height: "200px",
+                        width: "100%",
+                        src: projects.img,
+                        loading: "lazy",
+                        alt: projects.title,
+                        class: "card-image"
+                      }, null, 8, ["src", "alt"]),
+                      createVNode(VCardText, { class: "card-content d-flex flex-column flex-grow-1" }, {
+                        default: withCtx(() => [
+                          createVNode("h2", { class: "card-title" }, toDisplayString(projects.title), 1),
+                          createVNode("p", { class: "card-description" }, toDisplayString(projects.description), 1),
+                          createVNode(VChipGroup, {
+                            class: "card-skill d-flex flex-wrap",
+                            column: ""
+                          }, {
                             default: withCtx(() => [
-                              createVNode(
-                                "h2",
-                                { class: "card-title" },
-                                toDisplayString(projects.title),
-                                1
-                                /* TEXT */
-                              ),
-                              createVNode(
-                                "p",
-                                { class: "card-description" },
-                                toDisplayString(projects.description),
-                                1
-                                /* TEXT */
-                              ),
-                              createVNode(
-                                VChipGroup,
-                                {
-                                  class: "card-skill d-flex flex-wrap",
-                                  column: ""
-                                },
-                                {
+                              (openBlock(true), createBlock(Fragment, null, renderList(projects.skills, (skill, skillIndex) => {
+                                return openBlock(), createBlock(VChip, {
+                                  key: skillIndex,
+                                  "prepend-icon": skill.icon,
+                                  class: "d-flex"
+                                }, {
                                   default: withCtx(() => [
-                                    (openBlock(true), createBlock(
-                                      Fragment,
-                                      null,
-                                      renderList(projects.skills, (skill, skillIndex) => {
-                                        return openBlock(), createBlock(VChip, {
-                                          key: skillIndex,
-                                          "prepend-icon": skill.icon,
-                                          class: "d-flex"
-                                        }, {
-                                          default: withCtx(() => [
-                                            createTextVNode(
-                                              toDisplayString(skill.name),
-                                              1
-                                              /* TEXT */
-                                            )
-                                          ]),
-                                          _: 2
-                                          /* DYNAMIC */
-                                        }, 1032, ["prepend-icon"]);
-                                      }),
-                                      128
-                                      /* KEYED_FRAGMENT */
-                                    ))
+                                    createTextVNode(toDisplayString(skill.name), 1)
                                   ]),
                                   _: 2
-                                  /* DYNAMIC */
-                                },
-                                1024
-                                /* DYNAMIC_SLOTS */
-                              ),
-                              createVNode("a", {
-                                href: projects.link,
-                                class: "card-link mt-auto"
-                              }, "See the projects", 8, ["href"])
+                                }, 1032, ["prepend-icon"]);
+                              }), 128))
                             ]),
                             _: 2
-                            /* DYNAMIC */
-                          },
-                          1024
-                          /* DYNAMIC_SLOTS */
-                        )
-                      ]),
-                      _: 2
-                      /* DYNAMIC */
-                    },
-                    1024
-                    /* DYNAMIC_SLOTS */
-                  )
+                          }, 1024),
+                          createVNode("a", {
+                            href: projects.link,
+                            class: "card-link mt-auto"
+                          }, "See the projects", 8, ["href"])
+                        ]),
+                        _: 2
+                      }, 1024)
+                    ]),
+                    _: 2
+                  }, 1024)
                 ];
               }
             }),
             _: 2
-            /* DYNAMIC */
           }, _parent2, _scopeId));
         });
         _push2(`<!--]-->`);
       } else {
         return [
-          (openBlock(true), createBlock(
-            Fragment,
-            null,
-            renderList($data.projects, (projects, index2) => {
-              return openBlock(), createBlock(
-                VCol,
-                {
-                  cols: "12",
-                  sm: "6",
-                  md: "4",
-                  key: index2
-                },
-                {
+          (openBlock(true), createBlock(Fragment, null, renderList($data.projects, (projects, index2) => {
+            return openBlock(), createBlock(VCol, {
+              cols: "12",
+              sm: "6",
+              md: "4",
+              key: index2
+            }, {
+              default: withCtx(() => [
+                createVNode(VCard, {
+                  rounded: "lg",
+                  color: "#FFFFFF00",
+                  class: "border-thin d-flex flex-column hover-transition"
+                }, {
                   default: withCtx(() => [
-                    createVNode(
-                      VCard,
-                      {
-                        rounded: "lg",
-                        color: "#FFFFFF00",
-                        class: "border-thin d-flex flex-column hover-transition"
-                      },
-                      {
-                        default: withCtx(() => [
-                          createVNode(VImg, {
-                            height: "200px",
-                            width: "100%",
-                            src: projects.img,
-                            loading: "lazy",
-                            alt: projects.title,
-                            class: "card-image"
-                          }, null, 8, ["src", "alt"]),
-                          createVNode(
-                            VCardText,
-                            { class: "card-content d-flex flex-column flex-grow-1" },
-                            {
-                              default: withCtx(() => [
-                                createVNode(
-                                  "h2",
-                                  { class: "card-title" },
-                                  toDisplayString(projects.title),
-                                  1
-                                  /* TEXT */
-                                ),
-                                createVNode(
-                                  "p",
-                                  { class: "card-description" },
-                                  toDisplayString(projects.description),
-                                  1
-                                  /* TEXT */
-                                ),
-                                createVNode(
-                                  VChipGroup,
-                                  {
-                                    class: "card-skill d-flex flex-wrap",
-                                    column: ""
-                                  },
-                                  {
-                                    default: withCtx(() => [
-                                      (openBlock(true), createBlock(
-                                        Fragment,
-                                        null,
-                                        renderList(projects.skills, (skill, skillIndex) => {
-                                          return openBlock(), createBlock(VChip, {
-                                            key: skillIndex,
-                                            "prepend-icon": skill.icon,
-                                            class: "d-flex"
-                                          }, {
-                                            default: withCtx(() => [
-                                              createTextVNode(
-                                                toDisplayString(skill.name),
-                                                1
-                                                /* TEXT */
-                                              )
-                                            ]),
-                                            _: 2
-                                            /* DYNAMIC */
-                                          }, 1032, ["prepend-icon"]);
-                                        }),
-                                        128
-                                        /* KEYED_FRAGMENT */
-                                      ))
-                                    ]),
-                                    _: 2
-                                    /* DYNAMIC */
-                                  },
-                                  1024
-                                  /* DYNAMIC_SLOTS */
-                                ),
-                                createVNode("a", {
-                                  href: projects.link,
-                                  class: "card-link mt-auto"
-                                }, "See the projects", 8, ["href"])
-                              ]),
-                              _: 2
-                              /* DYNAMIC */
-                            },
-                            1024
-                            /* DYNAMIC_SLOTS */
-                          )
-                        ]),
-                        _: 2
-                        /* DYNAMIC */
-                      },
-                      1024
-                      /* DYNAMIC_SLOTS */
-                    )
+                    createVNode(VImg, {
+                      height: "200px",
+                      width: "100%",
+                      src: projects.img,
+                      loading: "lazy",
+                      alt: projects.title,
+                      class: "card-image"
+                    }, null, 8, ["src", "alt"]),
+                    createVNode(VCardText, { class: "card-content d-flex flex-column flex-grow-1" }, {
+                      default: withCtx(() => [
+                        createVNode("h2", { class: "card-title" }, toDisplayString(projects.title), 1),
+                        createVNode("p", { class: "card-description" }, toDisplayString(projects.description), 1),
+                        createVNode(VChipGroup, {
+                          class: "card-skill d-flex flex-wrap",
+                          column: ""
+                        }, {
+                          default: withCtx(() => [
+                            (openBlock(true), createBlock(Fragment, null, renderList(projects.skills, (skill, skillIndex) => {
+                              return openBlock(), createBlock(VChip, {
+                                key: skillIndex,
+                                "prepend-icon": skill.icon,
+                                class: "d-flex"
+                              }, {
+                                default: withCtx(() => [
+                                  createTextVNode(toDisplayString(skill.name), 1)
+                                ]),
+                                _: 2
+                              }, 1032, ["prepend-icon"]);
+                            }), 128))
+                          ]),
+                          _: 2
+                        }, 1024),
+                        createVNode("a", {
+                          href: projects.link,
+                          class: "card-link mt-auto"
+                        }, "See the projects", 8, ["href"])
+                      ]),
+                      _: 2
+                    }, 1024)
                   ]),
                   _: 2
-                  /* DYNAMIC */
-                },
-                1024
-                /* DYNAMIC_SLOTS */
-              );
-            }),
-            128
-            /* KEYED_FRAGMENT */
-          ))
+                }, 1024)
+              ]),
+              _: 2
+            }, 1024);
+          }), 128))
         ];
       }
     }),
     _: 1
-    /* STABLE */
   }, _parent));
   _push(`</div>`);
 }
@@ -2452,7 +2263,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
             }
           }),
           _: 1
-          /* STABLE */
         }, _parent2, _scopeId));
         _push2(ssrRenderComponent(VCardSubtitle, null, {
           default: withCtx((_2, _push3, _parent3, _scopeId2) => {
@@ -2465,7 +2275,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
             }
           }),
           _: 1
-          /* STABLE */
         }, _parent2, _scopeId));
         _push2(ssrRenderComponent(VCardText, null, {
           default: withCtx((_2, _push3, _parent3, _scopeId2) => {
@@ -2501,16 +2310,11 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                                   _push6(`${ssrInterpolate(social.name)}`);
                                 } else {
                                   return [
-                                    createTextVNode(
-                                      toDisplayString(social.name),
-                                      1
-                                      /* TEXT */
-                                    )
+                                    createTextVNode(toDisplayString(social.name), 1)
                                   ];
                                 }
                               }),
                               _: 2
-                              /* DYNAMIC */
                             }, _parent5, _scopeId4));
                           } else {
                             return [
@@ -2527,178 +2331,24 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                                 "aria-label": "View " + social.name + " profile"
                               }, {
                                 default: withCtx(() => [
-                                  createTextVNode(
-                                    toDisplayString(social.name),
-                                    1
-                                    /* TEXT */
-                                  )
+                                  createTextVNode(toDisplayString(social.name), 1)
                                 ]),
                                 _: 2
-                                /* DYNAMIC */
                               }, 1032, ["aria-label"]))
                             ];
                           }
                         }),
                         _: 2
-                        /* DYNAMIC */
                       }, _parent4, _scopeId3));
                     });
                     _push4(`<!--]-->`);
                   } else {
                     return [
-                      (openBlock(true), createBlock(
-                        Fragment,
-                        null,
-                        renderList($data.socialLinks, (social, index2) => {
-                          return openBlock(), createBlock(
-                            VCol,
-                            {
-                              key: index2,
-                              class: "d-flex justify-center"
-                            },
-                            {
-                              default: withCtx(() => [
-                                createVNode(VIcon, {
-                                  icon: social.icon,
-                                  role: "button",
-                                  "aria-label": "View " + social.name + " profile",
-                                  onClick: ($event) => $options.redirectTo(social.link)
-                                }, null, 8, ["icon", "aria-label", "onClick"]),
-                                (openBlock(), createBlock(VTooltip, {
-                                  key: "tooltip" + index2,
-                                  activator: "parent",
-                                  location: "bottom",
-                                  "aria-label": "View " + social.name + " profile"
-                                }, {
-                                  default: withCtx(() => [
-                                    createTextVNode(
-                                      toDisplayString(social.name),
-                                      1
-                                      /* TEXT */
-                                    )
-                                  ]),
-                                  _: 2
-                                  /* DYNAMIC */
-                                }, 1032, ["aria-label"]))
-                              ]),
-                              _: 2
-                              /* DYNAMIC */
-                            },
-                            1024
-                            /* DYNAMIC_SLOTS */
-                          );
-                        }),
-                        128
-                        /* KEYED_FRAGMENT */
-                      ))
-                    ];
-                  }
-                }),
-                _: 1
-                /* STABLE */
-              }, _parent3, _scopeId2));
-            } else {
-              return [
-                createVNode(VRow, {
-                  class: "align-center",
-                  "no-gutters": ""
-                }, {
-                  default: withCtx(() => [
-                    (openBlock(true), createBlock(
-                      Fragment,
-                      null,
-                      renderList($data.socialLinks, (social, index2) => {
-                        return openBlock(), createBlock(
-                          VCol,
-                          {
-                            key: index2,
-                            class: "d-flex justify-center"
-                          },
-                          {
-                            default: withCtx(() => [
-                              createVNode(VIcon, {
-                                icon: social.icon,
-                                role: "button",
-                                "aria-label": "View " + social.name + " profile",
-                                onClick: ($event) => $options.redirectTo(social.link)
-                              }, null, 8, ["icon", "aria-label", "onClick"]),
-                              (openBlock(), createBlock(VTooltip, {
-                                key: "tooltip" + index2,
-                                activator: "parent",
-                                location: "bottom",
-                                "aria-label": "View " + social.name + " profile"
-                              }, {
-                                default: withCtx(() => [
-                                  createTextVNode(
-                                    toDisplayString(social.name),
-                                    1
-                                    /* TEXT */
-                                  )
-                                ]),
-                                _: 2
-                                /* DYNAMIC */
-                              }, 1032, ["aria-label"]))
-                            ]),
-                            _: 2
-                            /* DYNAMIC */
-                          },
-                          1024
-                          /* DYNAMIC_SLOTS */
-                        );
-                      }),
-                      128
-                      /* KEYED_FRAGMENT */
-                    ))
-                  ]),
-                  _: 1
-                  /* STABLE */
-                })
-              ];
-            }
-          }),
-          _: 1
-          /* STABLE */
-        }, _parent2, _scopeId));
-      } else {
-        return [
-          createVNode(VImg, {
-            src: _imports_0,
-            alt: "Cr\xE9ation de votre site web de A a Z",
-            class: "profil-img",
-            eager: ""
-          }),
-          createVNode(VCardTitle, null, {
-            default: withCtx(() => [
-              createTextVNode("N\xFBr Djedidi")
-            ]),
-            _: 1
-            /* STABLE */
-          }),
-          createVNode(VCardSubtitle, null, {
-            default: withCtx(() => [
-              createTextVNode("Full stack web developer")
-            ]),
-            _: 1
-            /* STABLE */
-          }),
-          createVNode(VCardText, null, {
-            default: withCtx(() => [
-              createVNode(VRow, {
-                class: "align-center",
-                "no-gutters": ""
-              }, {
-                default: withCtx(() => [
-                  (openBlock(true), createBlock(
-                    Fragment,
-                    null,
-                    renderList($data.socialLinks, (social, index2) => {
-                      return openBlock(), createBlock(
-                        VCol,
-                        {
+                      (openBlock(true), createBlock(Fragment, null, renderList($data.socialLinks, (social, index2) => {
+                        return openBlock(), createBlock(VCol, {
                           key: index2,
                           class: "d-flex justify-center"
-                        },
-                        {
+                        }, {
                           default: withCtx(() => [
                             createVNode(VIcon, {
                               icon: social.icon,
@@ -2713,39 +2363,125 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                               "aria-label": "View " + social.name + " profile"
                             }, {
                               default: withCtx(() => [
-                                createTextVNode(
-                                  toDisplayString(social.name),
-                                  1
-                                  /* TEXT */
-                                )
+                                createTextVNode(toDisplayString(social.name), 1)
                               ]),
                               _: 2
-                              /* DYNAMIC */
                             }, 1032, ["aria-label"]))
                           ]),
                           _: 2
-                          /* DYNAMIC */
-                        },
-                        1024
-                        /* DYNAMIC_SLOTS */
-                      );
-                    }),
-                    128
-                    /* KEYED_FRAGMENT */
-                  ))
+                        }, 1024);
+                      }), 128))
+                    ];
+                  }
+                }),
+                _: 1
+              }, _parent3, _scopeId2));
+            } else {
+              return [
+                createVNode(VRow, {
+                  class: "align-center",
+                  "no-gutters": ""
+                }, {
+                  default: withCtx(() => [
+                    (openBlock(true), createBlock(Fragment, null, renderList($data.socialLinks, (social, index2) => {
+                      return openBlock(), createBlock(VCol, {
+                        key: index2,
+                        class: "d-flex justify-center"
+                      }, {
+                        default: withCtx(() => [
+                          createVNode(VIcon, {
+                            icon: social.icon,
+                            role: "button",
+                            "aria-label": "View " + social.name + " profile",
+                            onClick: ($event) => $options.redirectTo(social.link)
+                          }, null, 8, ["icon", "aria-label", "onClick"]),
+                          (openBlock(), createBlock(VTooltip, {
+                            key: "tooltip" + index2,
+                            activator: "parent",
+                            location: "bottom",
+                            "aria-label": "View " + social.name + " profile"
+                          }, {
+                            default: withCtx(() => [
+                              createTextVNode(toDisplayString(social.name), 1)
+                            ]),
+                            _: 2
+                          }, 1032, ["aria-label"]))
+                        ]),
+                        _: 2
+                      }, 1024);
+                    }), 128))
+                  ]),
+                  _: 1
+                })
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(VImg, {
+            src: _imports_0,
+            alt: "Cr\xE9ation de votre site web de A a Z",
+            class: "profil-img",
+            eager: ""
+          }),
+          createVNode(VCardTitle, null, {
+            default: withCtx(() => [
+              createTextVNode("N\xFBr Djedidi")
+            ]),
+            _: 1
+          }),
+          createVNode(VCardSubtitle, null, {
+            default: withCtx(() => [
+              createTextVNode("Full stack web developer")
+            ]),
+            _: 1
+          }),
+          createVNode(VCardText, null, {
+            default: withCtx(() => [
+              createVNode(VRow, {
+                class: "align-center",
+                "no-gutters": ""
+              }, {
+                default: withCtx(() => [
+                  (openBlock(true), createBlock(Fragment, null, renderList($data.socialLinks, (social, index2) => {
+                    return openBlock(), createBlock(VCol, {
+                      key: index2,
+                      class: "d-flex justify-center"
+                    }, {
+                      default: withCtx(() => [
+                        createVNode(VIcon, {
+                          icon: social.icon,
+                          role: "button",
+                          "aria-label": "View " + social.name + " profile",
+                          onClick: ($event) => $options.redirectTo(social.link)
+                        }, null, 8, ["icon", "aria-label", "onClick"]),
+                        (openBlock(), createBlock(VTooltip, {
+                          key: "tooltip" + index2,
+                          activator: "parent",
+                          location: "bottom",
+                          "aria-label": "View " + social.name + " profile"
+                        }, {
+                          default: withCtx(() => [
+                            createTextVNode(toDisplayString(social.name), 1)
+                          ]),
+                          _: 2
+                        }, 1032, ["aria-label"]))
+                      ]),
+                      _: 2
+                    }, 1024);
+                  }), 128))
                 ]),
                 _: 1
-                /* STABLE */
               })
             ]),
             _: 1
-            /* STABLE */
           })
         ];
       }
     }),
     _: 1
-    /* STABLE */
   }, _parent));
   _push(`</section>`);
   _push(ssrRenderComponent(VContainer, null, {
@@ -2766,7 +2502,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                   }
                 }),
                 _: 1
-                /* STABLE */
               }, _parent3, _scopeId2));
             } else {
               return [
@@ -2776,13 +2511,11 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                     createVNode("p", null, "Below is a selection of some of the most complex projects I've done:")
                   ]),
                   _: 1
-                  /* STABLE */
                 })
               ];
             }
           }),
           _: 1
-          /* STABLE */
         }, _parent2, _scopeId));
         _push2(`<section${_scopeId}>`);
         _push2(ssrRenderComponent(_component_Projects, null, null, _parent2, _scopeId));
@@ -2797,11 +2530,9 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                   createVNode("p", null, "Below is a selection of some of the most complex projects I've done:")
                 ]),
                 _: 1
-                /* STABLE */
               })
             ]),
             _: 1
-            /* STABLE */
           }),
           createVNode("section", null, [
             createVNode(_component_Projects)
@@ -2810,7 +2541,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
       }
     }),
     _: 1
-    /* STABLE */
   }, _parent));
   _push(`<!--]-->`);
 }
@@ -2823,4 +2553,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-DADpObcl.mjs.map
+//# sourceMappingURL=index-Ax77insC.mjs.map

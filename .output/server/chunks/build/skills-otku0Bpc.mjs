@@ -43,7 +43,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
             }
           }),
           _: 1
-          /* STABLE */
         }, _parent2, _scopeId));
         _push2(ssrRenderComponent(VRow, null, {
           default: withCtx((_2, _push3, _parent3, _scopeId2) => {
@@ -73,7 +72,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         }
                       }),
                       _: 1
-                      /* STABLE */
                     }, _parent4, _scopeId3));
                     _push4(ssrRenderComponent(VCardText, null, {
                       default: withCtx((_4, _push5, _parent5, _scopeId4) => {
@@ -94,7 +92,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         }
                       }),
                       _: 1
-                      /* STABLE */
                     }, _parent4, _scopeId3));
                     _push4(ssrRenderComponent(VCardText, null, {
                       default: withCtx((_4, _push5, _parent5, _scopeId4) => {
@@ -115,7 +112,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         }
                       }),
                       _: 1
-                      /* STABLE */
                     }, _parent4, _scopeId3));
                   } else {
                     return [
@@ -128,7 +124,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           createTextVNode(" Learning ")
                         ]),
                         _: 1
-                        /* STABLE */
                       }),
                       createVNode(VCardText, null, {
                         default: withCtx(() => [
@@ -139,7 +134,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           createTextVNode(" 1 year ")
                         ]),
                         _: 1
-                        /* STABLE */
                       }),
                       createVNode(VCardText, null, {
                         default: withCtx(() => [
@@ -150,13 +144,11 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           createTextVNode(" Full-Stack Developer ")
                         ]),
                         _: 1
-                        /* STABLE */
                       })
                     ];
                   }
                 }),
                 _: 1
-                /* STABLE */
               }, _parent3, _scopeId2));
               _push3(ssrRenderComponent(VCol, {
                 cols: "12",
@@ -183,7 +175,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         }
                       }),
                       _: 1
-                      /* STABLE */
                     }, _parent4, _scopeId3));
                     _push4(ssrRenderComponent(VCardText, null, {
                       default: withCtx((_4, _push5, _parent5, _scopeId4) => {
@@ -204,7 +195,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         }
                       }),
                       _: 1
-                      /* STABLE */
                     }, _parent4, _scopeId3));
                     _push4(ssrRenderComponent(VCardText, null, {
                       default: withCtx((_4, _push5, _parent5, _scopeId4) => {
@@ -225,7 +215,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         }
                       }),
                       _: 1
-                      /* STABLE */
                     }, _parent4, _scopeId3));
                   } else {
                     return [
@@ -238,7 +227,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           createTextVNode(" Professional ")
                         ]),
                         _: 1
-                        /* STABLE */
                       }),
                       createVNode(VCardText, null, {
                         default: withCtx(() => [
@@ -249,7 +237,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           createTextVNode(" < 1 year ")
                         ]),
                         _: 1
-                        /* STABLE */
                       }),
                       createVNode(VCardText, null, {
                         default: withCtx(() => [
@@ -260,13 +247,11 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           createTextVNode(" Full-Stack Developer ")
                         ]),
                         _: 1
-                        /* STABLE */
                       })
                     ];
                   }
                 }),
                 _: 1
-                /* STABLE */
               }, _parent3, _scopeId2));
             } else {
               return [
@@ -284,7 +269,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         createTextVNode(" Learning ")
                       ]),
                       _: 1
-                      /* STABLE */
                     }),
                     createVNode(VCardText, null, {
                       default: withCtx(() => [
@@ -295,7 +279,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         createTextVNode(" 1 year ")
                       ]),
                       _: 1
-                      /* STABLE */
                     }),
                     createVNode(VCardText, null, {
                       default: withCtx(() => [
@@ -306,11 +289,9 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         createTextVNode(" Full-Stack Developer ")
                       ]),
                       _: 1
-                      /* STABLE */
                     })
                   ]),
                   _: 1
-                  /* STABLE */
                 }),
                 createVNode(VCol, {
                   cols: "12",
@@ -326,7 +307,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         createTextVNode(" Professional ")
                       ]),
                       _: 1
-                      /* STABLE */
                     }),
                     createVNode(VCardText, null, {
                       default: withCtx(() => [
@@ -337,7 +317,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         createTextVNode(" < 1 year ")
                       ]),
                       _: 1
-                      /* STABLE */
                     }),
                     createVNode(VCardText, null, {
                       default: withCtx(() => [
@@ -348,17 +327,14 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         createTextVNode(" Full-Stack Developer ")
                       ]),
                       _: 1
-                      /* STABLE */
                     })
                   ]),
                   _: 1
-                  /* STABLE */
                 })
               ];
             }
           }),
           _: 1
-          /* STABLE */
         }, _parent2, _scopeId));
       } else {
         return [
@@ -367,7 +343,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
               createTextVNode("Achievements")
             ]),
             _: 1
-            /* STABLE */
           }),
           createVNode(VRow, null, {
             default: withCtx(() => [
@@ -385,7 +360,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                       createTextVNode(" Learning ")
                     ]),
                     _: 1
-                    /* STABLE */
                   }),
                   createVNode(VCardText, null, {
                     default: withCtx(() => [
@@ -396,7 +370,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                       createTextVNode(" 1 year ")
                     ]),
                     _: 1
-                    /* STABLE */
                   }),
                   createVNode(VCardText, null, {
                     default: withCtx(() => [
@@ -407,11 +380,9 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                       createTextVNode(" Full-Stack Developer ")
                     ]),
                     _: 1
-                    /* STABLE */
                   })
                 ]),
                 _: 1
-                /* STABLE */
               }),
               createVNode(VCol, {
                 cols: "12",
@@ -427,7 +398,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                       createTextVNode(" Professional ")
                     ]),
                     _: 1
-                    /* STABLE */
                   }),
                   createVNode(VCardText, null, {
                     default: withCtx(() => [
@@ -438,7 +408,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                       createTextVNode(" < 1 year ")
                     ]),
                     _: 1
-                    /* STABLE */
                   }),
                   createVNode(VCardText, null, {
                     default: withCtx(() => [
@@ -449,21 +418,17 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                       createTextVNode(" Full-Stack Developer ")
                     ]),
                     _: 1
-                    /* STABLE */
                   })
                 ]),
                 _: 1
-                /* STABLE */
               })
             ]),
             _: 1
-            /* STABLE */
           })
         ];
       }
     }),
     _: 1
-    /* STABLE */
   }, _parent));
   _push(ssrRenderComponent(VContainer, {
     class: "chart-container",
@@ -479,7 +444,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
       }
     }),
     _: 1
-    /* STABLE */
   }, _parent));
   _push(`</section>`);
 }
@@ -492,4 +456,4 @@ _sfc_main.setup = (props, ctx) => {
 const skills = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { skills as default };
-//# sourceMappingURL=skills-Cupo9a64.mjs.map
+//# sourceMappingURL=skills-otku0Bpc.mjs.map

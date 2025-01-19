@@ -116,7 +116,6 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
             }
           }),
           _: 1
-          /* STABLE */
         }, _parent2, _scopeId));
         _push2(`<div class="scene"${_scopeId}><div class="cube"${_scopeId}><div class="face front"${_scopeId}></div><div class="face back"${_scopeId}></div><div class="face right"${_scopeId}></div><div class="face left"${_scopeId}></div><div class="face top"${_scopeId}></div><div class="face bottom"${_scopeId}></div><div class="middle-cube"${_scopeId}><div class="middle-face middle-front"${_scopeId}></div><div class="middle-face middle-back"${_scopeId}></div><div class="middle-face middle-right"${_scopeId}></div><div class="middle-face middle-left"${_scopeId}></div><div class="middle-face middle-top"${_scopeId}></div><div class="middle-face middle-bottom"${_scopeId}></div><div class="inner-cube"${_scopeId}><div class="inner-face inner-front"${_scopeId}></div><div class="inner-face inner-back"${_scopeId}></div><div class="inner-face inner-right"${_scopeId}></div><div class="inner-face inner-left"${_scopeId}></div><div class="inner-face inner-top"${_scopeId}></div><div class="inner-face inner-bottom"${_scopeId}></div><div class="innermost-cube"${_scopeId}><div class="innermost-face innermost-front"${_scopeId}></div><div class="innermost-face innermost-back"${_scopeId}></div><div class="innermost-face innermost-right"${_scopeId}></div><div class="innermost-face innermost-left"${_scopeId}></div><div class="innermost-face innermost-top"${_scopeId}></div><div class="innermost-face innermost-bottom"${_scopeId}></div></div></div></div></div></div>`);
       } else {
@@ -171,56 +170,48 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
               ])
             ]),
             _: 1
-            /* STABLE */
           }),
           createVNode("div", { class: "scene" }, [
-            createVNode(
-              "div",
-              {
-                ref: "cube",
-                class: "cube"
-              },
-              [
-                createVNode("div", { class: "face front" }),
-                createVNode("div", { class: "face back" }),
-                createVNode("div", { class: "face right" }),
-                createVNode("div", { class: "face left" }),
-                createVNode("div", { class: "face top" }),
-                createVNode("div", { class: "face bottom" }),
-                createVNode("div", { class: "middle-cube" }, [
-                  createVNode("div", { class: "middle-face middle-front" }),
-                  createVNode("div", { class: "middle-face middle-back" }),
-                  createVNode("div", { class: "middle-face middle-right" }),
-                  createVNode("div", { class: "middle-face middle-left" }),
-                  createVNode("div", { class: "middle-face middle-top" }),
-                  createVNode("div", { class: "middle-face middle-bottom" }),
-                  createVNode("div", { class: "inner-cube" }, [
-                    createVNode("div", { class: "inner-face inner-front" }),
-                    createVNode("div", { class: "inner-face inner-back" }),
-                    createVNode("div", { class: "inner-face inner-right" }),
-                    createVNode("div", { class: "inner-face inner-left" }),
-                    createVNode("div", { class: "inner-face inner-top" }),
-                    createVNode("div", { class: "inner-face inner-bottom" }),
-                    createVNode("div", { class: "innermost-cube" }, [
-                      createVNode("div", { class: "innermost-face innermost-front" }),
-                      createVNode("div", { class: "innermost-face innermost-back" }),
-                      createVNode("div", { class: "innermost-face innermost-right" }),
-                      createVNode("div", { class: "innermost-face innermost-left" }),
-                      createVNode("div", { class: "innermost-face innermost-top" }),
-                      createVNode("div", { class: "innermost-face innermost-bottom" })
-                    ])
+            createVNode("div", {
+              ref: "cube",
+              class: "cube"
+            }, [
+              createVNode("div", { class: "face front" }),
+              createVNode("div", { class: "face back" }),
+              createVNode("div", { class: "face right" }),
+              createVNode("div", { class: "face left" }),
+              createVNode("div", { class: "face top" }),
+              createVNode("div", { class: "face bottom" }),
+              createVNode("div", { class: "middle-cube" }, [
+                createVNode("div", { class: "middle-face middle-front" }),
+                createVNode("div", { class: "middle-face middle-back" }),
+                createVNode("div", { class: "middle-face middle-right" }),
+                createVNode("div", { class: "middle-face middle-left" }),
+                createVNode("div", { class: "middle-face middle-top" }),
+                createVNode("div", { class: "middle-face middle-bottom" }),
+                createVNode("div", { class: "inner-cube" }, [
+                  createVNode("div", { class: "inner-face inner-front" }),
+                  createVNode("div", { class: "inner-face inner-back" }),
+                  createVNode("div", { class: "inner-face inner-right" }),
+                  createVNode("div", { class: "inner-face inner-left" }),
+                  createVNode("div", { class: "inner-face inner-top" }),
+                  createVNode("div", { class: "inner-face inner-bottom" }),
+                  createVNode("div", { class: "innermost-cube" }, [
+                    createVNode("div", { class: "innermost-face innermost-front" }),
+                    createVNode("div", { class: "innermost-face innermost-back" }),
+                    createVNode("div", { class: "innermost-face innermost-right" }),
+                    createVNode("div", { class: "innermost-face innermost-left" }),
+                    createVNode("div", { class: "innermost-face innermost-top" }),
+                    createVNode("div", { class: "innermost-face innermost-bottom" })
                   ])
                 ])
-              ],
-              512
-              /* NEED_PATCH */
-            )
+              ])
+            ], 512)
           ])
         ];
       }
     }),
     _: 1
-    /* STABLE */
   }, _parent));
   _push(`</section>`);
 }
@@ -233,4 +224,4 @@ _sfc_main.setup = (props, ctx) => {
 const animation = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { animation as default };
-//# sourceMappingURL=animation-uUc8sgft.mjs.map
+//# sourceMappingURL=animation-bXREOLWg.mjs.map

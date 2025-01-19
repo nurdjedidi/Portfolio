@@ -12,7 +12,9 @@ import bodyParser from 'body-parser';
 import crypto from 'crypto';
 import formData from 'form-data';
 import { Resend } from 'resend';
-import { loadNuxt, build } from 'nuxt';
+import pkg from '@nuxt/bridge';
+const { loadNuxt, build } = pkg;
+
 
 
 
@@ -104,10 +106,28 @@ app.get('/news', async (req, res) => {
   }
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '.output', 'server', 'index.mjs'));
-});
+const start = async () => {
+  try {
+    // Charger l'application Nuxt en mode production avec Nuxt Bridge
+    const nuxtApp = await loadNuxt({
+      for: 'production',
+    });
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+    // Si vous êtes en mode production, vous pouvez activer le build de Nuxt
+    if (process.env.NODE_ENV === 'production') {
+      await build(nuxtApp);
+    }
+
+    // Utiliser nuxtApp comme middleware pour Express
+    app.use(nuxtApp);
+
+    console.log('Nuxt is running...');
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+    });
+  } catch (err) {
+    console.error('Error starting Nuxt server:', err);
+  }
+};
+
+start();

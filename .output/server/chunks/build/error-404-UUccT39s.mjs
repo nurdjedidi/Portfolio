@@ -72,16 +72,11 @@ const _sfc_main = {
             _push2(`${ssrInterpolate(__props.backHome)}`);
           } else {
             return [
-              createTextVNode(
-                toDisplayString(__props.backHome),
-                1
-                /* TEXT */
-              )
+              createTextVNode(toDisplayString(__props.backHome), 1)
             ];
           }
         }),
         _: 1
-        /* STABLE */
       }, _parent));
       _push(`</div></div></div>`);
     };
@@ -96,4 +91,4 @@ _sfc_main.setup = (props, ctx) => {
 const error404 = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-c2c324f7"]]);
 
 export { error404 as default };
-//# sourceMappingURL=error-404-DSx4niXK.mjs.map
+//# sourceMappingURL=error-404-UUccT39s.mjs.map
