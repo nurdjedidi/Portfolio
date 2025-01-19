@@ -39,7 +39,7 @@ import fitness from '../images/fitness.avif';
             { name: 'JS', icon: 'mdi-language-javascript' },
             { name: 'Node.js', icon: 'mdi-nodejs' }
           ],
-          link: '../src/ext/Urbanstyle/accueil.html'
+          link: '/ext/Urbanstyle/accueil.html'
         },
         { img: news, 
           title: 'World news', 
@@ -51,7 +51,7 @@ import fitness from '../images/fitness.avif';
             { name: 'Node.js', icon: 'mdi-nodejs' },
             { name: 'API', icon: 'mdi-access-point' }
           ],
-          link: '../src/ext/World/news.html'
+          link: '/news'
         },
         { img: fitness, 
           title: 'Health & fitness', 

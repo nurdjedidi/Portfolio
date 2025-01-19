@@ -46,6 +46,9 @@ export default defineNuxtConfig({
     title: 'Portfolio | Nûr',
   },
 },
+nitro: {
+  serveStatic: true, 
+},
   devtools: { enabled: true },
   modules: [
     (_options, nuxt) => {

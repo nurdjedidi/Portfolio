@@ -1,21 +1,28 @@
 const client_manifest = {
-  "_CSm88iGt.js": {
+  "_TeTkeKha.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CSm88iGt.js",
+    "file": "TeTkeKha.js",
     "name": "vue.-sixQ7xP",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ]
   },
-  "_CzEqanCK.js": {
+  "_VCard.8Js4-u2y.css": {
+    "resourceType": "style",
+    "prefetch": true,
+    "preload": true,
+    "file": "VCard.8Js4-u2y.css",
+    "src": "_VCard.8Js4-u2y.css"
+  },
+  "_ZTZDEbW4.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CzEqanCK.js",
+    "file": "ZTZDEbW4.js",
     "name": "VCard",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
@@ -29,13 +36,6 @@ const client_manifest = {
     "resourceType": "style",
     "prefetch": true,
     "preload": true
-  },
-  "_VCard.8Js4-u2y.css": {
-    "resourceType": "style",
-    "prefetch": true,
-    "preload": true,
-    "file": "VCard.8Js4-u2y.css",
-    "src": "_VCard.8Js4-u2y.css"
   },
   "node_modules/@mdi/font/fonts/materialdesignicons-webfont.eot": {
     "resourceType": "font",
@@ -66,13 +66,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CHf4439u.js",
+    "file": "DTWnugFN.js",
     "name": "error-404",
     "src": "node_modules/nuxt/dist/app/components/error-404.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_CSm88iGt.js"
+      "_TeTkeKha.js"
     ],
     "css": []
   },
@@ -87,13 +87,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DPlJF06H.js",
+    "file": "CKxnaINC.js",
     "name": "error-500",
     "src": "node_modules/nuxt/dist/app/components/error-500.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_CSm88iGt.js"
+      "_TeTkeKha.js"
     ],
     "css": []
   },
@@ -108,7 +108,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "oSJlPkbq.js",
+    "file": "B5OFkRbO.js",
     "name": "entry",
     "src": "node_modules/nuxt/dist/app/entry.js",
     "isEntry": true,
@@ -158,7 +158,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "atmpKuWx.js",
+    "file": "DTN4Cbli.js",
     "name": "animation",
     "src": "pages/animation.vue",
     "isDynamicEntry": true,
@@ -178,13 +178,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "BIsjPxdB.js",
+    "file": "DYKYDf9P.js",
     "name": "index",
     "src": "pages/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_CzEqanCK.js"
+      "_ZTZDEbW4.js"
     ],
     "css": [],
     "assets": [
@@ -216,18 +216,38 @@ const client_manifest = {
     "file": "Vignette.Cxlms983.avif",
     "prefetch": true
   },
+  "pages/news.vue": {
+    "resourceType": "script",
+    "module": true,
+    "prefetch": true,
+    "preload": true,
+    "file": "DL5amGCa.js",
+    "name": "news",
+    "src": "pages/news.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "node_modules/nuxt/dist/app/entry.js"
+    ],
+    "css": []
+  },
+  "news.BZEkL1Fo.css": {
+    "file": "news.BZEkL1Fo.css",
+    "resourceType": "style",
+    "prefetch": true,
+    "preload": true
+  },
   "pages/skills.vue": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CRLQKl8B.js",
+    "file": "EQhGrRMW.js",
     "name": "skills",
     "src": "pages/skills.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_CzEqanCK.js"
+      "_ZTZDEbW4.js"
     ],
     "css": []
   },

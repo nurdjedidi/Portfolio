@@ -23,3 +23,4 @@ export default defineEventHandler(async (event) => {
     return { error: 'Impossible de récupérer les actualités.' };
   }
 });
+
