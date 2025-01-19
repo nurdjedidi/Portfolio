@@ -50,6 +50,9 @@ app.get('/news.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'src', 'ext', 'World', 'news.html'));
 });
 
+const start = async () => {
+  try {
+    const nuxtApp = await loadNuxt({ for: 'production' });
 
 app.post('/send-mail', async (req, res) => { 
   try { 
@@ -104,10 +107,16 @@ app.get('/news', async (req, res) => {
   }
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '.output', 'server', 'index.mjs'));
-});
+app.use(nuxtApp.render);
+console.log("Nuxt is running...");
 
-app.listen(port, '0.0.0.0', () => {
+// Démarrer le serveur
+app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+} catch (err) {
+console.error('Error starting Nuxt server:', err);
+}
+};
+
+start();
