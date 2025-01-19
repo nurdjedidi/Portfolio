@@ -22,10 +22,6 @@ dotenv.config();
 
 const resend = new Resend("re_McfbyRo5_EGaL6bZHPt8DFA6yzUp54PSx"); 
 
-async function start() {
-  const isDev = process.env.NODE_ENV !== 'production';
-  const nuxt = await loadNuxt({ dev: isDev });
-
 const options = {
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
@@ -39,6 +35,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/src', express.static(path.join(__dirname, 'src')));
 app.use('/ext', express.static(path.join(__dirname, 'ext')));
+app.use('/.output', express.static(path.join(__dirname, 'output')));
+app.use('/server', express.static(path.join(__dirname, 'server')));
 app.use(express.json());
 app.use(bodyParser.json()); 
 app.use(express.urlencoded({ extended: true }));
@@ -106,18 +104,10 @@ app.get('/news', async (req, res) => {
   }
 });
 
-app.all('*', (req, res) => {
-  return nuxt.render(req, res);
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '.output', 'server', 'index.mjs'));
 });
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-if (isDev) {
-  build(nuxt);
-}
-
-}
-
-start();
