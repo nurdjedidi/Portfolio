@@ -1,28 +1,10 @@
 const client_manifest = {
-  "_TeTkeKha.js": {
+  "_BZf8KluQ.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "TeTkeKha.js",
-    "name": "vue.-sixQ7xP",
-    "imports": [
-      "node_modules/nuxt/dist/app/entry.js"
-    ]
-  },
-  "_VCard.8Js4-u2y.css": {
-    "resourceType": "style",
-    "prefetch": true,
-    "preload": true,
-    "file": "VCard.8Js4-u2y.css",
-    "src": "_VCard.8Js4-u2y.css"
-  },
-  "_ZTZDEbW4.js": {
-    "resourceType": "script",
-    "module": true,
-    "prefetch": true,
-    "preload": true,
-    "file": "ZTZDEbW4.js",
+    "file": "BZf8KluQ.js",
     "name": "VCard",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
@@ -36,6 +18,24 @@ const client_manifest = {
     "resourceType": "style",
     "prefetch": true,
     "preload": true
+  },
+  "_BdE1RtIj.js": {
+    "resourceType": "script",
+    "module": true,
+    "prefetch": true,
+    "preload": true,
+    "file": "BdE1RtIj.js",
+    "name": "vue.-sixQ7xP",
+    "imports": [
+      "node_modules/nuxt/dist/app/entry.js"
+    ]
+  },
+  "_VCard.8Js4-u2y.css": {
+    "resourceType": "style",
+    "prefetch": true,
+    "preload": true,
+    "file": "VCard.8Js4-u2y.css",
+    "src": "_VCard.8Js4-u2y.css"
   },
   "node_modules/@mdi/font/fonts/materialdesignicons-webfont.eot": {
     "resourceType": "font",
@@ -66,13 +66,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DTWnugFN.js",
+    "file": "B1qX1tII.js",
     "name": "error-404",
     "src": "node_modules/nuxt/dist/app/components/error-404.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_TeTkeKha.js"
+      "_BdE1RtIj.js"
     ],
     "css": []
   },
@@ -87,13 +87,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CKxnaINC.js",
+    "file": "xxfwlbxE.js",
     "name": "error-500",
     "src": "node_modules/nuxt/dist/app/components/error-500.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_TeTkeKha.js"
+      "_BdE1RtIj.js"
     ],
     "css": []
   },
@@ -108,7 +108,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "B5OFkRbO.js",
+    "file": "DEIu64y5.js",
     "name": "entry",
     "src": "node_modules/nuxt/dist/app/entry.js",
     "isEntry": true,
@@ -117,7 +117,7 @@ const client_manifest = {
       "node_modules/nuxt/dist/app/components/error-500.vue"
     ],
     "css": [
-      "entry.a3fVNRjW.css"
+      "entry.l7Rqg5Hk.css"
     ],
     "assets": [
       "materialdesignicons-webfont.CSr8KVlo.eot",
@@ -127,8 +127,8 @@ const client_manifest = {
     ],
     "_globalCSS": true
   },
-  "entry.a3fVNRjW.css": {
-    "file": "entry.a3fVNRjW.css",
+  "entry.l7Rqg5Hk.css": {
+    "file": "entry.l7Rqg5Hk.css",
     "resourceType": "style",
     "prefetch": true,
     "preload": true
@@ -158,7 +158,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DTN4Cbli.js",
+    "file": "CiYxwh-z.js",
     "name": "animation",
     "src": "pages/animation.vue",
     "isDynamicEntry": true,
@@ -178,13 +178,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DYKYDf9P.js",
+    "file": "CxswRNu9.js",
     "name": "index",
     "src": "pages/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_ZTZDEbW4.js"
+      "_BZf8KluQ.js"
     ],
     "css": [],
     "assets": [
@@ -221,7 +221,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DL5amGCa.js",
+    "file": "C9UdR76a.js",
     "name": "news",
     "src": "pages/news.vue",
     "isDynamicEntry": true,
@@ -241,13 +241,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "EQhGrRMW.js",
+    "file": "BwguyqyF.js",
     "name": "skills",
     "src": "pages/skills.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_ZTZDEbW4.js"
+      "_BZf8KluQ.js"
     ],
     "css": []
   },

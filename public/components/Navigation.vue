@@ -39,3 +39,15 @@
   };
   </script>
   
+  <style>
+.nav.visible {
+  display: none;
+} 
+
+@media (max-width: 768px) {
+.nav.visible {
+  display: block;
+}
+}
+
+</style>
