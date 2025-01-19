@@ -86,6 +86,9 @@ export default {
     };
   },
   methods: {
+    toggleNav() {
+    this.navVisible = !this.navVisible; 
+  },
     async sendMail() {
       try {
         const response = await $fetch('/api/send-mail', {

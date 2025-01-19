@@ -10600,6 +10600,9 @@ const _sfc_main$2 = {
     };
   },
   methods: {
+    toggleNav() {
+      this.navVisible = !this.navVisible;
+    },
     async sendMail() {
       try {
         const response = await $fetch("/api/send-mail", {
@@ -10648,12 +10651,12 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                 icon: "mdi-menu",
                 class: [{ "icon-active": _ctx.navVisible }, "mr-2 d-flex d-sm-none"],
                 "aria-label": "Menu",
-                onClick: _ctx.toggleNav
+                onClick: $options.toggleNav
               }, null, _parent3, _scopeId2));
               _push3(`<h1 class="mb-0"${_scopeId2}>Web Portfolio</h1></div>`);
               _push3(ssrRenderComponent(_component_Navigation, {
                 "nav-visible": _ctx.navVisible,
-                onToggleNav: _ctx.toggleNav
+                onToggleNav: $options.toggleNav
               }, null, _parent3, _scopeId2));
             } else {
               return [
@@ -10668,13 +10671,13 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                     icon: "mdi-menu",
                     class: [{ "icon-active": _ctx.navVisible }, "mr-2 d-flex d-sm-none"],
                     "aria-label": "Menu",
-                    onClick: _ctx.toggleNav
+                    onClick: $options.toggleNav
                   }, null, 8, ["class", "onClick"]),
                   createVNode("h1", { class: "mb-0" }, "Web Portfolio")
                 ]),
                 createVNode(_component_Navigation, {
                   "nav-visible": _ctx.navVisible,
-                  onToggleNav: _ctx.toggleNav
+                  onToggleNav: $options.toggleNav
                 }, null, 8, ["nav-visible", "onToggleNav"])
               ];
             }
@@ -11048,13 +11051,13 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                     icon: "mdi-menu",
                     class: [{ "icon-active": _ctx.navVisible }, "mr-2 d-flex d-sm-none"],
                     "aria-label": "Menu",
-                    onClick: _ctx.toggleNav
+                    onClick: $options.toggleNav
                   }, null, 8, ["class", "onClick"]),
                   createVNode("h1", { class: "mb-0" }, "Web Portfolio")
                 ]),
                 createVNode(_component_Navigation, {
                   "nav-visible": _ctx.navVisible,
-                  onToggleNav: _ctx.toggleNav
+                  onToggleNav: $options.toggleNav
                 }, null, 8, ["nav-visible", "onToggleNav"])
               ]),
               _: 1
