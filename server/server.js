@@ -35,8 +35,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/src', express.static(path.join(__dirname, 'src')));
 app.use('/ext', express.static(path.join(__dirname, 'ext')));
-app.use('/.output', express.static(path.join(__dirname, 'output')));
-app.use('/server', express.static(path.join(__dirname, 'server')));
+app.use(express.static(path.join(__dirname, '.output', 'public')));
+app.use('/_nuxt', express.static(path.join(__dirname, '.output', '_nuxt')));
 app.use(express.json());
 app.use(bodyParser.json()); 
 app.use(express.urlencoded({ extended: true }));
@@ -104,7 +104,7 @@ app.get('/news', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '.output', 'server', 'index.mjs'));
 });
 
