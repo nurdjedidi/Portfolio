@@ -729,7 +729,7 @@ const _sfc_main$1 = {
             { name: "JS", icon: "mdi-language-javascript" },
             { name: "Node.js", icon: "mdi-nodejs" }
           ],
-          link: "/ext/Urbanstyle/accueil.html"
+          link: "/urbanstyle"
         },
         {
           img: news,
@@ -2553,4 +2553,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-5w-jArAn.mjs.map
+//# sourceMappingURL=index-maXqs34l.mjs.map
