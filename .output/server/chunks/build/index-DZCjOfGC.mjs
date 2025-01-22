@@ -1,9 +1,8 @@
-import { f as buildAssetsURL, E as encodeParam, v as hasProtocol, F as withLeadingSlash, w as joinURL, G as parseURL, m as defu, H as encodePath } from '../_/nitro.mjs';
-import { useSSRContext, shallowRef, computed, createVNode, toRef, mergeProps, withDirectives, vShow, Fragment, resolveDirective, reactive, ref, watch, Teleport, defineComponent, useAttrs, unref, inject, watchEffect, nextTick, onScopeDispose, provide, toRaw, readonly, Transition, resolveComponent, withCtx, createTextVNode, toDisplayString, openBlock, createBlock, renderList } from 'vue';
-import { ssrRenderAttrs, ssrRenderSlot, ssrRenderComponent, ssrRenderList, ssrInterpolate, ssrRenderAttr } from 'vue/server-renderer';
-import { p as propsFactory, I as IconValue, m as makeComponentProps, c as makeDisplayProps, d as makeTagProps, e as makeGroupProps, g as genericComponent, f as useRtl, h as useDisplay, j as useGroup, k as useResizeObserver, l as useGoTo, n as useRender, o as VFadeTransition, q as VIcon, t as deepEqual, v as makeThemeProps, w as makeVariantProps, x as provideTheme, y as provideDefaults, E as EventProp, z as makeBorderProps, A as makeDensityProps, B as makeElevationProps, C as makeGroupItemProps, D as makeRoundedProps, F as makeRouterProps, G as makeSizeProps, R as Ripple, H as useLocale, J as useBorder, K as useVariant, L as useDensity, M as useElevation, N as useRounded, O as useSize, P as useProxiedModel, Q as useGroupItem, S as useLink, T as genOverlays, U as VExpandXTransition, W as VDefaultsProvider, X as VAvatar, aa as makeDelayProps, ag as makeDimensionProps, ah as makeTransitionProps, ab as getCurrentInstance, ai as useBackgroundColor, aj as useDimension, ak as useScopeId, al as useRouter, af as useToggleScope, a7 as convertToUnit, am as MaybeTransition, ap as omit, aq as getUid, ar as forwardRefs, _ as _export_sfc, u as useNuxtApp, s as focusableChildren, ac as templateRef, an as animate, ao as standardEasing, V as VContainer, Y as destructComputed, Z as parseAnchor, $ as flipSide, a0 as flipAlign, a1 as flipCorner, ad as useDelay, ae as matchesSelector, b as useRuntimeConfig, a2 as getTargetBox, a3 as Box, a4 as consoleError, a5 as getAxis, a6 as getOverflow, a8 as clamp, a9 as nullifyTransforms } from './server.mjs';
-import { u as useHead } from './index-BabADJUJ.mjs';
-import { V as VCard, a as VCardTitle, b as VCardSubtitle, c as VCardText, d as VRow, e as VCol } from './VCard-DTQ05Igx.mjs';
+import { f as buildAssetsURL, p as publicAssetsURL } from '../_/nitro.mjs';
+import { shallowRef, computed, createVNode, toRef, mergeProps, withDirectives, vShow, Fragment, resolveDirective, reactive, ref, watch, Teleport, useSSRContext, inject, watchEffect, nextTick, onScopeDispose, provide, toRaw, readonly, Transition, resolveComponent, withCtx, createTextVNode, toDisplayString, openBlock, createBlock, renderList } from 'vue';
+import { ssrRenderComponent, ssrRenderList, ssrInterpolate, ssrRenderAttrs, ssrRenderAttr } from 'vue/server-renderer';
+import { p as propsFactory, I as IconValue, m as makeComponentProps, b as makeDisplayProps, c as makeTagProps, d as makeGroupProps, g as genericComponent, u as useRtl, e as useDisplay, f as useGroup, h as useResizeObserver, j as useGoTo, k as useRender, l as VFadeTransition, n as VIcon, q as deepEqual, s as makeThemeProps, t as makeVariantProps, v as provideTheme, w as provideDefaults, E as EventProp, x as makeBorderProps, y as makeDensityProps, z as makeElevationProps, A as makeGroupItemProps, B as makeRoundedProps, C as makeRouterProps, D as makeSizeProps, R as Ripple, F as useLocale, G as useBorder, H as useVariant, J as useDensity, K as useElevation, L as useRounded, M as useSize, N as useProxiedModel, O as useGroupItem, P as useLink, Q as genOverlays, S as VExpandXTransition, T as VDefaultsProvider, U as VAvatar, a9 as makeDelayProps, af as makeDimensionProps, ag as makeTransitionProps, aa as getCurrentInstance, ah as useBackgroundColor, ai as useDimension, aj as useScopeId, ak as useRouter, ae as useToggleScope, a6 as convertToUnit, al as MaybeTransition, ao as omit, ap as getUid, aq as forwardRefs, _ as _export_sfc, o as focusableChildren, ab as templateRef, am as animate, an as standardEasing, W as VImg, V as VContainer, X as destructComputed, Y as parseAnchor, Z as flipSide, $ as flipAlign, a0 as flipCorner, ac as useDelay, ad as matchesSelector, a1 as getTargetBox, a2 as Box, a3 as consoleError, a4 as getAxis, a5 as getOverflow, a7 as clamp, a8 as nullifyTransforms } from './server.mjs';
+import { V as VCard, a as VCardTitle, b as VCardSubtitle, c as VCardText, d as VRow, e as VCol } from './VCard-CA-qA7qM.mjs';
 import 'node:http';
 import 'node:https';
 import 'node:fs';
@@ -63,586 +62,6 @@ function isFixedPosition(el) {
   }
   return false;
 }
-async function imageMeta(_ctx, url) {
-  const meta = await _imageMeta(url).catch((err) => {
-    console.error("Failed to get image meta for " + url, err + "");
-    return {
-      width: 0,
-      height: 0,
-      ratio: 0
-    };
-  });
-  return meta;
-}
-async function _imageMeta(url) {
-  {
-    const imageMeta2 = await import('image-meta').then((r) => r.imageMeta);
-    const data = await fetch(url).then((res) => res.buffer());
-    const metadata = imageMeta2(data);
-    if (!metadata) {
-      throw new Error(`No metadata could be extracted from the image \`${url}\`.`);
-    }
-    const { width, height } = metadata;
-    const meta = {
-      width,
-      height,
-      ratio: width && height ? width / height : undefined
-    };
-    return meta;
-  }
-}
-function createMapper(map) {
-  return (key) => {
-    return key ? map[key] || key : map.missingValue;
-  };
-}
-function createOperationsGenerator({ formatter, keyMap, joinWith = "/", valueMap } = {}) {
-  if (!formatter) {
-    formatter = (key, value) => `${key}=${value}`;
-  }
-  if (keyMap && typeof keyMap !== "function") {
-    keyMap = createMapper(keyMap);
-  }
-  const map = valueMap || {};
-  Object.keys(map).forEach((valueKey) => {
-    if (typeof map[valueKey] !== "function") {
-      map[valueKey] = createMapper(map[valueKey]);
-    }
-  });
-  return (modifiers = {}) => {
-    const operations = Object.entries(modifiers).filter(([_, value]) => typeof value !== "undefined").map(([key, value]) => {
-      const mapper = map[key];
-      if (typeof mapper === "function") {
-        value = mapper(modifiers[key]);
-      }
-      key = typeof keyMap === "function" ? keyMap(key) : key;
-      return formatter(key, value);
-    });
-    return operations.join(joinWith);
-  };
-}
-function parseSize(input = "") {
-  if (typeof input === "number") {
-    return input;
-  }
-  if (typeof input === "string") {
-    if (input.replace("px", "").match(/^\d+$/g)) {
-      return Number.parseInt(input, 10);
-    }
-  }
-}
-function parseDensities(input = "") {
-  if (input === undefined || !input.length) {
-    return [];
-  }
-  const densities = /* @__PURE__ */ new Set();
-  for (const density of input.split(" ")) {
-    const d = Number.parseInt(density.replace("x", ""));
-    if (d) {
-      densities.add(d);
-    }
-  }
-  return Array.from(densities);
-}
-function checkDensities(densities) {
-  if (densities.length === 0) {
-    throw new Error("`densities` must not be empty, configure to `1` to render regular size only (DPR 1.0)");
-  }
-}
-function parseSizes(input) {
-  const sizes = {};
-  if (typeof input === "string") {
-    for (const entry of input.split(/[\s,]+/).filter((e) => e)) {
-      const s = entry.split(":");
-      if (s.length !== 2) {
-        sizes["1px"] = s[0].trim();
-      } else {
-        sizes[s[0].trim()] = s[1].trim();
-      }
-    }
-  } else {
-    Object.assign(sizes, input);
-  }
-  return sizes;
-}
-function createImage(globalOptions) {
-  const ctx = {
-    options: globalOptions
-  };
-  const getImage2 = (input, options = {}) => {
-    const image = resolveImage(ctx, input, options);
-    return image;
-  };
-  const $img = (input, modifiers = {}, options = {}) => {
-    return getImage2(input, {
-      ...options,
-      modifiers: defu(modifiers, options.modifiers || {})
-    }).url;
-  };
-  for (const presetName in globalOptions.presets) {
-    $img[presetName] = (source, modifiers, options) => $img(source, modifiers, { ...globalOptions.presets[presetName], ...options });
-  }
-  $img.options = globalOptions;
-  $img.getImage = getImage2;
-  $img.getMeta = (input, options) => getMeta(ctx, input, options);
-  $img.getSizes = (input, options) => getSizes(ctx, input, options);
-  ctx.$img = $img;
-  return $img;
-}
-async function getMeta(ctx, input, options) {
-  const image = resolveImage(ctx, input, { ...options });
-  if (typeof image.getMeta === "function") {
-    return await image.getMeta();
-  } else {
-    return await imageMeta(ctx, image.url);
-  }
-}
-function resolveImage(ctx, input, options) {
-  var _a, _b;
-  if (input && typeof input !== "string") {
-    throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`);
-  }
-  if (!input || input.startsWith("data:")) {
-    return {
-      url: input
-    };
-  }
-  const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider);
-  const preset = getPreset(ctx, options.preset);
-  input = hasProtocol(input) ? input : withLeadingSlash(input);
-  if (!provider.supportsAlias) {
-    for (const base in ctx.options.alias) {
-      if (input.startsWith(base)) {
-        const alias = ctx.options.alias[base];
-        if (alias) {
-          input = joinURL(alias, input.slice(base.length));
-        }
-      }
-    }
-  }
-  if (provider.validateDomains && hasProtocol(input)) {
-    const inputHost = parseURL(input).host;
-    if (!ctx.options.domains.find((d) => d === inputHost)) {
-      return {
-        url: input
-      };
-    }
-  }
-  const _options = defu(options, preset, defaults);
-  _options.modifiers = { ..._options.modifiers };
-  const expectedFormat = _options.modifiers.format;
-  if ((_a = _options.modifiers) == null ? undefined : _a.width) {
-    _options.modifiers.width = parseSize(_options.modifiers.width);
-  }
-  if ((_b = _options.modifiers) == null ? undefined : _b.height) {
-    _options.modifiers.height = parseSize(_options.modifiers.height);
-  }
-  const image = provider.getImage(input, _options, ctx);
-  image.format = image.format || expectedFormat || "";
-  return image;
-}
-function getProvider(ctx, name) {
-  const provider = ctx.options.providers[name];
-  if (!provider) {
-    throw new Error("Unknown provider: " + name);
-  }
-  return provider;
-}
-function getPreset(ctx, name) {
-  if (!name) {
-    return {};
-  }
-  if (!ctx.options.presets[name]) {
-    throw new Error("Unknown preset: " + name);
-  }
-  return ctx.options.presets[name];
-}
-function getSizes(ctx, input, opts) {
-  var _a, _b, _c, _d, _e;
-  const width = parseSize((_a = opts.modifiers) == null ? undefined : _a.width);
-  const height = parseSize((_b = opts.modifiers) == null ? undefined : _b.height);
-  const sizes = parseSizes(opts.sizes);
-  const densities = ((_c = opts.densities) == null ? undefined : _c.trim()) ? parseDensities(opts.densities.trim()) : ctx.options.densities;
-  checkDensities(densities);
-  const hwRatio = width && height ? height / width : 0;
-  const sizeVariants = [];
-  const srcsetVariants = [];
-  if (Object.keys(sizes).length >= 1) {
-    for (const key in sizes) {
-      const variant = getSizesVariant(key, String(sizes[key]), height, hwRatio, ctx);
-      if (variant === undefined) {
-        continue;
-      }
-      sizeVariants.push({
-        size: variant.size,
-        screenMaxWidth: variant.screenMaxWidth,
-        media: `(max-width: ${variant.screenMaxWidth}px)`
-      });
-      for (const density of densities) {
-        srcsetVariants.push({
-          width: variant._cWidth * density,
-          src: getVariantSrc(ctx, input, opts, variant, density)
-        });
-      }
-    }
-    finaliseSizeVariants(sizeVariants);
-  } else {
-    for (const density of densities) {
-      const key = Object.keys(sizes)[0];
-      let variant = key ? getSizesVariant(key, String(sizes[key]), height, hwRatio, ctx) : undefined;
-      if (variant === undefined) {
-        variant = {
-          size: "",
-          screenMaxWidth: 0,
-          _cWidth: (_d = opts.modifiers) == null ? undefined : _d.width,
-          _cHeight: (_e = opts.modifiers) == null ? undefined : _e.height
-        };
-      }
-      srcsetVariants.push({
-        width: density,
-        src: getVariantSrc(ctx, input, opts, variant, density)
-      });
-    }
-  }
-  finaliseSrcsetVariants(srcsetVariants);
-  const defaultVariant = srcsetVariants[srcsetVariants.length - 1];
-  const sizesVal = sizeVariants.length ? sizeVariants.map((v) => `${v.media ? v.media + " " : ""}${v.size}`).join(", ") : undefined;
-  const suffix = sizesVal ? "w" : "x";
-  const srcsetVal = srcsetVariants.map((v) => `${v.src} ${v.width}${suffix}`).join(", ");
-  return {
-    sizes: sizesVal,
-    srcset: srcsetVal,
-    src: defaultVariant == null ? undefined : defaultVariant.src
-  };
-}
-function getSizesVariant(key, size, height, hwRatio, ctx) {
-  const screenMaxWidth = ctx.options.screens && ctx.options.screens[key] || Number.parseInt(key);
-  const isFluid = size.endsWith("vw");
-  if (!isFluid && /^\d+$/.test(size)) {
-    size = size + "px";
-  }
-  if (!isFluid && !size.endsWith("px")) {
-    return undefined;
-  }
-  let _cWidth = Number.parseInt(size);
-  if (!screenMaxWidth || !_cWidth) {
-    return undefined;
-  }
-  if (isFluid) {
-    _cWidth = Math.round(_cWidth / 100 * screenMaxWidth);
-  }
-  const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height;
-  return {
-    size,
-    screenMaxWidth,
-    _cWidth,
-    _cHeight
-  };
-}
-function getVariantSrc(ctx, input, opts, variant, density) {
-  return ctx.$img(
-    input,
-    {
-      ...opts.modifiers,
-      width: variant._cWidth ? variant._cWidth * density : undefined,
-      height: variant._cHeight ? variant._cHeight * density : undefined
-    },
-    opts
-  );
-}
-function finaliseSizeVariants(sizeVariants) {
-  var _a;
-  sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth);
-  let previousMedia = null;
-  for (let i = sizeVariants.length - 1; i >= 0; i--) {
-    const sizeVariant = sizeVariants[i];
-    if (sizeVariant.media === previousMedia) {
-      sizeVariants.splice(i, 1);
-    }
-    previousMedia = sizeVariant.media;
-  }
-  for (let i = 0; i < sizeVariants.length; i++) {
-    sizeVariants[i].media = ((_a = sizeVariants[i + 1]) == null ? undefined : _a.media) || "";
-  }
-}
-function finaliseSrcsetVariants(srcsetVariants) {
-  srcsetVariants.sort((v1, v2) => v1.width - v2.width);
-  let previousWidth = null;
-  for (let i = srcsetVariants.length - 1; i >= 0; i--) {
-    const sizeVariant = srcsetVariants[i];
-    if (sizeVariant.width === previousWidth) {
-      srcsetVariants.splice(i, 1);
-    }
-    previousWidth = sizeVariant.width;
-  }
-}
-const operationsGenerator = createOperationsGenerator({
-  keyMap: {
-    format: "f",
-    fit: "fit",
-    width: "w",
-    height: "h",
-    resize: "s",
-    quality: "q",
-    background: "b"
-  },
-  joinWith: "&",
-  formatter: (key, val) => encodeParam(key) + "_" + encodeParam(val)
-});
-const getImage = (src, { modifiers = {}, baseURL } = {}, ctx) => {
-  if (modifiers.width && modifiers.height) {
-    modifiers.resize = `${modifiers.width}x${modifiers.height}`;
-    delete modifiers.width;
-    delete modifiers.height;
-  }
-  const params = operationsGenerator(modifiers) || "_";
-  if (!baseURL) {
-    baseURL = joinURL(ctx.options.nuxt.baseURL, "/_ipx");
-  }
-  return {
-    url: joinURL(baseURL, params, encodePath(src))
-  };
-};
-const validateDomains = true;
-const supportsAlias = true;
-const ipxRuntime$3yvBf38be5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  getImage,
-  supportsAlias,
-  validateDomains
-}, Symbol.toStringTag, { value: "Module" }));
-const imageOptions = {
-  "screens": {
-    "xs": 320,
-    "sm": 640,
-    "md": 768,
-    "lg": 1024,
-    "xl": 1280,
-    "xxl": 1536,
-    "2xl": 1536
-  },
-  "presets": {},
-  "provider": "ipx",
-  "domains": [
-    "portfolionurdjedd.com"
-  ],
-  "alias": {},
-  "densities": [
-    1,
-    2
-  ],
-  "format": [
-    "webp"
-  ]
-};
-imageOptions.providers = {
-  ["ipx"]: { provider: ipxRuntime$3yvBf38be5, defaults: {} }
-};
-const useImage = () => {
-  const config = useRuntimeConfig();
-  const nuxtApp = useNuxtApp();
-  return nuxtApp.$img || nuxtApp._img || (nuxtApp._img = createImage({
-    ...imageOptions,
-    nuxt: {
-      baseURL: config.app.baseURL
-    },
-    runtimeConfig: config
-  }));
-};
-const baseImageProps = {
-  // input source
-  src: { type: String, required: false },
-  // modifiers
-  format: { type: String, required: false },
-  quality: { type: [Number, String], required: false },
-  background: { type: String, required: false },
-  fit: { type: String, required: false },
-  modifiers: { type: Object, required: false },
-  // options
-  preset: { type: String, required: false },
-  provider: { type: String, required: false },
-  sizes: { type: [Object, String], required: false },
-  densities: { type: String, required: false },
-  preload: {
-    type: [Boolean, Object],
-    required: false
-  },
-  // <img> attributes
-  width: { type: [String, Number], required: false },
-  height: { type: [String, Number], required: false },
-  alt: { type: String, required: false },
-  referrerpolicy: { type: String, required: false },
-  usemap: { type: String, required: false },
-  longdesc: { type: String, required: false },
-  ismap: { type: Boolean, required: false },
-  loading: {
-    type: String,
-    required: false,
-    validator: (val) => ["lazy", "eager"].includes(val)
-  },
-  crossorigin: {
-    type: [Boolean, String],
-    required: false,
-    validator: (val) => ["anonymous", "use-credentials", "", true, false].includes(val)
-  },
-  decoding: {
-    type: String,
-    required: false,
-    validator: (val) => ["async", "auto", "sync"].includes(val)
-  },
-  // csp
-  nonce: { type: [String], required: false }
-};
-const useBaseImage = (props) => {
-  const options = computed(() => {
-    return {
-      provider: props.provider,
-      preset: props.preset
-    };
-  });
-  const attrs = computed(() => {
-    return {
-      width: parseSize(props.width),
-      height: parseSize(props.height),
-      alt: props.alt,
-      referrerpolicy: props.referrerpolicy,
-      usemap: props.usemap,
-      longdesc: props.longdesc,
-      ismap: props.ismap,
-      crossorigin: props.crossorigin === true ? "anonymous" : props.crossorigin || undefined,
-      loading: props.loading,
-      decoding: props.decoding,
-      nonce: props.nonce
-    };
-  });
-  const $img = useImage();
-  const modifiers = computed(() => {
-    return {
-      ...props.modifiers,
-      width: parseSize(props.width),
-      height: parseSize(props.height),
-      format: props.format,
-      quality: props.quality || $img.options.quality,
-      background: props.background,
-      fit: props.fit
-    };
-  });
-  return {
-    options,
-    attrs,
-    modifiers
-  };
-};
-const imgProps = {
-  ...baseImageProps,
-  placeholder: { type: [Boolean, String, Number, Array], required: false },
-  placeholderClass: { type: String, required: false },
-  custom: { type: Boolean, required: false }
-};
-const _sfc_main$2 = /* @__PURE__ */ defineComponent({
-  __name: "NuxtImg",
-  __ssrInlineRender: true,
-  props: imgProps,
-  emits: ["load", "error"],
-  setup(__props, { emit: __emit }) {
-    const props = __props;
-    const attrs = useAttrs();
-    const isServer = true;
-    const $img = useImage();
-    const _base = useBaseImage(props);
-    const placeholderLoaded = ref(false);
-    const imgEl = ref();
-    const sizes = computed(() => $img.getSizes(props.src, {
-      ..._base.options.value,
-      sizes: props.sizes,
-      densities: props.densities,
-      modifiers: {
-        ..._base.modifiers.value,
-        width: parseSize(props.width),
-        height: parseSize(props.height)
-      }
-    }));
-    const imgAttrs = computed(() => {
-      const attrs2 = { ..._base.attrs.value, "data-nuxt-img": "" };
-      if (!props.placeholder || placeholderLoaded.value) {
-        attrs2.sizes = sizes.value.sizes;
-        attrs2.srcset = sizes.value.srcset;
-      }
-      return attrs2;
-    });
-    const placeholder = computed(() => {
-      let placeholder2 = props.placeholder;
-      if (placeholder2 === "") {
-        placeholder2 = true;
-      }
-      if (!placeholder2 || placeholderLoaded.value) {
-        return false;
-      }
-      if (typeof placeholder2 === "string") {
-        return placeholder2;
-      }
-      const size = Array.isArray(placeholder2) ? placeholder2 : typeof placeholder2 === "number" ? [placeholder2, placeholder2] : [10, 10];
-      return $img(props.src, {
-        ..._base.modifiers.value,
-        width: size[0],
-        height: size[1],
-        quality: size[2] || 50,
-        blur: size[3] || 3
-      }, _base.options.value);
-    });
-    const mainSrc = computed(
-      () => props.sizes ? sizes.value.src : $img(props.src, _base.modifiers.value, _base.options.value)
-    );
-    const src = computed(() => placeholder.value ? placeholder.value : mainSrc.value);
-    if (props.preload) {
-      const isResponsive = Object.values(sizes.value).every((v) => v);
-      useHead({
-        link: [{
-          rel: "preload",
-          as: "image",
-          nonce: props.nonce,
-          ...!isResponsive ? { href: src.value } : {
-            href: sizes.value.src,
-            imagesizes: sizes.value.sizes,
-            imagesrcset: sizes.value.srcset
-          },
-          ...typeof props.preload !== "boolean" && props.preload.fetchPriority ? { fetchpriority: props.preload.fetchPriority } : {}
-        }]
-      });
-    }
-    const nuxtApp = useNuxtApp();
-    nuxtApp.isHydrating;
-    return (_ctx, _push, _parent, _attrs) => {
-      if (!_ctx.custom) {
-        _push(`<img${ssrRenderAttrs(mergeProps({
-          ref_key: "imgEl",
-          ref: imgEl,
-          class: props.placeholder && !placeholderLoaded.value ? props.placeholderClass : undefined
-        }, {
-          ...unref(isServer) ? { onerror: "this.setAttribute('data-error', 1)" } : {},
-          ...imgAttrs.value,
-          ...unref(attrs)
-        }, { src: src.value }, _attrs))}>`);
-      } else {
-        ssrRenderSlot(_ctx.$slots, "default", {
-          ...unref(isServer) ? { onerror: "this.setAttribute('data-error', 1)" } : {},
-          imgAttrs: {
-            ...imgAttrs.value,
-            ...unref(attrs)
-          },
-          isLoaded: placeholderLoaded.value,
-          src: src.value
-        }, null, _push, _parent);
-      }
-    };
-  }
-});
-const _sfc_setup$2 = _sfc_main$2.setup;
-_sfc_main$2.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("node_modules/@nuxt/image/dist/runtime/components/NuxtImg.vue");
-  return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : undefined;
-};
 const urbanstyle = "" + buildAssetsURL("urbanstyle.QgN-5x_1.avif");
 const news = "" + buildAssetsURL("news.TMP8sPdg.avif");
 const fitness = "" + buildAssetsURL("fitness.BbG25ixC.avif");
@@ -1341,7 +760,6 @@ const _sfc_main$1 = {
   }
 };
 function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_nuxt_img = _sfc_main$2;
   _push(`<div${ssrRenderAttrs(_attrs)}>`);
   _push(ssrRenderComponent(VRow, null, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
@@ -1363,7 +781,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                 }, {
                   default: withCtx((_3, _push4, _parent4, _scopeId3) => {
                     if (_push4) {
-                      _push4(ssrRenderComponent(_component_nuxt_img, {
+                      _push4(ssrRenderComponent(VImg, {
                         height: "200px",
                         width: "100%",
                         src: projects.img,
@@ -1456,7 +874,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                       }, _parent4, _scopeId3));
                     } else {
                       return [
-                        createVNode(_component_nuxt_img, {
+                        createVNode(VImg, {
                           height: "200px",
                           width: "100%",
                           src: projects.img,
@@ -1508,7 +926,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                     class: "border-thin d-flex flex-column hover-transition"
                   }, {
                     default: withCtx(() => [
-                      createVNode(_component_nuxt_img, {
+                      createVNode(VImg, {
                         height: "200px",
                         width: "100%",
                         src: projects.img,
@@ -1573,7 +991,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                   class: "border-thin d-flex flex-column hover-transition"
                 }, {
                   default: withCtx(() => [
-                    createVNode(_component_nuxt_img, {
+                    createVNode(VImg, {
                       height: "200px",
                       width: "100%",
                       src: projects.img,
@@ -1633,6 +1051,7 @@ _sfc_main$1.setup = (props, ctx) => {
   return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : undefined;
 };
 const Projects = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["ssrRender", _sfc_ssrRender$1]]);
+const _imports_0 = publicAssetsURL("/images/Vignette.avif");
 function elementToViewport(point, offset) {
   return {
     x: point.x + offset.x,
@@ -2812,7 +2231,6 @@ const _sfc_main = {
   }
 };
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_nuxt_img = _sfc_main$2;
   const _component_Projects = resolveComponent("Projects");
   _push(`<!--[--><section class="presentation">`);
   _push(ssrRenderComponent(VCard, {
@@ -2825,8 +2243,8 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
   }, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
-        _push2(ssrRenderComponent(_component_nuxt_img, {
-          src: "/Vignette.avif",
+        _push2(ssrRenderComponent(VImg, {
+          src: _imports_0,
           alt: "Cr\xE9ation de votre site web de A a Z",
           class: "profil-img",
           eager: ""
@@ -2999,8 +2417,8 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
         }, _parent2, _scopeId));
       } else {
         return [
-          createVNode(_component_nuxt_img, {
-            src: "/Vignette.avif",
+          createVNode(VImg, {
+            src: _imports_0,
             alt: "Cr\xE9ation de votre site web de A a Z",
             class: "profil-img",
             eager: ""
@@ -3132,4 +2550,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-BXmn5M-y.mjs.map
+//# sourceMappingURL=index-DZCjOfGC.mjs.map

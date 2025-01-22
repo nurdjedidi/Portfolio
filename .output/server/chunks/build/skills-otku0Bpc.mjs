@@ -1,8 +1,8 @@
 import { mergeProps, withCtx, createTextVNode, createVNode, useSSRContext } from 'vue';
 import { Chart, DoughnutController, ArcElement, Tooltip, Legend } from 'chart.js';
 import { ssrRenderAttrs, ssrRenderComponent } from 'vue/server-renderer';
-import { _ as _export_sfc, q as VIcon, V as VContainer } from './server.mjs';
-import { V as VCard, a as VCardTitle, d as VRow, e as VCol, b as VCardSubtitle, c as VCardText } from './VCard-DTQ05Igx.mjs';
+import { _ as _export_sfc, n as VIcon, V as VContainer } from './server.mjs';
+import { V as VCard, a as VCardTitle, d as VRow, e as VCol, b as VCardSubtitle, c as VCardText } from './VCard-CA-qA7qM.mjs';
 import '../_/nitro.mjs';
 import 'node:http';
 import 'node:https';
@@ -453,4 +453,4 @@ _sfc_main.setup = (props, ctx) => {
 const skills = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { skills as default };
-//# sourceMappingURL=skills-C_OQUFcY.mjs.map
+//# sourceMappingURL=skills-otku0Bpc.mjs.map
