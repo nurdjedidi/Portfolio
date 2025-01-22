@@ -57,6 +57,7 @@ nitro: {
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
+    '@nuxt/image'
   ],
   vite: {
     vue: {

@@ -1,12 +1,12 @@
 <template>
     <section class="presentation">
       <v-card max-width="400px" class="d-flex flex-column justify-center hover-transition w-100" xs="w-20" sm="w-70" md="w-100" color="grey-darken-4">
-      <v-img 
+      <NuxtImg
         src="../public/images/Vignette.avif"
         alt="Création de votre site web de A a Z"
         class="profil-img"
         eager
-      ></v-img>  
+      ></NuxtImg>  
       <v-card-title>Nûr Djedidi</v-card-title>
       <v-card-subtitle>Full stack web developer</v-card-subtitle>
       <v-card-text>

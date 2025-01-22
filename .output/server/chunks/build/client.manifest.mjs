@@ -1,21 +1,28 @@
 const client_manifest = {
-  "_BZ1XuFZR.js": {
+  "_BS9UW9tS.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "BZ1XuFZR.js",
+    "file": "BS9UW9tS.js",
     "name": "vue.-sixQ7xP",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ]
   },
-  "_DqL9Quul.js": {
+  "_VCard.8Js4-u2y.css": {
+    "resourceType": "style",
+    "prefetch": true,
+    "preload": true,
+    "file": "VCard.8Js4-u2y.css",
+    "src": "_VCard.8Js4-u2y.css"
+  },
+  "_z3PCaXyx.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DqL9Quul.js",
+    "file": "z3PCaXyx.js",
     "name": "VCard",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
@@ -29,13 +36,6 @@ const client_manifest = {
     "resourceType": "style",
     "prefetch": true,
     "preload": true
-  },
-  "_VCard.8Js4-u2y.css": {
-    "resourceType": "style",
-    "prefetch": true,
-    "preload": true,
-    "file": "VCard.8Js4-u2y.css",
-    "src": "_VCard.8Js4-u2y.css"
   },
   "node_modules/@mdi/font/fonts/materialdesignicons-webfont.eot": {
     "resourceType": "font",
@@ -66,13 +66,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "Bw7uabH-.js",
+    "file": "DQkc0u05.js",
     "name": "error-404",
     "src": "node_modules/nuxt/dist/app/components/error-404.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_BZ1XuFZR.js"
+      "_BS9UW9tS.js"
     ],
     "css": []
   },
@@ -87,13 +87,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "C7DUoyPS.js",
+    "file": "D9pwZs3o.js",
     "name": "error-500",
     "src": "node_modules/nuxt/dist/app/components/error-500.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_BZ1XuFZR.js"
+      "_BS9UW9tS.js"
     ],
     "css": []
   },
@@ -108,7 +108,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "qWRpRAu-.js",
+    "file": "BhW9rPwt.js",
     "name": "entry",
     "src": "node_modules/nuxt/dist/app/entry.js",
     "isEntry": true,
@@ -158,7 +158,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DgMV_ngX.js",
+    "file": "BroV6kw5.js",
     "name": "animation",
     "src": "pages/animation.vue",
     "isDynamicEntry": true,
@@ -178,20 +178,19 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "MCab-Vx8.js",
+    "file": "D40I-m8X.js",
     "name": "index",
     "src": "pages/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_DqL9Quul.js"
+      "_z3PCaXyx.js"
     ],
     "css": [],
     "assets": [
       "urbanstyle.QgN-5x_1.avif",
       "news.TMP8sPdg.avif",
-      "fitness.BbG25ixC.avif",
-      "Vignette.Cxlms983.avif"
+      "fitness.BbG25ixC.avif"
     ]
   },
   "index.BvRXt716.css": {
@@ -212,16 +211,12 @@ const client_manifest = {
     "file": "fitness.BbG25ixC.avif",
     "prefetch": true
   },
-  "Vignette.Cxlms983.avif": {
-    "file": "Vignette.Cxlms983.avif",
-    "prefetch": true
-  },
   "pages/news.vue": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CcP_2xRV.js",
+    "file": "sMG4QZBf.js",
     "name": "news",
     "src": "pages/news.vue",
     "isDynamicEntry": true,
@@ -241,13 +236,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "B_z4ALaK.js",
+    "file": "CdOKMGWM.js",
     "name": "skills",
     "src": "pages/skills.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_DqL9Quul.js"
+      "_z3PCaXyx.js"
     ],
     "css": []
   },
@@ -256,11 +251,6 @@ const client_manifest = {
     "resourceType": "style",
     "prefetch": true,
     "preload": true
-  },
-  "public/images/Vignette.avif": {
-    "prefetch": true,
-    "file": "Vignette.Cxlms983.avif",
-    "src": "public/images/Vignette.avif"
   },
   "public/images/fitness.avif": {
     "prefetch": true,

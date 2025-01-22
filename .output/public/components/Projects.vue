@@ -4,8 +4,9 @@
       <v-row>
         <v-col cols="12" sm="6" md="4" v-for="(projects, index) in projects" :key="index">
           <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
-            <v-img height="200px"
-            width="100%" :src="projects.img"  loading="lazy" :alt="projects.title" class="card-image"></v-img>
+            <NuxtImg height="200px"
+            width="100%" :src="projects.img"  loading="lazy" :alt="projects.title" class="card-image">
+            </NuxtImg>
             <v-card-text class="card-content d-flex flex-column flex-grow-1">
               <h2 class="card-title">{{ projects.title }}</h2>
               <p class="card-description">{{ projects.description }}</p>
@@ -39,7 +40,7 @@ import fitness from '../images/fitness.avif';
             { name: 'JS', icon: 'mdi-language-javascript' },
             { name: 'Node.js', icon: 'mdi-nodejs' }
           ],
-          link: '../ext/Urbanstyle/accueil.html'
+          link: '/urbanstyle'
         },
         { img: news, 
           title: 'World news', 

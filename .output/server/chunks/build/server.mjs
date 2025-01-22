@@ -1,6 +1,5 @@
-import { version as version$1, unref, inject as inject$1, watch, onScopeDispose, reactive, computed, watchEffect, toRefs, shallowRef, warn, getCurrentInstance as getCurrentInstance$1, ref, provide, defineComponent as defineComponent$1, capitalize, camelize, h, toRaw, createVNode, mergeProps, readonly, shallowReactive, Suspense, nextTick, Fragment, Transition, toRef, withDirectives, vShow, isRef, Text, resolveDirective, resolveDynamicComponent, cloneVNode, vModelText, effectScope, resolveComponent, TransitionGroup, useSSRContext, markRaw, createApp, getCurrentScope, hasInjectionContext, onErrorCaptured, onServerPrefetch, withCtx, createTextVNode, openBlock, createBlock, withModifiers, defineAsyncComponent, isReadonly, isShallow, isReactive } from 'vue';
-import { $ as $fetch$1, l as defu, p as parseQuery, m as createHooks, f as createError$1, n as hasProtocol, o as joinURL, q as getContext, v as isScriptProtocol, w as withQuery, x as sanitizeStatusCode, y as withTrailingSlash, z as withoutTrailingSlash, A as toRouteMatcher, B as createRouter$1 } from '../_/nitro.mjs';
-import { b as baseURL } from '../routes/renderer.mjs';
+import { version as version$1, unref, inject as inject$1, watch, onScopeDispose, reactive, computed, watchEffect, toRefs, shallowRef, warn, getCurrentInstance as getCurrentInstance$1, ref, provide, defineComponent as defineComponent$1, capitalize, camelize, h, toRaw, createVNode, mergeProps, readonly, shallowReactive, Suspense, nextTick, Fragment, Transition, toRef, withDirectives, vShow, isRef, Text, resolveDirective, resolveDynamicComponent, cloneVNode, vModelText, hasInjectionContext, effectScope, resolveComponent, TransitionGroup, useSSRContext, markRaw, createApp, getCurrentScope, onErrorCaptured, onServerPrefetch, withCtx, createTextVNode, openBlock, createBlock, withModifiers, defineAsyncComponent, isReadonly, isShallow, isReactive } from 'vue';
+import { $ as $fetch$1, l as baseURL, m as defu, n as parseQuery, o as getContext, q as createHooks, h as createError$1, v as hasProtocol, w as joinURL, x as isScriptProtocol, y as withQuery, z as sanitizeStatusCode, A as withTrailingSlash, B as withoutTrailingSlash, C as toRouteMatcher, D as createRouter$1 } from '../_/nitro.mjs';
 import { getActiveHead, CapoPlugin } from 'unhead';
 import { defineHeadPlugin } from '@unhead/shared';
 import { RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
@@ -9,10 +8,8 @@ import 'node:http';
 import 'node:https';
 import 'node:fs';
 import 'node:url';
+import 'ipx';
 import 'node:path';
-import 'vue-bundle-renderer/runtime';
-import 'devalue';
-import '@unhead/ssr';
 
 if (!globalThis.$fetch) {
   globalThis.$fetch = $fetch$1.create({
@@ -581,7 +578,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-_0x1JrYf.mjs')
+    component: () => import('./index-DH3cmXuQ.mjs')
   },
   {
     name: "news",
@@ -591,7 +588,7 @@ const _routes = [
   {
     name: "skills",
     path: "/skills",
-    component: () => import('./skills-otku0Bpc.mjs')
+    component: () => import('./skills-C_OQUFcY.mjs')
   }
 ];
 const _wrapIf = (component, props, slots) => {
@@ -11284,5 +11281,5 @@ let entry;
 }
 const entry$1 = (ssrContext) => entry(ssrContext);
 
-export { flipAlign as $, makeGroupItemProps as A, makeRoundedProps as B, makeRouterProps as C, makeSizeProps as D, EventProp as E, useLocale as F, useBorder as G, useVariant as H, IconValue as I, useDensity as J, useElevation as K, useRounded as L, useSize as M, useProxiedModel as N, useGroupItem as O, useLink as P, genOverlays as Q, Ripple as R, VExpandXTransition as S, VDefaultsProvider as T, VAvatar as U, VContainer as V, VImg as W, destructComputed as X, parseAnchor as Y, flipSide as Z, _export_sfc as _, __nuxt_component_0 as a, flipCorner as a0, getTargetBox as a1, Box as a2, consoleError as a3, getAxis as a4, getOverflow as a5, convertToUnit as a6, clamp as a7, nullifyTransforms as a8, makeDelayProps as a9, getCurrentInstance as aa, templateRef as ab, useDelay as ac, matchesSelector as ad, useToggleScope as ae, makeDimensionProps as af, makeTransitionProps as ag, useBackgroundColor as ah, useDimension as ai, useScopeId as aj, useRouter as ak, MaybeTransition as al, animate as am, standardEasing as an, omit as ao, getUid as ap, forwardRefs as aq, breakpoints as ar, createSimpleFunctional as as, makeLoaderProps as at, makeLocationProps as au, makePositionProps as av, useLoader as aw, useLocation as ax, usePosition as ay, LoaderSlot as az, makeDisplayProps as b, makeTagProps as c, makeGroupProps as d, entry$1 as default, useDisplay as e, useGroup as f, genericComponent as g, useResizeObserver as h, injectHead as i, useGoTo as j, useRender as k, VFadeTransition as l, makeComponentProps as m, VIcon as n, focusableChildren as o, propsFactory as p, deepEqual as q, resolveUnrefHeadInput as r, makeThemeProps as s, makeVariantProps as t, useRtl as u, provideTheme as v, provideDefaults as w, makeBorderProps as x, makeDensityProps as y, makeElevationProps as z };
+export { flipSide as $, makeDensityProps as A, makeElevationProps as B, makeGroupItemProps as C, makeRoundedProps as D, EventProp as E, makeRouterProps as F, makeSizeProps as G, useLocale as H, IconValue as I, useBorder as J, useVariant as K, useDensity as L, useElevation as M, useRounded as N, useSize as O, useProxiedModel as P, useGroupItem as Q, Ripple as R, useLink as S, genOverlays as T, VExpandXTransition as U, VContainer as V, VDefaultsProvider as W, VAvatar as X, destructComputed as Y, parseAnchor as Z, _export_sfc as _, __nuxt_component_0 as a, flipAlign as a0, flipCorner as a1, getTargetBox as a2, Box as a3, consoleError as a4, getAxis as a5, getOverflow as a6, convertToUnit as a7, clamp as a8, nullifyTransforms as a9, VImg as aA, LoaderSlot as aB, makeDelayProps as aa, getCurrentInstance as ab, templateRef as ac, useDelay as ad, matchesSelector as ae, useToggleScope as af, makeDimensionProps as ag, makeTransitionProps as ah, useBackgroundColor as ai, useDimension as aj, useScopeId as ak, useRouter as al, MaybeTransition as am, animate as an, standardEasing as ao, omit as ap, getUid as aq, forwardRefs as ar, breakpoints as as, createSimpleFunctional as at, makeLoaderProps as au, makeLocationProps as av, makePositionProps as aw, useLoader as ax, useLocation as ay, usePosition as az, useRuntimeConfig as b, makeDisplayProps as c, makeTagProps as d, entry$1 as default, makeGroupProps as e, useRtl as f, genericComponent as g, useDisplay as h, injectHead as i, useGroup as j, useResizeObserver as k, useGoTo as l, makeComponentProps as m, useRender as n, VFadeTransition as o, propsFactory as p, VIcon as q, resolveUnrefHeadInput as r, focusableChildren as s, deepEqual as t, useNuxtApp as u, makeThemeProps as v, makeVariantProps as w, provideTheme as x, provideDefaults as y, makeBorderProps as z };
 //# sourceMappingURL=server.mjs.map

@@ -1,4 +1,4 @@
-import { ar as breakpoints, p as propsFactory, m as makeComponentProps, c as makeTagProps, g as genericComponent, w as provideDefaults, k as useRender, as as createSimpleFunctional, I as IconValue, y as makeDensityProps, U as VAvatar, n as VIcon, T as VDefaultsProvider, x as makeBorderProps, af as makeDimensionProps, z as makeElevationProps, at as makeLoaderProps, au as makeLocationProps, av as makePositionProps, B as makeRoundedProps, C as makeRouterProps, s as makeThemeProps, t as makeVariantProps, R as Ripple, v as provideTheme, G as useBorder, H as useVariant, J as useDensity, ai as useDimension, K as useElevation, aw as useLoader, ax as useLocation, ay as usePosition, L as useRounded, P as useLink, W as VImg, az as LoaderSlot, Q as genOverlays } from './server.mjs';
+import { as as breakpoints, p as propsFactory, m as makeComponentProps, d as makeTagProps, g as genericComponent, y as provideDefaults, n as useRender, at as createSimpleFunctional, I as IconValue, A as makeDensityProps, X as VAvatar, q as VIcon, W as VDefaultsProvider, z as makeBorderProps, ag as makeDimensionProps, B as makeElevationProps, au as makeLoaderProps, av as makeLocationProps, aw as makePositionProps, D as makeRoundedProps, F as makeRouterProps, v as makeThemeProps, w as makeVariantProps, R as Ripple, x as provideTheme, J as useBorder, K as useVariant, L as useDensity, aj as useDimension, M as useElevation, ax as useLoader, ay as useLocation, az as usePosition, N as useRounded, S as useLink, aA as VImg, aB as LoaderSlot, T as genOverlays } from './server.mjs';
 import { capitalize, computed, h, createVNode, Fragment, withDirectives, mergeProps, resolveDirective } from 'vue';
 
 const breakpointProps = (() => {
@@ -551,4 +551,4 @@ const VCard = genericComponent()({
 });
 
 export { VCard as V, VCardTitle as a, VCardSubtitle as b, VCardText as c, VRow as d, VCol as e };
-//# sourceMappingURL=VCard-CA-qA7qM.mjs.map
+//# sourceMappingURL=VCard-DTQ05Igx.mjs.map

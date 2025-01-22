@@ -1,11 +1,17 @@
 import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'vue-bundle-renderer/runtime';
-import { j as joinRelativeURL, u as useRuntimeConfig, e as defineRenderHandler, g as getQuery, f as createError, h as getRouteRules, i as getResponseStatus, k as getResponseStatusText, b as useNitroApp } from '../_/nitro.mjs';
+import { e as defineRenderHandler, f as buildAssetsURL, p as publicAssetsURL, g as getQuery, h as createError, i as getRouteRules, u as useRuntimeConfig, j as getResponseStatus, k as getResponseStatusText, b as useNitroApp } from '../_/nitro.mjs';
 import { stringify, uneval } from 'devalue';
 import { renderToString } from 'vue/server-renderer';
 import { propsToString, renderSSRHead } from '@unhead/ssr';
 import { createServerHead as createServerHead$1, CapoPlugin } from 'unhead';
 import { version, unref } from 'vue';
 import { defineHeadPlugin } from '@unhead/shared';
+import 'node:http';
+import 'node:https';
+import 'node:fs';
+import 'node:url';
+import 'ipx';
+import 'node:path';
 
 const Vue3 = version[0] === "3";
 
@@ -83,21 +89,6 @@ const appTeleportAttrs = {"id":"teleports"};
 const componentIslands = false;
 
 const appId = "nuxt-app";
-
-function baseURL() {
-  return useRuntimeConfig().app.baseURL;
-}
-function buildAssetsDir() {
-  return useRuntimeConfig().app.buildAssetsDir;
-}
-function buildAssetsURL(...path) {
-  return joinRelativeURL(publicAssetsURL(), buildAssetsDir(), ...path);
-}
-function publicAssetsURL(...path) {
-  const app = useRuntimeConfig().app;
-  const publicBase = app.cdnURL || app.baseURL;
-  return path.length ? joinRelativeURL(publicBase, ...path) : publicBase;
-}
 
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;
@@ -393,10 +384,5 @@ function splitPayload(ssrContext) {
   };
 }
 
-const renderer$1 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  default: renderer
-});
-
-export { buildAssetsURL as a, baseURL as b, renderer$1 as r };
+export { renderer as default };
 //# sourceMappingURL=renderer.mjs.map

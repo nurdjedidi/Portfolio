@@ -3,6 +3,7 @@ import { Server } from 'node:https';
 import { t as toNodeListener, d as destr, u as useRuntimeConfig, a as trapUnhandledNodeErrors, s as setupGracefulShutdown, b as useNitroApp } from './chunks/_/nitro.mjs';
 import 'node:fs';
 import 'node:url';
+import 'ipx';
 import 'node:path';
 
 const cert = process.env.NITRO_SSL_CERT;
