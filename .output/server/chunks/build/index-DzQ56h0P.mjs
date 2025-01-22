@@ -423,7 +423,9 @@ const imageOptions = {
   },
   "presets": {},
   "provider": "ipx",
-  "domains": [],
+  "domains": [
+    "portfolionurdjedd.com"
+  ],
   "alias": {},
   "densities": [
     1,
@@ -3130,4 +3132,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-DH3cmXuQ.mjs.map
+//# sourceMappingURL=index-DzQ56h0P.mjs.map

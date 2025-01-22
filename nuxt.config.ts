@@ -50,15 +50,17 @@ nitro: {
   serveStatic: true, 
 },
   devtools: { enabled: true },
-  modules: [
+  modules: [ '@nuxt/image',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
-    '@nuxt/image'
   ],
+  image: {
+    domains: ['portfolionurdjedd.com']
+  },
   vite: {
     vue: {
       template: {
