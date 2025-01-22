@@ -4111,7 +4111,7 @@ function inject(key) {
 const vuetify_8NhHJigKc1 = /* @__PURE__ */ defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     theme: {
-      defaultTheme: "light"
+      defaultTheme: "dark"
     }
   });
   app.vueApp.use(vuetify);
