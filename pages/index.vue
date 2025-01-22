@@ -81,12 +81,6 @@
   transform: scale(1..01)
 }
 
-  section {
-  margin: 50px ;
-  padding: 20px;
-  max-width: 1200px;
-  text-align: center;
-}
 
 .projets {
   font-size: 2em;
