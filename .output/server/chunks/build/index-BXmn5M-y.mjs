@@ -2826,7 +2826,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
         _push2(ssrRenderComponent(_component_nuxt_img, {
-          src: "/images/Vignette.avif",
+          src: "/Vignette.avif",
           alt: "Cr\xE9ation de votre site web de A a Z",
           class: "profil-img",
           eager: ""
@@ -3000,7 +3000,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
       } else {
         return [
           createVNode(_component_nuxt_img, {
-            src: "/images/Vignette.avif",
+            src: "/Vignette.avif",
             alt: "Cr\xE9ation de votre site web de A a Z",
             class: "profil-img",
             eager: ""
@@ -3132,4 +3132,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-BUMC40nh.mjs.map
+//# sourceMappingURL=index-BXmn5M-y.mjs.map

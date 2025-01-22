@@ -2,7 +2,7 @@
     <section class="presentation">
       <v-card max-width="400px" class="d-flex flex-column justify-center hover-transition w-100" xs="w-20" sm="w-70" md="w-100" color="grey-darken-4">
       <nuxt-img
-        src="/images/Vignette.avif"
+        src="/Vignette.avif"
         alt="Création de votre site web de A a Z"
         class="profil-img"
         eager
