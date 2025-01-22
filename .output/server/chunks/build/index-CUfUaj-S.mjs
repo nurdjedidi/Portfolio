@@ -2235,7 +2235,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
   _push(`<!--[--><section class="presentation">`);
   _push(ssrRenderComponent(VCard, {
     "max-width": "400px",
-    class: "d-flex flex-column justify-center align-center hover-transition w-100",
+    class: "d-flex flex-column justify-center hover-transition w-100",
     xs: "w-20",
     sm: "w-70",
     md: "w-100",
@@ -2550,4 +2550,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-DwbcXQ3b.mjs.map
+//# sourceMappingURL=index-CUfUaj-S.mjs.map

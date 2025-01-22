@@ -1,6 +1,6 @@
 <template>
     <section class="presentation">
-      <v-card max-width="400px" class="d-flex flex-column justify-center align-center hover-transition w-100" xs="w-20" sm="w-70" md="w-100" color="grey-darken-4">
+      <v-card max-width="400px" class="d-flex flex-column justify-center hover-transition w-100" xs="w-20" sm="w-70" md="w-100" color="grey-darken-4">
       <v-img
         src="/images/Vignette.avif"
         alt="Création de votre site web de A a Z"
@@ -98,56 +98,6 @@ p {
   font-size: 1.1em;
   color: #bbb;
   margin-bottom: 30px;
-}
-
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.card-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.card-content {
-  padding: 20px;
-}
-
-.card-title {
-  font-size: 1.6em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.card-description {
-  font-size: 1em;
-  margin-bottom: 15px;
-}
-
-.card-skill {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.card-link {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #0056b3;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.card-link:hover {
-  background-color: #003f88;
 }
 
 @media (max-width: 768px) { 
