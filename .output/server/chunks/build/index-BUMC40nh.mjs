@@ -1341,7 +1341,7 @@ const _sfc_main$1 = {
   }
 };
 function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_NuxtImg = _sfc_main$2;
+  const _component_nuxt_img = _sfc_main$2;
   _push(`<div${ssrRenderAttrs(_attrs)}>`);
   _push(ssrRenderComponent(VRow, null, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
@@ -1363,7 +1363,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                 }, {
                   default: withCtx((_3, _push4, _parent4, _scopeId3) => {
                     if (_push4) {
-                      _push4(ssrRenderComponent(_component_NuxtImg, {
+                      _push4(ssrRenderComponent(_component_nuxt_img, {
                         height: "200px",
                         width: "100%",
                         src: projects.img,
@@ -1456,7 +1456,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                       }, _parent4, _scopeId3));
                     } else {
                       return [
-                        createVNode(_component_NuxtImg, {
+                        createVNode(_component_nuxt_img, {
                           height: "200px",
                           width: "100%",
                           src: projects.img,
@@ -1508,7 +1508,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                     class: "border-thin d-flex flex-column hover-transition"
                   }, {
                     default: withCtx(() => [
-                      createVNode(_component_NuxtImg, {
+                      createVNode(_component_nuxt_img, {
                         height: "200px",
                         width: "100%",
                         src: projects.img,
@@ -1573,7 +1573,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                   class: "border-thin d-flex flex-column hover-transition"
                 }, {
                   default: withCtx(() => [
-                    createVNode(_component_NuxtImg, {
+                    createVNode(_component_nuxt_img, {
                       height: "200px",
                       width: "100%",
                       src: projects.img,
@@ -2812,7 +2812,7 @@ const _sfc_main = {
   }
 };
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_NuxtImg = _sfc_main$2;
+  const _component_nuxt_img = _sfc_main$2;
   const _component_Projects = resolveComponent("Projects");
   _push(`<!--[--><section class="presentation">`);
   _push(ssrRenderComponent(VCard, {
@@ -2825,7 +2825,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
   }, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
-        _push2(ssrRenderComponent(_component_NuxtImg, {
+        _push2(ssrRenderComponent(_component_nuxt_img, {
           src: "/images/Vignette.avif",
           alt: "Cr\xE9ation de votre site web de A a Z",
           class: "profil-img",
@@ -2999,7 +2999,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
         }, _parent2, _scopeId));
       } else {
         return [
-          createVNode(_component_NuxtImg, {
+          createVNode(_component_nuxt_img, {
             src: "/images/Vignette.avif",
             alt: "Cr\xE9ation de votre site web de A a Z",
             class: "profil-img",
@@ -3132,4 +3132,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-nHOSy7Ns.mjs.map
+//# sourceMappingURL=index-BUMC40nh.mjs.map
