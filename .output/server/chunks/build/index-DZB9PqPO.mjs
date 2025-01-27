@@ -726,7 +726,7 @@ const _sfc_main$1 = {
             { name: "JS", icon: "mdi-language-javascript" },
             { name: "Node.js", icon: "mdi-nodejs" }
           ],
-          link: "/urbanstyle"
+          link: "https://urbanstyle-mvwkc.ondigitalocean.app/"
         },
         {
           img: news,
@@ -838,7 +838,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                               }),
                               _: 2
                             }, _parent5, _scopeId4));
-                            _push5(`<a${ssrRenderAttr("href", projects.link)} class="card-link mt-auto"${_scopeId4}>See the projects</a>`);
+                            _push5(`<a${ssrRenderAttr("href", projects.link)} target="_blank" class="card-link mt-auto"${_scopeId4}>See the projects</a>`);
                           } else {
                             return [
                               createVNode("h2", { class: "card-title" }, toDisplayString(projects.title), 1),
@@ -865,6 +865,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                               }, 1024),
                               createVNode("a", {
                                 href: projects.link,
+                                target: "_blank",
                                 class: "card-link mt-auto"
                               }, "See the projects", 8, ["href"])
                             ];
@@ -908,6 +909,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                             }, 1024),
                             createVNode("a", {
                               href: projects.link,
+                              target: "_blank",
                               class: "card-link mt-auto"
                             }, "See the projects", 8, ["href"])
                           ]),
@@ -960,6 +962,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                           }, 1024),
                           createVNode("a", {
                             href: projects.link,
+                            target: "_blank",
                             class: "card-link mt-auto"
                           }, "See the projects", 8, ["href"])
                         ]),
@@ -1025,6 +1028,7 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
                         }, 1024),
                         createVNode("a", {
                           href: projects.link,
+                          target: "_blank",
                           class: "card-link mt-auto"
                         }, "See the projects", 8, ["href"])
                       ]),
@@ -2550,4 +2554,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-DpdDQGPy.mjs.map
+//# sourceMappingURL=index-DZB9PqPO.mjs.map

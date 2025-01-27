@@ -13,7 +13,7 @@
               <v-chip-group class="card-skill d-flex flex-wrap" column>
                 <v-chip v-for="(skill, skillIndex) in projects.skills" :key="skillIndex" :prepend-icon="skill.icon" class="d-flex">{{ skill.name }}</v-chip>
               </v-chip-group>
-              <a :href="projects.link" class="card-link mt-auto">See the projects</a>
+              <a :href="projects.link" target="_blank" class="card-link mt-auto">See the projects</a>
             </v-card-text>
           </v-card>
         </v-col>
@@ -40,7 +40,7 @@ import fitness from '../images/fitness.avif';
             { name: 'JS', icon: 'mdi-language-javascript' },
             { name: 'Node.js', icon: 'mdi-nodejs' }
           ],
-          link: '/urbanstyle'
+          link: 'https://urbanstyle-mvwkc.ondigitalocean.app/'
         },
         { img: news, 
           title: 'World news', 
