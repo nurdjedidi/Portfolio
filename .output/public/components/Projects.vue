@@ -65,7 +65,7 @@ import fitness from '../images/fitness.avif';
             { name: 'MySQL', icon: 'mdi-database' },
             { name: 'API', icon: 'mdi-access-point' }
           ],
-          link: '/softai'
+          link: 'https://softai.info'
         }
       ]
         }

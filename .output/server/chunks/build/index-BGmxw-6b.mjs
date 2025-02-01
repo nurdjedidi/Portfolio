@@ -753,7 +753,7 @@ const _sfc_main$1 = {
             { name: "MySQL", icon: "mdi-database" },
             { name: "API", icon: "mdi-access-point" }
           ],
-          link: "/softai"
+          link: "https://softai.info"
         }
       ]
     };
@@ -2554,4 +2554,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-DADLUYi3.mjs.map
+//# sourceMappingURL=index-BGmxw-6b.mjs.map
