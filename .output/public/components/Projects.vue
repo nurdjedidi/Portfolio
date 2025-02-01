@@ -55,7 +55,7 @@ import fitness from '../images/fitness.avif';
           link: '/news'
         },
         { img: fitness, 
-          title: 'Health & fitness', 
+          title: 'NutriWeb', 
           description: 'Below is the link to a fitness and health monitoring project.', 
           skills: [
             { name: 'HTML', icon: 'mdi-language-html5' },

@@ -743,7 +743,7 @@ const _sfc_main$1 = {
         },
         {
           img: fitness,
-          title: "Health & fitness",
+          title: "NutriWeb",
           description: "Below is the link to a fitness and health monitoring project.",
           skills: [
             { name: "HTML", icon: "mdi-language-html5" },
@@ -2554,4 +2554,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-DZB9PqPO.mjs.map
+//# sourceMappingURL=index-DADLUYi3.mjs.map
