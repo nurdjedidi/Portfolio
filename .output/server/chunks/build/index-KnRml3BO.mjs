@@ -2222,9 +2222,9 @@ const _sfc_main = {
     return {
       socialLinks: [
         { name: "Twitter", icon: "mdi-twitter", link: "https://twitter.com" },
-        { name: "Codecademy", icon: "mdi-code-tags", link: "https://www.codecademy.com" },
-        { name: "GitHub", icon: "mdi-github", link: "https://github.com" },
-        { name: "LinkedIn", icon: "mdi-linkedin", link: "https://www.linkedin.com" }
+        { name: "Codecademy", icon: "mdi-code-tags", link: "https://www.codecademy.com/profiles/Nur_djedd" },
+        { name: "GitHub", icon: "mdi-github", link: "https://github.com/nurdjedidi" },
+        { name: "LinkedIn", icon: "mdi-linkedin", link: "https://www.linkedin.com/in/n%C3%BBr-djedidi-829921236/" }
       ]
     };
   },
@@ -2554,4 +2554,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-BGmxw-6b.mjs.map
+//# sourceMappingURL=index-KnRml3BO.mjs.map

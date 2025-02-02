@@ -44,9 +44,9 @@
     return {
       socialLinks: [
         { name: 'Twitter', icon: 'mdi-twitter', link: 'https://twitter.com' },
-        { name: 'Codecademy', icon: 'mdi-code-tags', link: 'https://www.codecademy.com' },
-        { name: 'GitHub', icon: 'mdi-github', link: 'https://github.com' },
-        { name: 'LinkedIn', icon: 'mdi-linkedin', link: 'https://www.linkedin.com' }
+        { name: 'Codecademy', icon: 'mdi-code-tags', link: 'https://www.codecademy.com/profiles/Nur_djedd' },
+        { name: 'GitHub', icon: 'mdi-github', link: 'https://github.com/nurdjedidi' },
+        { name: 'LinkedIn', icon: 'mdi-linkedin', link: 'https://www.linkedin.com/in/n%C3%BBr-djedidi-829921236/' }
       ],
     };
   },
