@@ -51,7 +51,7 @@
        new Chart(ctx, {
         type: 'doughnut', 
         data: {
-    labels: ['HTML', 'CSS', 'JS', 'Vue.js', 'Node.js', 'MySQL', 'MongoDB', 'API', 'SEO'],
+    labels: ['HTML', 'CSS', 'Javascript', 'Typescript', 'Vue.js', 'Node.js', 'MySQL', 'API', 'SEO'],
     datasets: [
         {
             label: 'Maîtrise 1',
