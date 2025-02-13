@@ -2,8 +2,10 @@ import { c as defineEventHandler } from '../../_/nitro.mjs';
 import axios from 'axios';
 import 'node:http';
 import 'node:https';
+import 'vue';
 import 'node:fs';
 import 'node:url';
+import 'consola/core';
 import 'ipx';
 import 'node:path';
 

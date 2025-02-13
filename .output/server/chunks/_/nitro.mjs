@@ -1,9 +1,11 @@
 import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import http from 'node:http';
 import https from 'node:https';
+import { toValue } from 'vue';
 import { promises, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { createConsola as createConsola$1 } from 'consola/core';
 import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'ipx';
-import { dirname as dirname$1, resolve as resolve$1, join } from 'node:path';
+import { resolve as resolve$2, dirname as dirname$1, join } from 'node:path';
 
 const suspectProtoRx = /"(?:_|\\u0{2}5[Ff]){2}(?:p|\\u0{2}70)(?:r|\\u0{2}72)(?:o|\\u0{2}6[Ff])(?:t|\\u0{2}74)(?:o|\\u0{2}6[Ff])(?:_|\\u0{2}5[Ff]){2}"\s*:/;
 const suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
@@ -38,7 +40,7 @@ function destr(value, options = {}) {
       return false;
     }
     if (_lval === "undefined") {
-      return undefined;
+      return void 0;
     }
     if (_lval === "null") {
       return null;
@@ -79,12 +81,14 @@ const HASH_RE = /#/g;
 const AMPERSAND_RE = /&/g;
 const SLASH_RE = /\//g;
 const EQUAL_RE = /=/g;
+const IM_RE = /\?/g;
 const PLUS_RE = /\+/g;
 const ENC_CARET_RE = /%5e/gi;
 const ENC_BACKTICK_RE = /%60/gi;
 const ENC_PIPE_RE = /%7c/gi;
 const ENC_SPACE_RE = /%20/gi;
 const ENC_SLASH_RE = /%2f/gi;
+const ENC_ENC_SLASH_RE = /%252f/gi;
 function encode(text) {
   return encodeURI("" + text).replace(ENC_PIPE_RE, "|");
 }
@@ -93,6 +97,9 @@ function encodeQueryValue(input) {
 }
 function encodeQueryKey(text) {
   return encodeQueryValue(text).replace(EQUAL_RE, "%3D");
+}
+function encodePath(text) {
+  return encode(text).replace(HASH_RE, "%23").replace(IM_RE, "%3F").replace(ENC_ENC_SLASH_RE, "%2F").replace(AMPERSAND_RE, "%26").replace(PLUS_RE, "%2B");
 }
 function decode(text = "") {
   try {
@@ -126,7 +133,7 @@ function parseQuery(parametersString = "") {
       continue;
     }
     const value = decodeQueryValue(s[2] || "");
-    if (object[key] === undefined) {
+    if (object[key] === void 0) {
       object[key] = value;
     } else if (Array.isArray(object[key])) {
       object[key].push(value);
@@ -149,7 +156,7 @@ function encodeQueryItem(key, value) {
   return `${encodeQueryKey(key)}=${encodeQueryValue(value)}`;
 }
 function stringifyQuery(query) {
-  return Object.keys(query).filter((k) => query[k] !== undefined).map((k) => encodeQueryItem(k, query[k])).filter(Boolean).join("&");
+  return Object.keys(query).filter((k) => query[k] !== void 0).map((k) => encodeQueryItem(k, query[k])).filter(Boolean).join("&");
 }
 
 const PROTOCOL_STRICT_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
@@ -312,6 +319,19 @@ function joinRelativeURL(..._input) {
   }
   return url;
 }
+function withHttps(input) {
+  return withProtocol(input, "https://");
+}
+function withProtocol(input, protocol) {
+  let match = input.match(PROTOCOL_REGEX);
+  if (!match) {
+    match = input.match(/^\/{2,}/);
+  }
+  if (!match) {
+    return protocol + input;
+  }
+  return protocol + input.slice(match[0].length);
+}
 
 const protocolRelative = Symbol.for("ufo:protocolRelative");
 function parseURL(input = "", defaultProto) {
@@ -331,7 +351,7 @@ function parseURL(input = "", defaultProto) {
     };
   }
   if (!hasProtocol(input, { acceptRelative: true })) {
-    return parsePath(input);
+    return defaultProto ? parseURL(defaultProto + input) : parsePath(input);
   }
   const [, protocol = "", auth, hostAndPath = ""] = input.replace(/\\/g, "/").match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) || [];
   let [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
@@ -375,9 +395,9 @@ const defaults = Object.freeze({
   unorderedObjects: true,
   unorderedArrays: false,
   unorderedSets: false,
-  excludeKeys: undefined,
-  excludeValues: undefined,
-  replacer: undefined
+  excludeKeys: void 0,
+  excludeValues: void 0,
+  replacer: void 0
 });
 function objectHash(object, options) {
   if (options) {
@@ -428,7 +448,7 @@ function createHasher(options) {
       }
       objType = objType.toLowerCase();
       let objectNumber = null;
-      if ((objectNumber = context.get(object)) === undefined) {
+      if ((objectNumber = context.get(object)) === void 0) {
         context.set(object, context.size);
       } else {
         return this.dispatch("[CIRCULAR:" + objectNumber + "]");
@@ -478,7 +498,7 @@ function createHasher(options) {
       }
     },
     array(arr, unordered) {
-      unordered = unordered === undefined ? options.unorderedArrays !== false : unordered;
+      unordered = unordered === void 0 ? options.unorderedArrays !== false : unordered;
       write("array:" + arr.length + ":");
       if (!unordered || arr.length <= 1) {
         for (const entry of arr) {
@@ -703,7 +723,7 @@ class WordArray {
     __publicField$1(this, "words");
     __publicField$1(this, "sigBytes");
     words = this.words = words || [];
-    this.sigBytes = sigBytes === undefined ? words.length * 4 : sigBytes;
+    this.sigBytes = sigBytes === void 0 ? words.length * 4 : sigBytes;
   }
   toString(encoder) {
     return (encoder || Hex).stringify(this);
@@ -1036,7 +1056,7 @@ function lookup(ctx, path) {
       wildCardParam = sections.slice(i).join("/");
     }
     const nextNode = node.children.get(section);
-    if (nextNode === undefined) {
+    if (nextNode === void 0) {
       if (node && node.placeholderChildren.length > 1) {
         const remaining = sections.length - i;
         node = node.placeholderChildren.find((c) => c.maxDepth === remaining) || null;
@@ -1065,7 +1085,7 @@ function lookup(ctx, path) {
   if (paramsFound) {
     return {
       ...node.data,
-      params: paramsFound ? params : undefined
+      params: paramsFound ? params : void 0
     };
   }
   return node.data;
@@ -1249,7 +1269,7 @@ function _defu(baseObject, defaults, namespace = ".", merger) {
       continue;
     }
     const value = baseObject[key];
-    if (value === null || value === undefined) {
+    if (value === null || value === void 0) {
       continue;
     }
     if (merger && merger(object, key, value, namespace)) {
@@ -1278,647 +1298,11 @@ function createDefu(merger) {
 }
 const defu = createDefu();
 const defuFn = createDefu((object, key, currentValue) => {
-  if (object[key] !== undefined && typeof currentValue === "function") {
+  if (object[key] !== void 0 && typeof currentValue === "function") {
     object[key] = currentValue(object[key]);
     return true;
   }
 });
-
-function rawHeaders(headers) {
-  const rawHeaders2 = [];
-  for (const key in headers) {
-    if (Array.isArray(headers[key])) {
-      for (const h of headers[key]) {
-        rawHeaders2.push(key, h);
-      }
-    } else {
-      rawHeaders2.push(key, headers[key]);
-    }
-  }
-  return rawHeaders2;
-}
-function mergeFns(...functions) {
-  return function(...args) {
-    for (const fn of functions) {
-      fn(...args);
-    }
-  };
-}
-function createNotImplementedError(name) {
-  throw new Error(`[unenv] ${name} is not implemented yet!`);
-}
-
-let defaultMaxListeners = 10;
-let EventEmitter$1 = class EventEmitter {
-  __unenv__ = true;
-  _events = /* @__PURE__ */ Object.create(null);
-  _maxListeners;
-  static get defaultMaxListeners() {
-    return defaultMaxListeners;
-  }
-  static set defaultMaxListeners(arg) {
-    if (typeof arg !== "number" || arg < 0 || Number.isNaN(arg)) {
-      throw new RangeError(
-        'The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + "."
-      );
-    }
-    defaultMaxListeners = arg;
-  }
-  setMaxListeners(n) {
-    if (typeof n !== "number" || n < 0 || Number.isNaN(n)) {
-      throw new RangeError(
-        'The value of "n" is out of range. It must be a non-negative number. Received ' + n + "."
-      );
-    }
-    this._maxListeners = n;
-    return this;
-  }
-  getMaxListeners() {
-    return _getMaxListeners(this);
-  }
-  emit(type, ...args) {
-    if (!this._events[type] || this._events[type].length === 0) {
-      return false;
-    }
-    if (type === "error") {
-      let er;
-      if (args.length > 0) {
-        er = args[0];
-      }
-      if (er instanceof Error) {
-        throw er;
-      }
-      const err = new Error(
-        "Unhandled error." + (er ? " (" + er.message + ")" : "")
-      );
-      err.context = er;
-      throw err;
-    }
-    for (const _listener of this._events[type]) {
-      (_listener.listener || _listener).apply(this, args);
-    }
-    return true;
-  }
-  addListener(type, listener) {
-    return _addListener(this, type, listener, false);
-  }
-  on(type, listener) {
-    return _addListener(this, type, listener, false);
-  }
-  prependListener(type, listener) {
-    return _addListener(this, type, listener, true);
-  }
-  once(type, listener) {
-    return this.on(type, _wrapOnce(this, type, listener));
-  }
-  prependOnceListener(type, listener) {
-    return this.prependListener(type, _wrapOnce(this, type, listener));
-  }
-  removeListener(type, listener) {
-    return _removeListener(this, type, listener);
-  }
-  off(type, listener) {
-    return this.removeListener(type, listener);
-  }
-  removeAllListeners(type) {
-    return _removeAllListeners(this, type);
-  }
-  listeners(type) {
-    return _listeners(this, type, true);
-  }
-  rawListeners(type) {
-    return _listeners(this, type, false);
-  }
-  listenerCount(type) {
-    return this.rawListeners(type).length;
-  }
-  eventNames() {
-    return Object.keys(this._events);
-  }
-};
-function _addListener(target, type, listener, prepend) {
-  _checkListener(listener);
-  if (target._events.newListener !== undefined) {
-    target.emit("newListener", type, listener.listener || listener);
-  }
-  if (!target._events[type]) {
-    target._events[type] = [];
-  }
-  if (prepend) {
-    target._events[type].unshift(listener);
-  } else {
-    target._events[type].push(listener);
-  }
-  const maxListeners = _getMaxListeners(target);
-  if (maxListeners > 0 && target._events[type].length > maxListeners && !target._events[type].warned) {
-    target._events[type].warned = true;
-    const warning = new Error(
-      `[unenv] Possible EventEmitter memory leak detected. ${target._events[type].length} ${type} listeners added. Use emitter.setMaxListeners() to increase limit`
-    );
-    warning.name = "MaxListenersExceededWarning";
-    warning.emitter = target;
-    warning.type = type;
-    warning.count = target._events[type]?.length;
-    console.warn(warning);
-  }
-  return target;
-}
-function _removeListener(target, type, listener) {
-  _checkListener(listener);
-  if (!target._events[type] || target._events[type].length === 0) {
-    return target;
-  }
-  const lenBeforeFilter = target._events[type].length;
-  target._events[type] = target._events[type].filter((fn) => fn !== listener);
-  if (lenBeforeFilter === target._events[type].length) {
-    return target;
-  }
-  if (target._events.removeListener) {
-    target.emit("removeListener", type, listener.listener || listener);
-  }
-  if (target._events[type].length === 0) {
-    delete target._events[type];
-  }
-  return target;
-}
-function _removeAllListeners(target, type) {
-  if (!target._events[type] || target._events[type].length === 0) {
-    return target;
-  }
-  if (target._events.removeListener) {
-    for (const _listener of target._events[type]) {
-      target.emit("removeListener", type, _listener.listener || _listener);
-    }
-  }
-  delete target._events[type];
-  return target;
-}
-function _wrapOnce(target, type, listener) {
-  let fired = false;
-  const wrapper = (...args) => {
-    if (fired) {
-      return;
-    }
-    target.removeListener(type, wrapper);
-    fired = true;
-    return args.length === 0 ? listener.call(target) : listener.apply(target, args);
-  };
-  wrapper.listener = listener;
-  return wrapper;
-}
-function _getMaxListeners(target) {
-  return target._maxListeners ?? EventEmitter$1.defaultMaxListeners;
-}
-function _listeners(target, type, unwrap) {
-  let listeners = target._events[type];
-  if (typeof listeners === "function") {
-    listeners = [listeners];
-  }
-  return unwrap ? listeners.map((l) => l.listener || l) : listeners;
-}
-function _checkListener(listener) {
-  if (typeof listener !== "function") {
-    throw new TypeError(
-      'The "listener" argument must be of type Function. Received type ' + typeof listener
-    );
-  }
-}
-
-const EventEmitter = globalThis.EventEmitter || EventEmitter$1;
-
-class _Readable extends EventEmitter {
-  __unenv__ = true;
-  readableEncoding = null;
-  readableEnded = true;
-  readableFlowing = false;
-  readableHighWaterMark = 0;
-  readableLength = 0;
-  readableObjectMode = false;
-  readableAborted = false;
-  readableDidRead = false;
-  closed = false;
-  errored = null;
-  readable = false;
-  destroyed = false;
-  static from(_iterable, options) {
-    return new _Readable(options);
-  }
-  constructor(_opts) {
-    super();
-  }
-  _read(_size) {
-  }
-  read(_size) {
-  }
-  setEncoding(_encoding) {
-    return this;
-  }
-  pause() {
-    return this;
-  }
-  resume() {
-    return this;
-  }
-  isPaused() {
-    return true;
-  }
-  unpipe(_destination) {
-    return this;
-  }
-  unshift(_chunk, _encoding) {
-  }
-  wrap(_oldStream) {
-    return this;
-  }
-  push(_chunk, _encoding) {
-    return false;
-  }
-  _destroy(_error, _callback) {
-    this.removeAllListeners();
-  }
-  destroy(error) {
-    this.destroyed = true;
-    this._destroy(error);
-    return this;
-  }
-  pipe(_destenition, _options) {
-    return {};
-  }
-  compose(stream, options) {
-    throw new Error("[unenv] Method not implemented.");
-  }
-  [Symbol.asyncDispose]() {
-    this.destroy();
-    return Promise.resolve();
-  }
-  // eslint-disable-next-line require-yield
-  async *[Symbol.asyncIterator]() {
-    throw createNotImplementedError("Readable.asyncIterator");
-  }
-  iterator(options) {
-    throw createNotImplementedError("Readable.iterator");
-  }
-  map(fn, options) {
-    throw createNotImplementedError("Readable.map");
-  }
-  filter(fn, options) {
-    throw createNotImplementedError("Readable.filter");
-  }
-  forEach(fn, options) {
-    throw createNotImplementedError("Readable.forEach");
-  }
-  reduce(fn, initialValue, options) {
-    throw createNotImplementedError("Readable.reduce");
-  }
-  find(fn, options) {
-    throw createNotImplementedError("Readable.find");
-  }
-  findIndex(fn, options) {
-    throw createNotImplementedError("Readable.findIndex");
-  }
-  some(fn, options) {
-    throw createNotImplementedError("Readable.some");
-  }
-  toArray(options) {
-    throw createNotImplementedError("Readable.toArray");
-  }
-  every(fn, options) {
-    throw createNotImplementedError("Readable.every");
-  }
-  flatMap(fn, options) {
-    throw createNotImplementedError("Readable.flatMap");
-  }
-  drop(limit, options) {
-    throw createNotImplementedError("Readable.drop");
-  }
-  take(limit, options) {
-    throw createNotImplementedError("Readable.take");
-  }
-  asIndexedPairs(options) {
-    throw createNotImplementedError("Readable.asIndexedPairs");
-  }
-}
-const Readable = globalThis.Readable || _Readable;
-
-class _Writable extends EventEmitter {
-  __unenv__ = true;
-  writable = true;
-  writableEnded = false;
-  writableFinished = false;
-  writableHighWaterMark = 0;
-  writableLength = 0;
-  writableObjectMode = false;
-  writableCorked = 0;
-  closed = false;
-  errored = null;
-  writableNeedDrain = false;
-  destroyed = false;
-  _data;
-  _encoding = "utf-8";
-  constructor(_opts) {
-    super();
-  }
-  pipe(_destenition, _options) {
-    return {};
-  }
-  _write(chunk, encoding, callback) {
-    if (this.writableEnded) {
-      if (callback) {
-        callback();
-      }
-      return;
-    }
-    if (this._data === undefined) {
-      this._data = chunk;
-    } else {
-      const a = typeof this._data === "string" ? Buffer.from(this._data, this._encoding || encoding || "utf8") : this._data;
-      const b = typeof chunk === "string" ? Buffer.from(chunk, encoding || this._encoding || "utf8") : chunk;
-      this._data = Buffer.concat([a, b]);
-    }
-    this._encoding = encoding;
-    if (callback) {
-      callback();
-    }
-  }
-  _writev(_chunks, _callback) {
-  }
-  _destroy(_error, _callback) {
-  }
-  _final(_callback) {
-  }
-  write(chunk, arg2, arg3) {
-    const encoding = typeof arg2 === "string" ? this._encoding : "utf-8";
-    const cb = typeof arg2 === "function" ? arg2 : typeof arg3 === "function" ? arg3 : undefined;
-    this._write(chunk, encoding, cb);
-    return true;
-  }
-  setDefaultEncoding(_encoding) {
-    return this;
-  }
-  end(arg1, arg2, arg3) {
-    const callback = typeof arg1 === "function" ? arg1 : typeof arg2 === "function" ? arg2 : typeof arg3 === "function" ? arg3 : undefined;
-    if (this.writableEnded) {
-      if (callback) {
-        callback();
-      }
-      return this;
-    }
-    const data = arg1 === callback ? undefined : arg1;
-    if (data) {
-      const encoding = arg2 === callback ? undefined : arg2;
-      this.write(data, encoding, callback);
-    }
-    this.writableEnded = true;
-    this.writableFinished = true;
-    this.emit("close");
-    this.emit("finish");
-    return this;
-  }
-  cork() {
-  }
-  uncork() {
-  }
-  destroy(_error) {
-    this.destroyed = true;
-    delete this._data;
-    this.removeAllListeners();
-    return this;
-  }
-  compose(stream, options) {
-    throw new Error("[h3] Method not implemented.");
-  }
-}
-const Writable = globalThis.Writable || _Writable;
-
-const __Duplex = class {
-  allowHalfOpen = true;
-  _destroy;
-  constructor(readable = new Readable(), writable = new Writable()) {
-    Object.assign(this, readable);
-    Object.assign(this, writable);
-    this._destroy = mergeFns(readable._destroy, writable._destroy);
-  }
-};
-function getDuplex() {
-  Object.assign(__Duplex.prototype, Readable.prototype);
-  Object.assign(__Duplex.prototype, Writable.prototype);
-  return __Duplex;
-}
-const _Duplex = /* @__PURE__ */ getDuplex();
-const Duplex = globalThis.Duplex || _Duplex;
-
-class Socket extends Duplex {
-  __unenv__ = true;
-  bufferSize = 0;
-  bytesRead = 0;
-  bytesWritten = 0;
-  connecting = false;
-  destroyed = false;
-  pending = false;
-  localAddress = "";
-  localPort = 0;
-  remoteAddress = "";
-  remoteFamily = "";
-  remotePort = 0;
-  autoSelectFamilyAttemptedAddresses = [];
-  readyState = "readOnly";
-  constructor(_options) {
-    super();
-  }
-  write(_buffer, _arg1, _arg2) {
-    return false;
-  }
-  connect(_arg1, _arg2, _arg3) {
-    return this;
-  }
-  end(_arg1, _arg2, _arg3) {
-    return this;
-  }
-  setEncoding(_encoding) {
-    return this;
-  }
-  pause() {
-    return this;
-  }
-  resume() {
-    return this;
-  }
-  setTimeout(_timeout, _callback) {
-    return this;
-  }
-  setNoDelay(_noDelay) {
-    return this;
-  }
-  setKeepAlive(_enable, _initialDelay) {
-    return this;
-  }
-  address() {
-    return {};
-  }
-  unref() {
-    return this;
-  }
-  ref() {
-    return this;
-  }
-  destroySoon() {
-    this.destroy();
-  }
-  resetAndDestroy() {
-    const err = new Error("ERR_SOCKET_CLOSED");
-    err.code = "ERR_SOCKET_CLOSED";
-    this.destroy(err);
-    return this;
-  }
-}
-
-class IncomingMessage extends Readable {
-  __unenv__ = {};
-  aborted = false;
-  httpVersion = "1.1";
-  httpVersionMajor = 1;
-  httpVersionMinor = 1;
-  complete = true;
-  connection;
-  socket;
-  headers = {};
-  trailers = {};
-  method = "GET";
-  url = "/";
-  statusCode = 200;
-  statusMessage = "";
-  closed = false;
-  errored = null;
-  readable = false;
-  constructor(socket) {
-    super();
-    this.socket = this.connection = socket || new Socket();
-  }
-  get rawHeaders() {
-    return rawHeaders(this.headers);
-  }
-  get rawTrailers() {
-    return [];
-  }
-  setTimeout(_msecs, _callback) {
-    return this;
-  }
-  get headersDistinct() {
-    return _distinct(this.headers);
-  }
-  get trailersDistinct() {
-    return _distinct(this.trailers);
-  }
-}
-function _distinct(obj) {
-  const d = {};
-  for (const [key, value] of Object.entries(obj)) {
-    if (key) {
-      d[key] = (Array.isArray(value) ? value : [value]).filter(
-        Boolean
-      );
-    }
-  }
-  return d;
-}
-
-class ServerResponse extends Writable {
-  __unenv__ = true;
-  statusCode = 200;
-  statusMessage = "";
-  upgrading = false;
-  chunkedEncoding = false;
-  shouldKeepAlive = false;
-  useChunkedEncodingByDefault = false;
-  sendDate = false;
-  finished = false;
-  headersSent = false;
-  strictContentLength = false;
-  connection = null;
-  socket = null;
-  req;
-  _headers = {};
-  constructor(req) {
-    super();
-    this.req = req;
-  }
-  assignSocket(socket) {
-    socket._httpMessage = this;
-    this.socket = socket;
-    this.connection = socket;
-    this.emit("socket", socket);
-    this._flush();
-  }
-  _flush() {
-    this.flushHeaders();
-  }
-  detachSocket(_socket) {
-  }
-  writeContinue(_callback) {
-  }
-  writeHead(statusCode, arg1, arg2) {
-    if (statusCode) {
-      this.statusCode = statusCode;
-    }
-    if (typeof arg1 === "string") {
-      this.statusMessage = arg1;
-      arg1 = undefined;
-    }
-    const headers = arg2 || arg1;
-    if (headers) {
-      if (Array.isArray(headers)) ; else {
-        for (const key in headers) {
-          this.setHeader(key, headers[key]);
-        }
-      }
-    }
-    this.headersSent = true;
-    return this;
-  }
-  writeProcessing() {
-  }
-  setTimeout(_msecs, _callback) {
-    return this;
-  }
-  appendHeader(name, value) {
-    name = name.toLowerCase();
-    const current = this._headers[name];
-    const all = [
-      ...Array.isArray(current) ? current : [current],
-      ...Array.isArray(value) ? value : [value]
-    ].filter(Boolean);
-    this._headers[name] = all.length > 1 ? all : all[0];
-    return this;
-  }
-  setHeader(name, value) {
-    this._headers[name.toLowerCase()] = value;
-    return this;
-  }
-  getHeader(name) {
-    return this._headers[name.toLowerCase()];
-  }
-  getHeaders() {
-    return this._headers;
-  }
-  getHeaderNames() {
-    return Object.keys(this._headers);
-  }
-  hasHeader(name) {
-    return name.toLowerCase() in this._headers;
-  }
-  removeHeader(name) {
-    delete this._headers[name.toLowerCase()];
-  }
-  addTrailers(_headers) {
-  }
-  flushHeaders() {
-  }
-  writeEarlyHints(_headers, cb) {
-    if (typeof cb === "function") {
-      cb();
-    }
-  }
-}
 
 function useBase(base, handler) {
   base = withoutTrailingSlash(base);
@@ -2087,6 +1471,22 @@ function getRequestHeader(event, name) {
   const headers = getRequestHeaders(event);
   const value = headers[name.toLowerCase()];
   return value;
+}
+const getHeader = getRequestHeader;
+function getRequestHost(event, opts = {}) {
+  if (opts.xForwardedHost) {
+    const xForwardedHost = event.node.req.headers["x-forwarded-host"];
+    if (xForwardedHost) {
+      return xForwardedHost;
+    }
+  }
+  return event.node.req.headers.host || "localhost";
+}
+function getRequestProtocol(event, opts = {}) {
+  if (opts.xForwardedProto !== false && event.node.req.headers["x-forwarded-proto"] === "https") {
+    return "https";
+  }
+  return event.node.req.connection?.encrypted ? "https" : "http";
 }
 
 const RawBodySymbol = Symbol.for("h3RawBody");
@@ -2423,6 +1823,7 @@ const setHeaders = setResponseHeaders;
 function setResponseHeader(event, name, value) {
   event.node.res.setHeader(name, value);
 }
+const setHeader = setResponseHeader;
 function appendResponseHeader(event, name, value) {
   let current = event.node.res.getHeader(name);
   if (!current) {
@@ -3276,9 +2677,9 @@ function callEachWith(callbacks, arg0) {
 class Hookable {
   constructor() {
     this._hooks = {};
-    this._before = undefined;
-    this._after = undefined;
-    this._deprecatedMessages = undefined;
+    this._before = void 0;
+    this._after = void 0;
+    this._deprecatedMessages = void 0;
     this._deprecatedHooks = {};
     this.hook = this.hook.bind(this);
     this.callHook = this.callHook.bind(this);
@@ -3322,7 +2723,7 @@ class Hookable {
     return () => {
       if (function_) {
         this.removeHook(name, function_);
-        function_ = undefined;
+        function_ = void 0;
       }
     };
   }
@@ -3332,8 +2733,8 @@ class Hookable {
       if (typeof _unreg === "function") {
         _unreg();
       }
-      _unreg = undefined;
-      _function = undefined;
+      _unreg = void 0;
+      _function = void 0;
       return function_(...arguments_);
     };
     _unreg = this.hook(name, _function);
@@ -3395,7 +2796,7 @@ class Hookable {
     return this.callHookWith(parallelTaskCaller, name, ...arguments_);
   }
   callHookWith(caller, name, ...arguments_) {
-    const event = this._before || this._after ? { name, args: arguments_, context: {} } : undefined;
+    const event = this._before || this._after ? { name, args: arguments_, context: {} } : void 0;
     if (this._before) {
       callEachWith(this._before, event);
     }
@@ -3419,7 +2820,7 @@ class Hookable {
     this._before = this._before || [];
     this._before.push(function_);
     return () => {
-      if (this._before !== undefined) {
+      if (this._before !== void 0) {
         const index = this._before.indexOf(function_);
         if (index !== -1) {
           this._before.splice(index, 1);
@@ -3431,7 +2832,7 @@ class Hookable {
     this._after = this._after || [];
     this._after.push(function_);
     return () => {
-      if (this._after !== undefined) {
+      if (this._after !== void 0) {
         const index = this._after.indexOf(function_);
         if (index !== -1) {
           this._after.splice(index, 1);
@@ -3464,7 +2865,7 @@ function createFetchError(ctx) {
   const message = `${requestStr}: ${statusStr}${errorMessage ? ` ${errorMessage}` : ""}`;
   const fetchError = new FetchError(
     message,
-    ctx.error ? { cause: ctx.error } : undefined
+    ctx.error ? { cause: ctx.error } : void 0
   );
   for (const key of ["request", "options", "response"]) {
     Object.defineProperty(fetchError, key, {
@@ -3496,7 +2897,7 @@ function isPayloadMethod(method = "GET") {
   return payloadMethods.has(method.toUpperCase());
 }
 function isJSONSerializable(value) {
-  if (value === undefined) {
+  if (value === void 0) {
     return false;
   }
   const t = typeof value;
@@ -3642,8 +3043,8 @@ function createFetch$1(globalOptions = {}) {
         globalOptions.defaults,
         Headers
       ),
-      response: undefined,
-      error: undefined
+      response: void 0,
+      error: void 0
     };
     if (context.options.method) {
       context.options.method = context.options.method.toUpperCase();
@@ -3794,9 +3195,645 @@ function createNodeFetch() {
 }
 const fetch = globalThis.fetch ? (...args) => globalThis.fetch(...args) : createNodeFetch();
 const Headers$1 = globalThis.Headers || s;
-const AbortController = globalThis.AbortController || i;
-const ofetch = createFetch$1({ fetch, Headers: Headers$1, AbortController });
+const AbortController$1 = globalThis.AbortController || i;
+const ofetch = createFetch$1({ fetch, Headers: Headers$1, AbortController: AbortController$1 });
 const $fetch = ofetch;
+
+function rawHeaders(headers) {
+  const rawHeaders2 = [];
+  for (const key in headers) {
+    if (Array.isArray(headers[key])) {
+      for (const h of headers[key]) {
+        rawHeaders2.push(key, h);
+      }
+    } else {
+      rawHeaders2.push(key, headers[key]);
+    }
+  }
+  return rawHeaders2;
+}
+function mergeFns(...functions) {
+  return function(...args) {
+    for (const fn of functions) {
+      fn(...args);
+    }
+  };
+}
+function createNotImplementedError(name) {
+  throw new Error(`[unenv] ${name} is not implemented yet!`);
+}
+
+let defaultMaxListeners = 10;
+let EventEmitter$1 = class EventEmitter {
+  __unenv__ = true;
+  _events = /* @__PURE__ */ Object.create(null);
+  _maxListeners;
+  static get defaultMaxListeners() {
+    return defaultMaxListeners;
+  }
+  static set defaultMaxListeners(arg) {
+    if (typeof arg !== "number" || arg < 0 || Number.isNaN(arg)) {
+      throw new RangeError(
+        'The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + "."
+      );
+    }
+    defaultMaxListeners = arg;
+  }
+  setMaxListeners(n) {
+    if (typeof n !== "number" || n < 0 || Number.isNaN(n)) {
+      throw new RangeError(
+        'The value of "n" is out of range. It must be a non-negative number. Received ' + n + "."
+      );
+    }
+    this._maxListeners = n;
+    return this;
+  }
+  getMaxListeners() {
+    return _getMaxListeners(this);
+  }
+  emit(type, ...args) {
+    if (!this._events[type] || this._events[type].length === 0) {
+      return false;
+    }
+    if (type === "error") {
+      let er;
+      if (args.length > 0) {
+        er = args[0];
+      }
+      if (er instanceof Error) {
+        throw er;
+      }
+      const err = new Error(
+        "Unhandled error." + (er ? " (" + er.message + ")" : "")
+      );
+      err.context = er;
+      throw err;
+    }
+    for (const _listener of this._events[type]) {
+      (_listener.listener || _listener).apply(this, args);
+    }
+    return true;
+  }
+  addListener(type, listener) {
+    return _addListener(this, type, listener, false);
+  }
+  on(type, listener) {
+    return _addListener(this, type, listener, false);
+  }
+  prependListener(type, listener) {
+    return _addListener(this, type, listener, true);
+  }
+  once(type, listener) {
+    return this.on(type, _wrapOnce(this, type, listener));
+  }
+  prependOnceListener(type, listener) {
+    return this.prependListener(type, _wrapOnce(this, type, listener));
+  }
+  removeListener(type, listener) {
+    return _removeListener(this, type, listener);
+  }
+  off(type, listener) {
+    return this.removeListener(type, listener);
+  }
+  removeAllListeners(type) {
+    return _removeAllListeners(this, type);
+  }
+  listeners(type) {
+    return _listeners(this, type, true);
+  }
+  rawListeners(type) {
+    return _listeners(this, type, false);
+  }
+  listenerCount(type) {
+    return this.rawListeners(type).length;
+  }
+  eventNames() {
+    return Object.keys(this._events);
+  }
+};
+function _addListener(target, type, listener, prepend) {
+  _checkListener(listener);
+  if (target._events.newListener !== void 0) {
+    target.emit("newListener", type, listener.listener || listener);
+  }
+  if (!target._events[type]) {
+    target._events[type] = [];
+  }
+  if (prepend) {
+    target._events[type].unshift(listener);
+  } else {
+    target._events[type].push(listener);
+  }
+  const maxListeners = _getMaxListeners(target);
+  if (maxListeners > 0 && target._events[type].length > maxListeners && !target._events[type].warned) {
+    target._events[type].warned = true;
+    const warning = new Error(
+      `[unenv] Possible EventEmitter memory leak detected. ${target._events[type].length} ${type} listeners added. Use emitter.setMaxListeners() to increase limit`
+    );
+    warning.name = "MaxListenersExceededWarning";
+    warning.emitter = target;
+    warning.type = type;
+    warning.count = target._events[type]?.length;
+    console.warn(warning);
+  }
+  return target;
+}
+function _removeListener(target, type, listener) {
+  _checkListener(listener);
+  if (!target._events[type] || target._events[type].length === 0) {
+    return target;
+  }
+  const lenBeforeFilter = target._events[type].length;
+  target._events[type] = target._events[type].filter((fn) => fn !== listener);
+  if (lenBeforeFilter === target._events[type].length) {
+    return target;
+  }
+  if (target._events.removeListener) {
+    target.emit("removeListener", type, listener.listener || listener);
+  }
+  if (target._events[type].length === 0) {
+    delete target._events[type];
+  }
+  return target;
+}
+function _removeAllListeners(target, type) {
+  if (!target._events[type] || target._events[type].length === 0) {
+    return target;
+  }
+  if (target._events.removeListener) {
+    for (const _listener of target._events[type]) {
+      target.emit("removeListener", type, _listener.listener || _listener);
+    }
+  }
+  delete target._events[type];
+  return target;
+}
+function _wrapOnce(target, type, listener) {
+  let fired = false;
+  const wrapper = (...args) => {
+    if (fired) {
+      return;
+    }
+    target.removeListener(type, wrapper);
+    fired = true;
+    return args.length === 0 ? listener.call(target) : listener.apply(target, args);
+  };
+  wrapper.listener = listener;
+  return wrapper;
+}
+function _getMaxListeners(target) {
+  return target._maxListeners ?? EventEmitter$1.defaultMaxListeners;
+}
+function _listeners(target, type, unwrap) {
+  let listeners = target._events[type];
+  if (typeof listeners === "function") {
+    listeners = [listeners];
+  }
+  return unwrap ? listeners.map((l) => l.listener || l) : listeners;
+}
+function _checkListener(listener) {
+  if (typeof listener !== "function") {
+    throw new TypeError(
+      'The "listener" argument must be of type Function. Received type ' + typeof listener
+    );
+  }
+}
+
+const EventEmitter = globalThis.EventEmitter || EventEmitter$1;
+
+class _Readable extends EventEmitter {
+  __unenv__ = true;
+  readableEncoding = null;
+  readableEnded = true;
+  readableFlowing = false;
+  readableHighWaterMark = 0;
+  readableLength = 0;
+  readableObjectMode = false;
+  readableAborted = false;
+  readableDidRead = false;
+  closed = false;
+  errored = null;
+  readable = false;
+  destroyed = false;
+  static from(_iterable, options) {
+    return new _Readable(options);
+  }
+  constructor(_opts) {
+    super();
+  }
+  _read(_size) {
+  }
+  read(_size) {
+  }
+  setEncoding(_encoding) {
+    return this;
+  }
+  pause() {
+    return this;
+  }
+  resume() {
+    return this;
+  }
+  isPaused() {
+    return true;
+  }
+  unpipe(_destination) {
+    return this;
+  }
+  unshift(_chunk, _encoding) {
+  }
+  wrap(_oldStream) {
+    return this;
+  }
+  push(_chunk, _encoding) {
+    return false;
+  }
+  _destroy(_error, _callback) {
+    this.removeAllListeners();
+  }
+  destroy(error) {
+    this.destroyed = true;
+    this._destroy(error);
+    return this;
+  }
+  pipe(_destenition, _options) {
+    return {};
+  }
+  compose(stream, options) {
+    throw new Error("[unenv] Method not implemented.");
+  }
+  [Symbol.asyncDispose]() {
+    this.destroy();
+    return Promise.resolve();
+  }
+  // eslint-disable-next-line require-yield
+  async *[Symbol.asyncIterator]() {
+    throw createNotImplementedError("Readable.asyncIterator");
+  }
+  iterator(options) {
+    throw createNotImplementedError("Readable.iterator");
+  }
+  map(fn, options) {
+    throw createNotImplementedError("Readable.map");
+  }
+  filter(fn, options) {
+    throw createNotImplementedError("Readable.filter");
+  }
+  forEach(fn, options) {
+    throw createNotImplementedError("Readable.forEach");
+  }
+  reduce(fn, initialValue, options) {
+    throw createNotImplementedError("Readable.reduce");
+  }
+  find(fn, options) {
+    throw createNotImplementedError("Readable.find");
+  }
+  findIndex(fn, options) {
+    throw createNotImplementedError("Readable.findIndex");
+  }
+  some(fn, options) {
+    throw createNotImplementedError("Readable.some");
+  }
+  toArray(options) {
+    throw createNotImplementedError("Readable.toArray");
+  }
+  every(fn, options) {
+    throw createNotImplementedError("Readable.every");
+  }
+  flatMap(fn, options) {
+    throw createNotImplementedError("Readable.flatMap");
+  }
+  drop(limit, options) {
+    throw createNotImplementedError("Readable.drop");
+  }
+  take(limit, options) {
+    throw createNotImplementedError("Readable.take");
+  }
+  asIndexedPairs(options) {
+    throw createNotImplementedError("Readable.asIndexedPairs");
+  }
+}
+const Readable = globalThis.Readable || _Readable;
+
+class _Writable extends EventEmitter {
+  __unenv__ = true;
+  writable = true;
+  writableEnded = false;
+  writableFinished = false;
+  writableHighWaterMark = 0;
+  writableLength = 0;
+  writableObjectMode = false;
+  writableCorked = 0;
+  closed = false;
+  errored = null;
+  writableNeedDrain = false;
+  destroyed = false;
+  _data;
+  _encoding = "utf-8";
+  constructor(_opts) {
+    super();
+  }
+  pipe(_destenition, _options) {
+    return {};
+  }
+  _write(chunk, encoding, callback) {
+    if (this.writableEnded) {
+      if (callback) {
+        callback();
+      }
+      return;
+    }
+    if (this._data === void 0) {
+      this._data = chunk;
+    } else {
+      const a = typeof this._data === "string" ? Buffer.from(this._data, this._encoding || encoding || "utf8") : this._data;
+      const b = typeof chunk === "string" ? Buffer.from(chunk, encoding || this._encoding || "utf8") : chunk;
+      this._data = Buffer.concat([a, b]);
+    }
+    this._encoding = encoding;
+    if (callback) {
+      callback();
+    }
+  }
+  _writev(_chunks, _callback) {
+  }
+  _destroy(_error, _callback) {
+  }
+  _final(_callback) {
+  }
+  write(chunk, arg2, arg3) {
+    const encoding = typeof arg2 === "string" ? this._encoding : "utf-8";
+    const cb = typeof arg2 === "function" ? arg2 : typeof arg3 === "function" ? arg3 : void 0;
+    this._write(chunk, encoding, cb);
+    return true;
+  }
+  setDefaultEncoding(_encoding) {
+    return this;
+  }
+  end(arg1, arg2, arg3) {
+    const callback = typeof arg1 === "function" ? arg1 : typeof arg2 === "function" ? arg2 : typeof arg3 === "function" ? arg3 : void 0;
+    if (this.writableEnded) {
+      if (callback) {
+        callback();
+      }
+      return this;
+    }
+    const data = arg1 === callback ? void 0 : arg1;
+    if (data) {
+      const encoding = arg2 === callback ? void 0 : arg2;
+      this.write(data, encoding, callback);
+    }
+    this.writableEnded = true;
+    this.writableFinished = true;
+    this.emit("close");
+    this.emit("finish");
+    return this;
+  }
+  cork() {
+  }
+  uncork() {
+  }
+  destroy(_error) {
+    this.destroyed = true;
+    delete this._data;
+    this.removeAllListeners();
+    return this;
+  }
+  compose(stream, options) {
+    throw new Error("[h3] Method not implemented.");
+  }
+}
+const Writable = globalThis.Writable || _Writable;
+
+const __Duplex = class {
+  allowHalfOpen = true;
+  _destroy;
+  constructor(readable = new Readable(), writable = new Writable()) {
+    Object.assign(this, readable);
+    Object.assign(this, writable);
+    this._destroy = mergeFns(readable._destroy, writable._destroy);
+  }
+};
+function getDuplex() {
+  Object.assign(__Duplex.prototype, Readable.prototype);
+  Object.assign(__Duplex.prototype, Writable.prototype);
+  return __Duplex;
+}
+const _Duplex = /* @__PURE__ */ getDuplex();
+const Duplex = globalThis.Duplex || _Duplex;
+
+class Socket extends Duplex {
+  __unenv__ = true;
+  bufferSize = 0;
+  bytesRead = 0;
+  bytesWritten = 0;
+  connecting = false;
+  destroyed = false;
+  pending = false;
+  localAddress = "";
+  localPort = 0;
+  remoteAddress = "";
+  remoteFamily = "";
+  remotePort = 0;
+  autoSelectFamilyAttemptedAddresses = [];
+  readyState = "readOnly";
+  constructor(_options) {
+    super();
+  }
+  write(_buffer, _arg1, _arg2) {
+    return false;
+  }
+  connect(_arg1, _arg2, _arg3) {
+    return this;
+  }
+  end(_arg1, _arg2, _arg3) {
+    return this;
+  }
+  setEncoding(_encoding) {
+    return this;
+  }
+  pause() {
+    return this;
+  }
+  resume() {
+    return this;
+  }
+  setTimeout(_timeout, _callback) {
+    return this;
+  }
+  setNoDelay(_noDelay) {
+    return this;
+  }
+  setKeepAlive(_enable, _initialDelay) {
+    return this;
+  }
+  address() {
+    return {};
+  }
+  unref() {
+    return this;
+  }
+  ref() {
+    return this;
+  }
+  destroySoon() {
+    this.destroy();
+  }
+  resetAndDestroy() {
+    const err = new Error("ERR_SOCKET_CLOSED");
+    err.code = "ERR_SOCKET_CLOSED";
+    this.destroy(err);
+    return this;
+  }
+}
+
+class IncomingMessage extends Readable {
+  __unenv__ = {};
+  aborted = false;
+  httpVersion = "1.1";
+  httpVersionMajor = 1;
+  httpVersionMinor = 1;
+  complete = true;
+  connection;
+  socket;
+  headers = {};
+  trailers = {};
+  method = "GET";
+  url = "/";
+  statusCode = 200;
+  statusMessage = "";
+  closed = false;
+  errored = null;
+  readable = false;
+  constructor(socket) {
+    super();
+    this.socket = this.connection = socket || new Socket();
+  }
+  get rawHeaders() {
+    return rawHeaders(this.headers);
+  }
+  get rawTrailers() {
+    return [];
+  }
+  setTimeout(_msecs, _callback) {
+    return this;
+  }
+  get headersDistinct() {
+    return _distinct(this.headers);
+  }
+  get trailersDistinct() {
+    return _distinct(this.trailers);
+  }
+}
+function _distinct(obj) {
+  const d = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (key) {
+      d[key] = (Array.isArray(value) ? value : [value]).filter(
+        Boolean
+      );
+    }
+  }
+  return d;
+}
+
+class ServerResponse extends Writable {
+  __unenv__ = true;
+  statusCode = 200;
+  statusMessage = "";
+  upgrading = false;
+  chunkedEncoding = false;
+  shouldKeepAlive = false;
+  useChunkedEncodingByDefault = false;
+  sendDate = false;
+  finished = false;
+  headersSent = false;
+  strictContentLength = false;
+  connection = null;
+  socket = null;
+  req;
+  _headers = {};
+  constructor(req) {
+    super();
+    this.req = req;
+  }
+  assignSocket(socket) {
+    socket._httpMessage = this;
+    this.socket = socket;
+    this.connection = socket;
+    this.emit("socket", socket);
+    this._flush();
+  }
+  _flush() {
+    this.flushHeaders();
+  }
+  detachSocket(_socket) {
+  }
+  writeContinue(_callback) {
+  }
+  writeHead(statusCode, arg1, arg2) {
+    if (statusCode) {
+      this.statusCode = statusCode;
+    }
+    if (typeof arg1 === "string") {
+      this.statusMessage = arg1;
+      arg1 = void 0;
+    }
+    const headers = arg2 || arg1;
+    if (headers) {
+      if (Array.isArray(headers)) ; else {
+        for (const key in headers) {
+          this.setHeader(key, headers[key]);
+        }
+      }
+    }
+    this.headersSent = true;
+    return this;
+  }
+  writeProcessing() {
+  }
+  setTimeout(_msecs, _callback) {
+    return this;
+  }
+  appendHeader(name, value) {
+    name = name.toLowerCase();
+    const current = this._headers[name];
+    const all = [
+      ...Array.isArray(current) ? current : [current],
+      ...Array.isArray(value) ? value : [value]
+    ].filter(Boolean);
+    this._headers[name] = all.length > 1 ? all : all[0];
+    return this;
+  }
+  setHeader(name, value) {
+    this._headers[name.toLowerCase()] = value;
+    return this;
+  }
+  getHeader(name) {
+    return this._headers[name.toLowerCase()];
+  }
+  getHeaders() {
+    return this._headers;
+  }
+  getHeaderNames() {
+    return Object.keys(this._headers);
+  }
+  hasHeader(name) {
+    return name.toLowerCase() in this._headers;
+  }
+  removeHeader(name) {
+    delete this._headers[name.toLowerCase()];
+  }
+  addTrailers(_headers) {
+  }
+  flushHeaders() {
+  }
+  writeEarlyHints(_headers, cb) {
+    if (typeof cb === "function") {
+      cb();
+    }
+  }
+}
 
 const nullBodyResponses = /* @__PURE__ */ new Set([101, 204, 205, 304]);
 function createCall(handle) {
@@ -3992,12 +4029,331 @@ const errorHandler = (async function errorhandler(error, event) {
   for (const [header, value] of res.headers.entries()) {
     setResponseHeader(event, header, value);
   }
-  setResponseStatus(event, res.status && res.status !== 200 ? res.status : undefined, res.statusText);
+  setResponseStatus(event, res.status && res.status !== 200 ? res.status : void 0, res.statusText);
   return send(event, html);
 });
 
+const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_$";
+const unsafeChars = /[<>\b\f\n\r\t\0\u2028\u2029]/g;
+const reserved = /^(?:do|if|in|for|int|let|new|try|var|byte|case|char|else|enum|goto|long|this|void|with|await|break|catch|class|const|final|float|short|super|throw|while|yield|delete|double|export|import|native|return|switch|throws|typeof|boolean|default|extends|finally|package|private|abstract|continue|debugger|function|volatile|interface|protected|transient|implements|instanceof|synchronized)$/;
+const escaped = {
+  "<": "\\u003C",
+  ">": "\\u003E",
+  "/": "\\u002F",
+  "\\": "\\\\",
+  "\b": "\\b",
+  "\f": "\\f",
+  "\n": "\\n",
+  "\r": "\\r",
+  "	": "\\t",
+  "\0": "\\0",
+  "\u2028": "\\u2028",
+  "\u2029": "\\u2029"
+};
+const objectProtoOwnPropertyNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
+function devalue(value) {
+  const counts = /* @__PURE__ */ new Map();
+  let logNum = 0;
+  function log(message) {
+    if (logNum < 100) {
+      console.warn(message);
+      logNum += 1;
+    }
+  }
+  function walk(thing) {
+    if (typeof thing === "function") {
+      log(`Cannot stringify a function ${thing.name}`);
+      return;
+    }
+    if (counts.has(thing)) {
+      counts.set(thing, counts.get(thing) + 1);
+      return;
+    }
+    counts.set(thing, 1);
+    if (!isPrimitive$1(thing)) {
+      const type = getType(thing);
+      switch (type) {
+        case "Number":
+        case "String":
+        case "Boolean":
+        case "Date":
+        case "RegExp":
+          return;
+        case "Array":
+          thing.forEach(walk);
+          break;
+        case "Set":
+        case "Map":
+          Array.from(thing).forEach(walk);
+          break;
+        default:
+          const proto = Object.getPrototypeOf(thing);
+          if (proto !== Object.prototype && proto !== null && Object.getOwnPropertyNames(proto).sort().join("\0") !== objectProtoOwnPropertyNames) {
+            if (typeof thing.toJSON !== "function") {
+              log(`Cannot stringify arbitrary non-POJOs ${thing.constructor.name}`);
+            }
+          } else if (Object.getOwnPropertySymbols(thing).length > 0) {
+            log(`Cannot stringify POJOs with symbolic keys ${Object.getOwnPropertySymbols(thing).map((symbol) => symbol.toString())}`);
+          } else {
+            Object.keys(thing).forEach((key) => walk(thing[key]));
+          }
+      }
+    }
+  }
+  walk(value);
+  const names = /* @__PURE__ */ new Map();
+  Array.from(counts).filter((entry) => entry[1] > 1).sort((a, b) => b[1] - a[1]).forEach((entry, i) => {
+    names.set(entry[0], getName(i));
+  });
+  function stringify(thing) {
+    if (names.has(thing)) {
+      return names.get(thing);
+    }
+    if (isPrimitive$1(thing)) {
+      return stringifyPrimitive(thing);
+    }
+    const type = getType(thing);
+    switch (type) {
+      case "Number":
+      case "String":
+      case "Boolean":
+        return `Object(${stringify(thing.valueOf())})`;
+      case "RegExp":
+        return thing.toString();
+      case "Date":
+        return `new Date(${thing.getTime()})`;
+      case "Array":
+        const members = thing.map((v, i) => i in thing ? stringify(v) : "");
+        const tail = thing.length === 0 || thing.length - 1 in thing ? "" : ",";
+        return `[${members.join(",")}${tail}]`;
+      case "Set":
+      case "Map":
+        return `new ${type}([${Array.from(thing).map(stringify).join(",")}])`;
+      default:
+        if (thing.toJSON) {
+          let json = thing.toJSON();
+          if (getType(json) === "String") {
+            try {
+              json = JSON.parse(json);
+            } catch (e) {
+            }
+          }
+          return stringify(json);
+        }
+        if (Object.getPrototypeOf(thing) === null) {
+          if (Object.keys(thing).length === 0) {
+            return "Object.create(null)";
+          }
+          return `Object.create(null,{${Object.keys(thing).map((key) => `${safeKey(key)}:{writable:true,enumerable:true,value:${stringify(thing[key])}}`).join(",")}})`;
+        }
+        return `{${Object.keys(thing).map((key) => `${safeKey(key)}:${stringify(thing[key])}`).join(",")}}`;
+    }
+  }
+  const str = stringify(value);
+  if (names.size) {
+    const params = [];
+    const statements = [];
+    const values = [];
+    names.forEach((name, thing) => {
+      params.push(name);
+      if (isPrimitive$1(thing)) {
+        values.push(stringifyPrimitive(thing));
+        return;
+      }
+      const type = getType(thing);
+      switch (type) {
+        case "Number":
+        case "String":
+        case "Boolean":
+          values.push(`Object(${stringify(thing.valueOf())})`);
+          break;
+        case "RegExp":
+          values.push(thing.toString());
+          break;
+        case "Date":
+          values.push(`new Date(${thing.getTime()})`);
+          break;
+        case "Array":
+          values.push(`Array(${thing.length})`);
+          thing.forEach((v, i) => {
+            statements.push(`${name}[${i}]=${stringify(v)}`);
+          });
+          break;
+        case "Set":
+          values.push("new Set");
+          statements.push(`${name}.${Array.from(thing).map((v) => `add(${stringify(v)})`).join(".")}`);
+          break;
+        case "Map":
+          values.push("new Map");
+          statements.push(`${name}.${Array.from(thing).map(([k, v]) => `set(${stringify(k)}, ${stringify(v)})`).join(".")}`);
+          break;
+        default:
+          values.push(Object.getPrototypeOf(thing) === null ? "Object.create(null)" : "{}");
+          Object.keys(thing).forEach((key) => {
+            statements.push(`${name}${safeProp(key)}=${stringify(thing[key])}`);
+          });
+      }
+    });
+    statements.push(`return ${str}`);
+    return `(function(${params.join(",")}){${statements.join(";")}}(${values.join(",")}))`;
+  } else {
+    return str;
+  }
+}
+function getName(num) {
+  let name = "";
+  do {
+    name = chars[num % chars.length] + name;
+    num = ~~(num / chars.length) - 1;
+  } while (num >= 0);
+  return reserved.test(name) ? `${name}0` : name;
+}
+function isPrimitive$1(thing) {
+  return Object(thing) !== thing;
+}
+function stringifyPrimitive(thing) {
+  if (typeof thing === "string") {
+    return stringifyString(thing);
+  }
+  if (thing === void 0) {
+    return "void 0";
+  }
+  if (thing === 0 && 1 / thing < 0) {
+    return "-0";
+  }
+  const str = String(thing);
+  if (typeof thing === "number") {
+    return str.replace(/^(-)?0\./, "$1.");
+  }
+  return str;
+}
+function getType(thing) {
+  return Object.prototype.toString.call(thing).slice(8, -1);
+}
+function escapeUnsafeChar(c) {
+  return escaped[c] || c;
+}
+function escapeUnsafeChars(str) {
+  return str.replace(unsafeChars, escapeUnsafeChar);
+}
+function safeKey(key) {
+  return /^[_$a-zA-Z][_$a-zA-Z0-9]*$/.test(key) ? key : escapeUnsafeChars(JSON.stringify(key));
+}
+function safeProp(key) {
+  return /^[_$a-zA-Z][_$a-zA-Z0-9]*$/.test(key) ? `.${key}` : `[${escapeUnsafeChars(JSON.stringify(key))}]`;
+}
+function stringifyString(str) {
+  let result = '"';
+  for (let i = 0; i < str.length; i += 1) {
+    const char = str.charAt(i);
+    const code = char.charCodeAt(0);
+    if (char === '"') {
+      result += '\\"';
+    } else if (char in escaped) {
+      result += escaped[char];
+    } else if (code >= 55296 && code <= 57343) {
+      const next = str.charCodeAt(i + 1);
+      if (code <= 56319 && (next >= 56320 && next <= 57343)) {
+        result += char + str[++i];
+      } else {
+        result += `\\u${code.toString(16).toUpperCase()}`;
+      }
+    } else {
+      result += char;
+    }
+  }
+  result += '"';
+  return result;
+}
+
+function normalizeSiteConfig(config) {
+  if (typeof config.indexable !== "undefined")
+    config.indexable = String(config.indexable) !== "false";
+  if (typeof config.trailingSlash !== "undefined" && !config.trailingSlash)
+    config.trailingSlash = String(config.trailingSlash) !== "false";
+  if (config.url && !hasProtocol(config.url, { acceptRelative: true, strict: false }))
+    config.url = withHttps(config.url);
+  const keys = Object.keys(config).sort((a, b) => a.localeCompare(b));
+  const newConfig = {};
+  for (const k of keys)
+    newConfig[k] = config[k];
+  return newConfig;
+}
+function createSiteConfigStack(options) {
+  const debug = options?.debug || false;
+  const stack = [];
+  function push(input) {
+    if (!input || typeof input !== "object" || Object.keys(input).length === 0)
+      return;
+    if (!input._context && debug) {
+      let lastFunctionName = new Error("tmp").stack?.split("\n")[2].split(" ")[5];
+      if (lastFunctionName?.includes("/"))
+        lastFunctionName = "anonymous";
+      input._context = lastFunctionName;
+    }
+    const entry = {};
+    for (const k in input) {
+      const val = input[k];
+      if (typeof val !== "undefined" && val !== "")
+        entry[k] = val;
+    }
+    if (Object.keys(entry).filter((k) => !k.startsWith("_")).length > 0)
+      stack.push(entry);
+  }
+  function get(options2) {
+    const siteConfig = {};
+    if (options2?.debug)
+      siteConfig._context = {};
+    for (const o in stack.sort((a, b) => (a._priority || 0) - (b._priority || 0))) {
+      for (const k in stack[o]) {
+        const key = k;
+        const val = options2?.resolveRefs ? toValue(stack[o][k]) : stack[o][k];
+        if (!k.startsWith("_") && typeof val !== "undefined") {
+          siteConfig[k] = val;
+          if (options2?.debug)
+            siteConfig._context[key] = stack[o]._context?.[key] || stack[o]._context || "anonymous";
+        }
+      }
+    }
+    return options2?.skipNormalize ? siteConfig : normalizeSiteConfig(siteConfig);
+  }
+  return {
+    stack,
+    push,
+    get
+  };
+}
+
+function envSiteConfig(env) {
+  return Object.fromEntries(Object.entries(env).filter(([k]) => k.startsWith("NUXT_SITE_") || k.startsWith("NUXT_PUBLIC_SITE_")).map(([k, v]) => [
+    k.replace(/^NUXT_(PUBLIC_)?SITE_/, "").split("_").map((s, i) => i === 0 ? s.toLowerCase() : s[0].toUpperCase() + s.slice(1).toLowerCase()).join(""),
+    v
+  ]));
+}
+
+function useSiteConfig(e, _options) {
+  e.context.siteConfig = e.context.siteConfig || createSiteConfigStack();
+  const options = defu(_options, useRuntimeConfig(e)["nuxt-site-config"], { debug: false });
+  return e.context.siteConfig.get(options);
+}
+
+const _KG4kYUfsVR = defineNitroPlugin(async (nitroApp) => {
+  nitroApp.hooks.hook("render:html", async (ctx, { event }) => {
+    const routeOptions = getRouteRules(event);
+    const isIsland = process.env.NUXT_COMPONENT_ISLANDS && event.path.startsWith("/__nuxt_island");
+    event.path;
+    const noSSR = event.context.nuxt?.noSSR || routeOptions.ssr === false && !isIsland || (false);
+    if (noSSR) {
+      const siteConfig = Object.fromEntries(
+        Object.entries(useSiteConfig(event)).map(([k, v]) => [k, toValue(v)])
+      );
+      ctx.body.push(`<script>window.__NUXT_SITE_CONFIG__=${devalue(siteConfig)}<\/script>`);
+    }
+  });
+});
+
 const plugins = [
-  
+  _KG4kYUfsVR
 ];
 
 const assets$1 = {
@@ -4021,6 +4377,188 @@ const assets$1 = {
     "mtime": "2025-01-19T12:44:39.517Z",
     "size": 1342,
     "path": "../public/style.css"
+  },
+  "/components/Navigation.vue": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"abd-JXthDppUFU4BK2KbKgr25iR6lZE\"",
+    "mtime": "2025-01-25T16:56:00.963Z",
+    "size": 2749,
+    "path": "../public/components/Navigation.vue"
+  },
+  "/components/Projects.vue": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"147b-7qP1e5EAwhS2xrKRNo8jM7fT+Xo\"",
+    "mtime": "2025-02-01T15:08:06.440Z",
+    "size": 5243,
+    "path": "../public/components/Projects.vue"
+  },
+  "/_nuxt/animation.CcCz6yOD.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"1ec2-zsXvf5IDsURi+qO0hdJUmhzPZB4\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 7874,
+    "path": "../public/_nuxt/animation.CcCz6yOD.css"
+  },
+  "/_nuxt/Asr4L45h.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"338-BmCt3kmxhmAwPyqsg2aFdLkOBGU\"",
+    "mtime": "2025-02-13T20:47:09.090Z",
+    "size": 824,
+    "path": "../public/_nuxt/Asr4L45h.js"
+  },
+  "/_nuxt/C1nx06wZ.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"4f6dd-knRuAZwkp9auqm0CgZtlToUi4vw\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 325341,
+    "path": "../public/_nuxt/C1nx06wZ.js"
+  },
+  "/_nuxt/C4EHMjRV.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"17b-qB0H6KN2NDWzG2c8y4m4EHijUhc\"",
+    "mtime": "2025-02-13T20:47:09.075Z",
+    "size": 379,
+    "path": "../public/_nuxt/C4EHMjRV.js"
+  },
+  "/_nuxt/CzEf9JOR.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"23984-GjibpznXqYdJV9cPctG9jz5oZ1k\"",
+    "mtime": "2025-02-13T20:47:09.092Z",
+    "size": 145796,
+    "path": "../public/_nuxt/CzEf9JOR.js"
+  },
+  "/_nuxt/DF4SawNa.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"ea9-0e2Qe4dlx12HiwOGnCtsF8MHM+w\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 3753,
+    "path": "../public/_nuxt/DF4SawNa.js"
+  },
+  "/_nuxt/DtVttvxc.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"8e99-NHFR7DcFFnNbORkkt+I3+MaKuO8\"",
+    "mtime": "2025-02-13T20:47:09.078Z",
+    "size": 36505,
+    "path": "../public/_nuxt/DtVttvxc.js"
+  },
+  "/_nuxt/DVj5NFde.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1ebb-+VZOdJQvbgNULr86zrzZ1vi0RpQ\"",
+    "mtime": "2025-02-13T20:47:09.090Z",
+    "size": 7867,
+    "path": "../public/_nuxt/DVj5NFde.js"
+  },
+  "/_nuxt/DZijhJPA.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"fe6-7+Jrr5DD1WmqrzyUTk8cGz40RN4\"",
+    "mtime": "2025-02-13T20:47:09.075Z",
+    "size": 4070,
+    "path": "../public/_nuxt/DZijhJPA.js"
+  },
+  "/_nuxt/DzvJKQEW.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"d52-LSXo6QuRwYrvkBw4xNf8H+r8r/g\"",
+    "mtime": "2025-02-13T20:47:09.075Z",
+    "size": 3410,
+    "path": "../public/_nuxt/DzvJKQEW.js"
+  },
+  "/_nuxt/entry.DidxzgZR.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"9d91e-/5tFpZurrW3q8pu05JEQOeuZP3Q\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 645406,
+    "path": "../public/_nuxt/entry.DidxzgZR.css"
+  },
+  "/_nuxt/error-404.C3V-3Mc4.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"de4-tk05rgubWwonEl8hX4lgLuosKN0\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 3556,
+    "path": "../public/_nuxt/error-404.C3V-3Mc4.css"
+  },
+  "/_nuxt/error-500.dGVH929u.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"75c-KF6NWZfD3QI/4EI5b2MfK1uNuAg\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 1884,
+    "path": "../public/_nuxt/error-500.dGVH929u.css"
+  },
+  "/_nuxt/fitness.BbG25ixC.avif": {
+    "type": "image/avif",
+    "etag": "\"ebf4-YQGg328YRLfC5oHFgz6bVYXMuWk\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 60404,
+    "path": "../public/_nuxt/fitness.BbG25ixC.avif"
+  },
+  "/_nuxt/index.BFP2UTz4.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"37e7-mfoCyqqwsSyt1qmiDH8oOwfASOE\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 14311,
+    "path": "../public/_nuxt/index.BFP2UTz4.css"
+  },
+  "/_nuxt/materialdesignicons-webfont.B7mPwVP_.ttf": {
+    "type": "font/ttf",
+    "etag": "\"13f40c-T1Gk3HWmjT5XMhxEjv3eojyKnbA\"",
+    "mtime": "2025-02-13T20:47:09.076Z",
+    "size": 1307660,
+    "path": "../public/_nuxt/materialdesignicons-webfont.B7mPwVP_.ttf"
+  },
+  "/_nuxt/materialdesignicons-webfont.CSr8KVlo.eot": {
+    "type": "application/vnd.ms-fontobject",
+    "etag": "\"13f4e8-ApygSKV9BTQg/POr5dCUzjU5OZw\"",
+    "mtime": "2025-02-13T20:47:09.076Z",
+    "size": 1307880,
+    "path": "../public/_nuxt/materialdesignicons-webfont.CSr8KVlo.eot"
+  },
+  "/_nuxt/materialdesignicons-webfont.Dp5v-WZN.woff2": {
+    "type": "font/woff2",
+    "etag": "\"62710-TiD2zPQxmd6lyFsjoODwuoH/7iY\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 403216,
+    "path": "../public/_nuxt/materialdesignicons-webfont.Dp5v-WZN.woff2"
+  },
+  "/_nuxt/materialdesignicons-webfont.PXm3-2wK.woff": {
+    "type": "font/woff",
+    "etag": "\"8f8d0-zD3UavWtb7zNpwtFPVWUs57NasQ\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 587984,
+    "path": "../public/_nuxt/materialdesignicons-webfont.PXm3-2wK.woff"
+  },
+  "/_nuxt/news.BZEkL1Fo.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"3d6-cs8mOUBzu57CJguJBTGDFKgsNhw\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 982,
+    "path": "../public/_nuxt/news.BZEkL1Fo.css"
+  },
+  "/_nuxt/news.TMP8sPdg.avif": {
+    "type": "image/avif",
+    "etag": "\"214ff-fqxnW79cFEkocuAlZ2wX6QvKdu0\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 136447,
+    "path": "../public/_nuxt/news.TMP8sPdg.avif"
+  },
+  "/_nuxt/skills.CKM9MLr4.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"bf-P4swwXB2xFLK/sZp/udWl3EFUIY\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 191,
+    "path": "../public/_nuxt/skills.CKM9MLr4.css"
+  },
+  "/_nuxt/urbanstyle.QgN-5x_1.avif": {
+    "type": "image/avif",
+    "etag": "\"13a6c-dx8fT0i7fNjDD4nKG1qadLmCGUQ\"",
+    "mtime": "2025-02-13T20:47:09.042Z",
+    "size": 80492,
+    "path": "../public/_nuxt/urbanstyle.QgN-5x_1.avif"
+  },
+  "/_nuxt/VCard.8Js4-u2y.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"199f-FNn2tbuY6iKc9uUgnn30bdUoWks\"",
+    "mtime": "2025-02-13T20:47:09.067Z",
+    "size": 6559,
+    "path": "../public/_nuxt/VCard.8Js4-u2y.css"
   },
   "/images/fitness.avif": {
     "type": "image/avif",
@@ -4071,188 +4609,6 @@ const assets$1 = {
     "size": 86102,
     "path": "../public/images/Vignette.avif"
   },
-  "/components/Navigation.vue": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"abd-JXthDppUFU4BK2KbKgr25iR6lZE\"",
-    "mtime": "2025-01-25T16:56:00.963Z",
-    "size": 2749,
-    "path": "../public/components/Navigation.vue"
-  },
-  "/components/Projects.vue": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"147b-7qP1e5EAwhS2xrKRNo8jM7fT+Xo\"",
-    "mtime": "2025-02-01T15:08:06.440Z",
-    "size": 5243,
-    "path": "../public/components/Projects.vue"
-  },
-  "/_nuxt/animation.CcCz6yOD.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"1ec2-zsXvf5IDsURi+qO0hdJUmhzPZB4\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 7874,
-    "path": "../public/_nuxt/animation.CcCz6yOD.css"
-  },
-  "/_nuxt/BigDO-Y9.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1ebc-BWPhKzDy8kqtrnBIHPkl5i4apt8\"",
-    "mtime": "2025-02-13T19:47:39.243Z",
-    "size": 7868,
-    "path": "../public/_nuxt/BigDO-Y9.js"
-  },
-  "/_nuxt/Br4IbXF4.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"8dd3-aRslRJI5nh/092I4q9X9P2EBrig\"",
-    "mtime": "2025-02-13T19:47:39.240Z",
-    "size": 36307,
-    "path": "../public/_nuxt/Br4IbXF4.js"
-  },
-  "/_nuxt/BTTVrtfN.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"17b-0Anff+lhcqWqNQIMpfgPYnrPkWg\"",
-    "mtime": "2025-02-13T19:47:39.236Z",
-    "size": 379,
-    "path": "../public/_nuxt/BTTVrtfN.js"
-  },
-  "/_nuxt/CH2vMJfm.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"338-+8ovBXtKyqdogbsIbtfd48s5rC0\"",
-    "mtime": "2025-02-13T19:47:39.242Z",
-    "size": 824,
-    "path": "../public/_nuxt/CH2vMJfm.js"
-  },
-  "/_nuxt/DFfBx29y.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"4f519-fd7ZdtYu5fPWOnfGs/MtAxGYR+s\"",
-    "mtime": "2025-02-13T19:47:39.234Z",
-    "size": 324889,
-    "path": "../public/_nuxt/DFfBx29y.js"
-  },
-  "/_nuxt/DikohXrc.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"d52-zTYTUahY8B5W6RBaIuZm18UoF3o\"",
-    "mtime": "2025-02-13T19:47:39.234Z",
-    "size": 3410,
-    "path": "../public/_nuxt/DikohXrc.js"
-  },
-  "/_nuxt/Dw7RAGnb.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"fe6-cAWk3bc4NWGFDD+0W5jjZKGQfCI\"",
-    "mtime": "2025-02-13T19:47:39.236Z",
-    "size": 4070,
-    "path": "../public/_nuxt/Dw7RAGnb.js"
-  },
-  "/_nuxt/entry.a3fVNRjW.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"9d7d0-x0c5/oGo2zwX2quGYCs256YkLe8\"",
-    "mtime": "2025-02-13T19:47:39.234Z",
-    "size": 645072,
-    "path": "../public/_nuxt/entry.a3fVNRjW.css"
-  },
-  "/_nuxt/error-404.C3V-3Mc4.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"de4-tk05rgubWwonEl8hX4lgLuosKN0\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 3556,
-    "path": "../public/_nuxt/error-404.C3V-3Mc4.css"
-  },
-  "/_nuxt/error-500.dGVH929u.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"75c-KF6NWZfD3QI/4EI5b2MfK1uNuAg\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 1884,
-    "path": "../public/_nuxt/error-500.dGVH929u.css"
-  },
-  "/_nuxt/fitness.BbG25ixC.avif": {
-    "type": "image/avif",
-    "etag": "\"ebf4-YQGg328YRLfC5oHFgz6bVYXMuWk\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 60404,
-    "path": "../public/_nuxt/fitness.BbG25ixC.avif"
-  },
-  "/_nuxt/H67LRR8X.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"ea9-ZVFWq68OPiI+VRv0vq2LTUDCbv8\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 3753,
-    "path": "../public/_nuxt/H67LRR8X.js"
-  },
-  "/_nuxt/index.CZ8C1jta.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"37d3-/2gYDQgW5kUu1k5QbFv2LwAUcXw\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 14291,
-    "path": "../public/_nuxt/index.CZ8C1jta.css"
-  },
-  "/_nuxt/materialdesignicons-webfont.B7mPwVP_.ttf": {
-    "type": "font/ttf",
-    "etag": "\"13f40c-T1Gk3HWmjT5XMhxEjv3eojyKnbA\"",
-    "mtime": "2025-02-13T19:47:39.236Z",
-    "size": 1307660,
-    "path": "../public/_nuxt/materialdesignicons-webfont.B7mPwVP_.ttf"
-  },
-  "/_nuxt/materialdesignicons-webfont.CSr8KVlo.eot": {
-    "type": "application/vnd.ms-fontobject",
-    "etag": "\"13f4e8-ApygSKV9BTQg/POr5dCUzjU5OZw\"",
-    "mtime": "2025-02-13T19:47:39.229Z",
-    "size": 1307880,
-    "path": "../public/_nuxt/materialdesignicons-webfont.CSr8KVlo.eot"
-  },
-  "/_nuxt/materialdesignicons-webfont.Dp5v-WZN.woff2": {
-    "type": "font/woff2",
-    "etag": "\"62710-TiD2zPQxmd6lyFsjoODwuoH/7iY\"",
-    "mtime": "2025-02-13T19:47:39.232Z",
-    "size": 403216,
-    "path": "../public/_nuxt/materialdesignicons-webfont.Dp5v-WZN.woff2"
-  },
-  "/_nuxt/materialdesignicons-webfont.PXm3-2wK.woff": {
-    "type": "font/woff",
-    "etag": "\"8f8d0-zD3UavWtb7zNpwtFPVWUs57NasQ\"",
-    "mtime": "2025-02-13T19:47:39.234Z",
-    "size": 587984,
-    "path": "../public/_nuxt/materialdesignicons-webfont.PXm3-2wK.woff"
-  },
-  "/_nuxt/news.BZEkL1Fo.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"3d6-cs8mOUBzu57CJguJBTGDFKgsNhw\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 982,
-    "path": "../public/_nuxt/news.BZEkL1Fo.css"
-  },
-  "/_nuxt/news.TMP8sPdg.avif": {
-    "type": "image/avif",
-    "etag": "\"214ff-fqxnW79cFEkocuAlZ2wX6QvKdu0\"",
-    "mtime": "2025-02-13T19:47:39.232Z",
-    "size": 136447,
-    "path": "../public/_nuxt/news.TMP8sPdg.avif"
-  },
-  "/_nuxt/skills.CKM9MLr4.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"bf-P4swwXB2xFLK/sZp/udWl3EFUIY\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 191,
-    "path": "../public/_nuxt/skills.CKM9MLr4.css"
-  },
-  "/_nuxt/TlW-G2M_.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"23c90-EFJPj90k2nrJV5ud7DBiH74ePiY\"",
-    "mtime": "2025-02-13T19:47:39.244Z",
-    "size": 146576,
-    "path": "../public/_nuxt/TlW-G2M_.js"
-  },
-  "/_nuxt/urbanstyle.QgN-5x_1.avif": {
-    "type": "image/avif",
-    "etag": "\"13a6c-dx8fT0i7fNjDD4nKG1qadLmCGUQ\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 80492,
-    "path": "../public/_nuxt/urbanstyle.QgN-5x_1.avif"
-  },
-  "/_nuxt/VCard.8Js4-u2y.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"199f-FNn2tbuY6iKc9uUgnn30bdUoWks\"",
-    "mtime": "2025-02-13T19:47:39.233Z",
-    "size": 6559,
-    "path": "../public/_nuxt/VCard.8Js4-u2y.css"
-  },
   "/ext/Urbanstyle/accueil.html": {
     "type": "text/html; charset=utf-8",
     "etag": "\"3eab-GvDRpJyCdbZ9oCFrQK2SmgXg9uw\"",
@@ -4302,6 +4658,13 @@ const assets$1 = {
     "size": 6133,
     "path": "../public/ext/Urbanstyle/style.css"
   },
+  "/_nuxt/builds/latest.json": {
+    "type": "application/json",
+    "etag": "\"47-PsslH1v5nGUAzkfV0oPnAb1vCck\"",
+    "mtime": "2025-02-13T20:47:16.357Z",
+    "size": 71,
+    "path": "../public/_nuxt/builds/latest.json"
+  },
   "/ext/World/app.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"3c2-IUhKACBGi3UiLzR6BICkOlGgY48\"",
@@ -4343,13 +4706,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:36.952Z",
     "size": 296,
     "path": "../public/ext/World/package.json"
-  },
-  "/_nuxt/builds/latest.json": {
-    "type": "application/json",
-    "etag": "\"47-vpfWYM7TTDbx1bdJ/2PGUbNVA+4\"",
-    "mtime": "2025-02-13T19:47:44.776Z",
-    "size": 71,
-    "path": "../public/_nuxt/builds/latest.json"
   },
   "/ext/Urbanstyle/images/bonnet.avif": {
     "type": "image/avif",
@@ -4407,12 +4763,12 @@ const assets$1 = {
     "size": 25076,
     "path": "../public/ext/Urbanstyle/images/urban.png"
   },
-  "/_nuxt/builds/meta/b13b1193-0891-47bb-8a52-9285a7c461e8.json": {
+  "/_nuxt/builds/meta/856565f9-7a96-4276-9518-f91868a4db56.json": {
     "type": "application/json",
-    "etag": "\"8b-OGF8azrVZyWW/Am5XMHGaDoanMU\"",
-    "mtime": "2025-02-13T19:47:44.777Z",
+    "etag": "\"8b-4Xmc8fExfA2qF71MIsWSRMQkYQs\"",
+    "mtime": "2025-02-13T20:47:16.358Z",
     "size": 139,
-    "path": "../public/_nuxt/builds/meta/b13b1193-0891-47bb-8a52-9285a7c461e8.json"
+    "path": "../public/_nuxt/builds/meta/856565f9-7a96-4276-9518-f91868a4db56.json"
   },
   "/ext/World/node_modules/.package-lock.json": {
     "type": "application/json",
@@ -4420,41 +4776,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:36.998Z",
     "size": 30165,
     "path": "../public/ext/World/node_modules/.package-lock.json"
-  },
-  "/ext/World/node_modules/accepts/HISTORY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"13e8-WL6GeEJVEcfPpg4O4PAJdA6qRhY\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 5096,
-    "path": "../public/ext/World/node_modules/accepts/HISTORY.md"
-  },
-  "/ext/World/node_modules/accepts/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1484-KCJj9F9r+A+/Q/QJfVO1tg/xoF8\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 5252,
-    "path": "../public/ext/World/node_modules/accepts/index.js"
-  },
-  "/ext/World/node_modules/accepts/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"48f-8CevPmGvOID9f3uLqUUqhd0hVzg\"",
-    "mtime": "2025-01-19T16:22:33.032Z",
-    "size": 1167,
-    "path": "../public/ext/World/node_modules/accepts/LICENSE"
-  },
-  "/ext/World/node_modules/accepts/package.json": {
-    "type": "application/json",
-    "etag": "\"485-Exuk1jdH5mY6nBlAnkOsA0vVMs8\"",
-    "mtime": "2025-01-19T16:22:33.102Z",
-    "size": 1157,
-    "path": "../public/ext/World/node_modules/accepts/package.json"
-  },
-  "/ext/World/node_modules/accepts/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"101b-OohFENLu7XOkzVrglHpscs08dCY\"",
-    "mtime": "2025-01-19T16:22:33.154Z",
-    "size": 4123,
-    "path": "../public/ext/World/node_modules/accepts/README.md"
   },
   "/ext/World/node_modules/.bin/mime": {
     "type": "text/plain; charset=utf-8",
@@ -4498,6 +4819,69 @@ const assets$1 = {
     "size": 446,
     "path": "../public/ext/World/node_modules/.bin/node.ps1"
   },
+  "/ext/World/node_modules/accepts/HISTORY.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"13e8-WL6GeEJVEcfPpg4O4PAJdA6qRhY\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 5096,
+    "path": "../public/ext/World/node_modules/accepts/HISTORY.md"
+  },
+  "/ext/World/node_modules/accepts/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1484-KCJj9F9r+A+/Q/QJfVO1tg/xoF8\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 5252,
+    "path": "../public/ext/World/node_modules/accepts/index.js"
+  },
+  "/ext/World/node_modules/accepts/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"48f-8CevPmGvOID9f3uLqUUqhd0hVzg\"",
+    "mtime": "2025-01-19T16:22:33.032Z",
+    "size": 1167,
+    "path": "../public/ext/World/node_modules/accepts/LICENSE"
+  },
+  "/ext/World/node_modules/accepts/package.json": {
+    "type": "application/json",
+    "etag": "\"485-Exuk1jdH5mY6nBlAnkOsA0vVMs8\"",
+    "mtime": "2025-01-19T16:22:33.102Z",
+    "size": 1157,
+    "path": "../public/ext/World/node_modules/accepts/package.json"
+  },
+  "/ext/World/node_modules/accepts/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"101b-OohFENLu7XOkzVrglHpscs08dCY\"",
+    "mtime": "2025-01-19T16:22:33.154Z",
+    "size": 4123,
+    "path": "../public/ext/World/node_modules/accepts/README.md"
+  },
+  "/ext/World/node_modules/array-flatten/array-flatten.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"4ab-/GzDDouOwJ7rpiusB27WJ6o+6NE\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 1195,
+    "path": "../public/ext/World/node_modules/array-flatten/array-flatten.js"
+  },
+  "/ext/World/node_modules/array-flatten/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"44f-On+Ia2MtIZdnakACDTVOhLeGBgQ\"",
+    "mtime": "2025-01-19T16:22:33.099Z",
+    "size": 1103,
+    "path": "../public/ext/World/node_modules/array-flatten/LICENSE"
+  },
+  "/ext/World/node_modules/array-flatten/package.json": {
+    "type": "application/json",
+    "etag": "\"36f-/FG4nQ+3zGQKBJW6pABTZOg3GMM\"",
+    "mtime": "2025-01-19T16:22:33.032Z",
+    "size": 879,
+    "path": "../public/ext/World/node_modules/array-flatten/package.json"
+  },
+  "/ext/World/node_modules/array-flatten/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"4dd-mO+p5L1ta8pOu3aZGiGHqKSWyLY\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 1245,
+    "path": "../public/ext/World/node_modules/array-flatten/README.md"
+  },
   "/ext/World/node_modules/body-parser/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
     "etag": "\"4159-yaq2fThyRf9wHZUg/wf4Ssz8xCI\"",
@@ -4540,33 +4924,40 @@ const assets$1 = {
     "size": 1193,
     "path": "../public/ext/World/node_modules/body-parser/SECURITY.md"
   },
-  "/ext/World/node_modules/array-flatten/array-flatten.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"4ab-/GzDDouOwJ7rpiusB27WJ6o+6NE\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 1195,
-    "path": "../public/ext/World/node_modules/array-flatten/array-flatten.js"
-  },
-  "/ext/World/node_modules/array-flatten/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"44f-On+Ia2MtIZdnakACDTVOhLeGBgQ\"",
-    "mtime": "2025-01-19T16:22:33.099Z",
-    "size": 1103,
-    "path": "../public/ext/World/node_modules/array-flatten/LICENSE"
-  },
-  "/ext/World/node_modules/array-flatten/package.json": {
-    "type": "application/json",
-    "etag": "\"36f-/FG4nQ+3zGQKBJW6pABTZOg3GMM\"",
-    "mtime": "2025-01-19T16:22:33.032Z",
-    "size": 879,
-    "path": "../public/ext/World/node_modules/array-flatten/package.json"
-  },
-  "/ext/World/node_modules/array-flatten/README.md": {
+  "/ext/World/node_modules/bytes/History.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"4dd-mO+p5L1ta8pOu3aZGiGHqKSWyLY\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 1245,
-    "path": "../public/ext/World/node_modules/array-flatten/README.md"
+    "etag": "\"6ef-VDVQvp5xNggwSuL4mn6bTfBw7I8\"",
+    "mtime": "2025-01-19T16:22:33.121Z",
+    "size": 1775,
+    "path": "../public/ext/World/node_modules/bytes/History.md"
+  },
+  "/ext/World/node_modules/bytes/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"e1d-vUZSnlY3/xplnx1K8lmJJbEnQeA\"",
+    "mtime": "2025-01-19T16:22:33.054Z",
+    "size": 3613,
+    "path": "../public/ext/World/node_modules/bytes/index.js"
+  },
+  "/ext/World/node_modules/bytes/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"481-C4TNufxiY+wX2JkdkQmSK4QNTzA\"",
+    "mtime": "2025-01-19T16:22:33.026Z",
+    "size": 1153,
+    "path": "../public/ext/World/node_modules/bytes/LICENSE"
+  },
+  "/ext/World/node_modules/bytes/package.json": {
+    "type": "application/json",
+    "etag": "\"3bf-2P4+cOtOz0v1g4Xksn+Jt85laig\"",
+    "mtime": "2025-01-19T16:22:33.088Z",
+    "size": 959,
+    "path": "../public/ext/World/node_modules/bytes/package.json"
+  },
+  "/ext/World/node_modules/bytes/Readme.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"12a2-wfZLtwictZ1bPZKTiBGNJUSK4io\"",
+    "mtime": "2025-01-19T16:22:33.145Z",
+    "size": 4770,
+    "path": "../public/ext/World/node_modules/bytes/Readme.md"
   },
   "/ext/World/node_modules/call-bind-apply-helpers/.eslintrc": {
     "type": "text/plain; charset=utf-8",
@@ -4659,41 +5050,6 @@ const assets$1 = {
     "size": 115,
     "path": "../public/ext/World/node_modules/call-bind-apply-helpers/tsconfig.json"
   },
-  "/ext/World/node_modules/bytes/History.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"6ef-VDVQvp5xNggwSuL4mn6bTfBw7I8\"",
-    "mtime": "2025-01-19T16:22:33.121Z",
-    "size": 1775,
-    "path": "../public/ext/World/node_modules/bytes/History.md"
-  },
-  "/ext/World/node_modules/bytes/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"e1d-vUZSnlY3/xplnx1K8lmJJbEnQeA\"",
-    "mtime": "2025-01-19T16:22:33.054Z",
-    "size": 3613,
-    "path": "../public/ext/World/node_modules/bytes/index.js"
-  },
-  "/ext/World/node_modules/bytes/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"481-C4TNufxiY+wX2JkdkQmSK4QNTzA\"",
-    "mtime": "2025-01-19T16:22:33.026Z",
-    "size": 1153,
-    "path": "../public/ext/World/node_modules/bytes/LICENSE"
-  },
-  "/ext/World/node_modules/bytes/package.json": {
-    "type": "application/json",
-    "etag": "\"3bf-2P4+cOtOz0v1g4Xksn+Jt85laig\"",
-    "mtime": "2025-01-19T16:22:33.088Z",
-    "size": 959,
-    "path": "../public/ext/World/node_modules/bytes/package.json"
-  },
-  "/ext/World/node_modules/bytes/Readme.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"12a2-wfZLtwictZ1bPZKTiBGNJUSK4io\"",
-    "mtime": "2025-01-19T16:22:33.145Z",
-    "size": 4770,
-    "path": "../public/ext/World/node_modules/bytes/Readme.md"
-  },
   "/ext/World/node_modules/call-bound/.eslintrc": {
     "type": "text/plain; charset=utf-8",
     "etag": "\"8a-ajoYQMp7uDO8G3itu7fwbtt5Ajs\"",
@@ -4785,41 +5141,6 @@ const assets$1 = {
     "size": 5205,
     "path": "../public/ext/World/node_modules/content-disposition/README.md"
   },
-  "/ext/World/node_modules/cookie-signature/.npmignore": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"1d-PNbt8OjstgyMboy+ds01hxJQTVc\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 29,
-    "path": "../public/ext/World/node_modules/cookie-signature/.npmignore"
-  },
-  "/ext/World/node_modules/cookie-signature/History.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"2b7-DuKagPAvCNczQoQjduJ7w7f309s\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 695,
-    "path": "../public/ext/World/node_modules/cookie-signature/History.md"
-  },
-  "/ext/World/node_modules/cookie-signature/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"4ce-u1wsCkY6oQB0yvmR9naBIxsfDCE\"",
-    "mtime": "2025-01-19T16:22:33.099Z",
-    "size": 1230,
-    "path": "../public/ext/World/node_modules/cookie-signature/index.js"
-  },
-  "/ext/World/node_modules/cookie-signature/package.json": {
-    "type": "application/json",
-    "etag": "\"1ec-6wcUIyBfw1Vz5xS6p1XjqekAqXk\"",
-    "mtime": "2025-01-19T16:22:33.031Z",
-    "size": 492,
-    "path": "../public/ext/World/node_modules/cookie-signature/package.json"
-  },
-  "/ext/World/node_modules/cookie-signature/Readme.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"5d2-7t8N7ZN/Nrj/UFSlsIzzj9wkHes\"",
-    "mtime": "2025-01-19T16:22:33.154Z",
-    "size": 1490,
-    "path": "../public/ext/World/node_modules/cookie-signature/Readme.md"
-  },
   "/ext/World/node_modules/content-type/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
     "etag": "\"20b-eElRXR6uHlg75jI5nk/sYbEiHaI\"",
@@ -4889,6 +5210,41 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.161Z",
     "size": 1180,
     "path": "../public/ext/World/node_modules/cookie/SECURITY.md"
+  },
+  "/ext/World/node_modules/cookie-signature/.npmignore": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"1d-PNbt8OjstgyMboy+ds01hxJQTVc\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 29,
+    "path": "../public/ext/World/node_modules/cookie-signature/.npmignore"
+  },
+  "/ext/World/node_modules/cookie-signature/History.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"2b7-DuKagPAvCNczQoQjduJ7w7f309s\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 695,
+    "path": "../public/ext/World/node_modules/cookie-signature/History.md"
+  },
+  "/ext/World/node_modules/cookie-signature/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"4ce-u1wsCkY6oQB0yvmR9naBIxsfDCE\"",
+    "mtime": "2025-01-19T16:22:33.099Z",
+    "size": 1230,
+    "path": "../public/ext/World/node_modules/cookie-signature/index.js"
+  },
+  "/ext/World/node_modules/cookie-signature/package.json": {
+    "type": "application/json",
+    "etag": "\"1ec-6wcUIyBfw1Vz5xS6p1XjqekAqXk\"",
+    "mtime": "2025-01-19T16:22:33.031Z",
+    "size": 492,
+    "path": "../public/ext/World/node_modules/cookie-signature/package.json"
+  },
+  "/ext/World/node_modules/cookie-signature/Readme.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"5d2-7t8N7ZN/Nrj/UFSlsIzzj9wkHes\"",
+    "mtime": "2025-01-19T16:22:33.154Z",
+    "size": 1490,
+    "path": "../public/ext/World/node_modules/cookie-signature/Readme.md"
   },
   "/ext/World/node_modules/debug/.coveralls.yml": {
     "type": "text/yaml; charset=utf-8",
@@ -5009,6 +5365,34 @@ const assets$1 = {
     "size": 9988,
     "path": "../public/ext/World/node_modules/depd/Readme.md"
   },
+  "/ext/World/node_modules/destroy/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"10a2-ZUfpxtv7KHyyKBmVVybvwBoplQ8\"",
+    "mtime": "2025-01-19T16:22:33.054Z",
+    "size": 4258,
+    "path": "../public/ext/World/node_modules/destroy/index.js"
+  },
+  "/ext/World/node_modules/destroy/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"495-6H2su+voL0ewL4KXFBRoLANWA3M\"",
+    "mtime": "2025-01-19T16:22:33.026Z",
+    "size": 1173,
+    "path": "../public/ext/World/node_modules/destroy/LICENSE"
+  },
+  "/ext/World/node_modules/destroy/package.json": {
+    "type": "application/json",
+    "etag": "\"468-4SEV7ZoeLFbrNez8FP+DuMApNdU\"",
+    "mtime": "2025-01-19T16:22:33.095Z",
+    "size": 1128,
+    "path": "../public/ext/World/node_modules/destroy/package.json"
+  },
+  "/ext/World/node_modules/destroy/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"99b-MdbQ9LjxfCVRVAhXBWlQxAZhj1E\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 2459,
+    "path": "../public/ext/World/node_modules/destroy/README.md"
+  },
   "/ext/World/node_modules/dunder-proto/.eslintrc": {
     "type": "text/plain; charset=utf-8",
     "etag": "\"2b-r3nIG9YcmpN/yhhCXdhM34MXyLk\"",
@@ -5072,34 +5456,6 @@ const assets$1 = {
     "size": 116,
     "path": "../public/ext/World/node_modules/dunder-proto/tsconfig.json"
   },
-  "/ext/World/node_modules/destroy/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"10a2-ZUfpxtv7KHyyKBmVVybvwBoplQ8\"",
-    "mtime": "2025-01-19T16:22:33.054Z",
-    "size": 4258,
-    "path": "../public/ext/World/node_modules/destroy/index.js"
-  },
-  "/ext/World/node_modules/destroy/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"495-6H2su+voL0ewL4KXFBRoLANWA3M\"",
-    "mtime": "2025-01-19T16:22:33.026Z",
-    "size": 1173,
-    "path": "../public/ext/World/node_modules/destroy/LICENSE"
-  },
-  "/ext/World/node_modules/destroy/package.json": {
-    "type": "application/json",
-    "etag": "\"468-4SEV7ZoeLFbrNez8FP+DuMApNdU\"",
-    "mtime": "2025-01-19T16:22:33.095Z",
-    "size": 1128,
-    "path": "../public/ext/World/node_modules/destroy/package.json"
-  },
-  "/ext/World/node_modules/destroy/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"99b-MdbQ9LjxfCVRVAhXBWlQxAZhj1E\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 2459,
-    "path": "../public/ext/World/node_modules/destroy/README.md"
-  },
   "/ext/World/node_modules/ee-first/index.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"694-ZyG1Iaw1CXMdPQ+bAHSQgXbh/MQ\"",
@@ -5127,6 +5483,34 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.048Z",
     "size": 2617,
     "path": "../public/ext/World/node_modules/ee-first/README.md"
+  },
+  "/ext/World/node_modules/encodeurl/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"62a-l2KoK7BvV4KRUDCkVtucO+loEcE\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 1578,
+    "path": "../public/ext/World/node_modules/encodeurl/index.js"
+  },
+  "/ext/World/node_modules/encodeurl/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"441-ZdTCBqJmZlPC/W5RZGj6WqMh6PE\"",
+    "mtime": "2025-01-19T16:22:33.032Z",
+    "size": 1089,
+    "path": "../public/ext/World/node_modules/encodeurl/LICENSE"
+  },
+  "/ext/World/node_modules/encodeurl/package.json": {
+    "type": "application/json",
+    "etag": "\"444-QCKCWbtPEGcGSQ0LC3PNTzXW20Q\"",
+    "mtime": "2025-01-19T16:22:33.095Z",
+    "size": 1092,
+    "path": "../public/ext/World/node_modules/encodeurl/package.json"
+  },
+  "/ext/World/node_modules/encodeurl/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"c95-37dlwHXejBN9zAjdoQKOEUtSSw4\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 3221,
+    "path": "../public/ext/World/node_modules/encodeurl/README.md"
   },
   "/ext/World/node_modules/es-define-property/.eslintrc": {
     "type": "text/plain; charset=utf-8",
@@ -5183,34 +5567,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.180Z",
     "size": 138,
     "path": "../public/ext/World/node_modules/es-define-property/tsconfig.json"
-  },
-  "/ext/World/node_modules/encodeurl/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"62a-l2KoK7BvV4KRUDCkVtucO+loEcE\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 1578,
-    "path": "../public/ext/World/node_modules/encodeurl/index.js"
-  },
-  "/ext/World/node_modules/encodeurl/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"441-ZdTCBqJmZlPC/W5RZGj6WqMh6PE\"",
-    "mtime": "2025-01-19T16:22:33.032Z",
-    "size": 1089,
-    "path": "../public/ext/World/node_modules/encodeurl/LICENSE"
-  },
-  "/ext/World/node_modules/encodeurl/package.json": {
-    "type": "application/json",
-    "etag": "\"444-QCKCWbtPEGcGSQ0LC3PNTzXW20Q\"",
-    "mtime": "2025-01-19T16:22:33.095Z",
-    "size": 1092,
-    "path": "../public/ext/World/node_modules/encodeurl/package.json"
-  },
-  "/ext/World/node_modules/encodeurl/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"c95-37dlwHXejBN9zAjdoQKOEUtSSw4\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 3221,
-    "path": "../public/ext/World/node_modules/encodeurl/README.md"
   },
   "/ext/World/node_modules/es-errors/.eslintrc": {
     "type": "text/plain; charset=utf-8",
@@ -5303,34 +5659,6 @@ const assets$1 = {
     "size": 73,
     "path": "../public/ext/World/node_modules/es-errors/uri.js"
   },
-  "/ext/World/node_modules/escape-html/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"552-37sZx56wyn/yYl+xl1o1z0e+N4o\"",
-    "mtime": "2025-01-19T16:22:33.099Z",
-    "size": 1362,
-    "path": "../public/ext/World/node_modules/escape-html/index.js"
-  },
-  "/ext/World/node_modules/escape-html/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"485-rfekUsR/+HxI3v831wPxZo8Sdso\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 1157,
-    "path": "../public/ext/World/node_modules/escape-html/LICENSE"
-  },
-  "/ext/World/node_modules/escape-html/package.json": {
-    "type": "application/json",
-    "etag": "\"1b2-+dP9ZKAZbneWVInOm4H+TOOp7LE\"",
-    "mtime": "2025-01-19T16:22:33.032Z",
-    "size": 434,
-    "path": "../public/ext/World/node_modules/escape-html/package.json"
-  },
-  "/ext/World/node_modules/escape-html/Readme.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"2c3-NZI6l9Si+LcS2FoYr6Pap+G3pT4\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 707,
-    "path": "../public/ext/World/node_modules/escape-html/Readme.md"
-  },
   "/ext/World/node_modules/es-object-atoms/.eslintrc": {
     "type": "text/plain; charset=utf-8",
     "etag": "\"e5-GOZWA0h0HbxBE9fQ6ar36X/WFCc\"",
@@ -5400,6 +5728,34 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.202Z",
     "size": 81,
     "path": "../public/ext/World/node_modules/es-object-atoms/tsconfig.json"
+  },
+  "/ext/World/node_modules/escape-html/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"552-37sZx56wyn/yYl+xl1o1z0e+N4o\"",
+    "mtime": "2025-01-19T16:22:33.099Z",
+    "size": 1362,
+    "path": "../public/ext/World/node_modules/escape-html/index.js"
+  },
+  "/ext/World/node_modules/escape-html/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"485-rfekUsR/+HxI3v831wPxZo8Sdso\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 1157,
+    "path": "../public/ext/World/node_modules/escape-html/LICENSE"
+  },
+  "/ext/World/node_modules/escape-html/package.json": {
+    "type": "application/json",
+    "etag": "\"1b2-+dP9ZKAZbneWVInOm4H+TOOp7LE\"",
+    "mtime": "2025-01-19T16:22:33.032Z",
+    "size": 434,
+    "path": "../public/ext/World/node_modules/escape-html/package.json"
+  },
+  "/ext/World/node_modules/escape-html/Readme.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"2c3-NZI6l9Si+LcS2FoYr6Pap+G3pT4\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 707,
+    "path": "../public/ext/World/node_modules/escape-html/Readme.md"
   },
   "/ext/World/node_modules/etag/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
@@ -5513,41 +5869,6 @@ const assets$1 = {
     "size": 1202,
     "path": "../public/ext/World/node_modules/finalhandler/SECURITY.md"
   },
-  "/ext/World/node_modules/fresh/HISTORY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"5dc-DEYyZ6fS8V7eHKy9XjJiAqEjII8\"",
-    "mtime": "2025-01-19T16:22:33.154Z",
-    "size": 1500,
-    "path": "../public/ext/World/node_modules/fresh/HISTORY.md"
-  },
-  "/ext/World/node_modules/fresh/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"a97-z8BwQjC10Iw5+YR/fh6Ag2m0EQ4\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 2711,
-    "path": "../public/ext/World/node_modules/fresh/index.js"
-  },
-  "/ext/World/node_modules/fresh/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"496-1FI16NnR1lZCCnYKZ26nFSOGlp8\"",
-    "mtime": "2025-01-19T16:22:33.095Z",
-    "size": 1174,
-    "path": "../public/ext/World/node_modules/fresh/LICENSE"
-  },
-  "/ext/World/node_modules/fresh/package.json": {
-    "type": "application/json",
-    "etag": "\"54d-bZD3ZYJ5GEBmxe55DPo93mkhlRs\"",
-    "mtime": "2025-01-19T16:22:33.030Z",
-    "size": 1357,
-    "path": "../public/ext/World/node_modules/fresh/package.json"
-  },
-  "/ext/World/node_modules/fresh/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"d2e-2aRFlK+eAFd79ttXA42r1s7tWKc\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 3374,
-    "path": "../public/ext/World/node_modules/fresh/README.md"
-  },
   "/ext/World/node_modules/forwarded/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
     "etag": "\"190-vQ7+ZprVBqsli7Rh0URNdN0ojOU\"",
@@ -5583,54 +5904,40 @@ const assets$1 = {
     "size": 1654,
     "path": "../public/ext/World/node_modules/forwarded/README.md"
   },
-  "/ext/World/node_modules/get-intrinsic/.eslintrc": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"25b-T6xC9zz39btVGQ7HqGNp/z4Ufx4\"",
-    "mtime": "2025-01-19T16:22:33.014Z",
-    "size": 603,
-    "path": "../public/ext/World/node_modules/get-intrinsic/.eslintrc"
-  },
-  "/ext/World/node_modules/get-intrinsic/.nycrc": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"8b-VPnXrfiUPLB/ghQ1uyaetLpAzMI\"",
-    "mtime": "2025-01-19T16:22:33.048Z",
-    "size": 139,
-    "path": "../public/ext/World/node_modules/get-intrinsic/.nycrc"
-  },
-  "/ext/World/node_modules/get-intrinsic/CHANGELOG.md": {
+  "/ext/World/node_modules/fresh/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"3a5f-D4bv4l4PX9Z7rMSM3DaufcmOvbk\"",
-    "mtime": "2025-01-19T16:22:33.186Z",
-    "size": 14943,
-    "path": "../public/ext/World/node_modules/get-intrinsic/CHANGELOG.md"
+    "etag": "\"5dc-DEYyZ6fS8V7eHKy9XjJiAqEjII8\"",
+    "mtime": "2025-01-19T16:22:33.154Z",
+    "size": 1500,
+    "path": "../public/ext/World/node_modules/fresh/HISTORY.md"
   },
-  "/ext/World/node_modules/get-intrinsic/index.js": {
+  "/ext/World/node_modules/fresh/index.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"3814-UwPdqOn0qsnlJOU4s9eISZo0gxA\"",
-    "mtime": "2025-01-19T16:22:33.162Z",
-    "size": 14356,
-    "path": "../public/ext/World/node_modules/get-intrinsic/index.js"
+    "etag": "\"a97-z8BwQjC10Iw5+YR/fh6Ag2m0EQ4\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 2711,
+    "path": "../public/ext/World/node_modules/fresh/index.js"
   },
-  "/ext/World/node_modules/get-intrinsic/LICENSE": {
+  "/ext/World/node_modules/fresh/LICENSE": {
     "type": "text/plain; charset=utf-8",
-    "etag": "\"42f-cIepJXfIaAYzijY6iKmjtPdi4m0\"",
-    "mtime": "2025-01-19T16:22:33.080Z",
-    "size": 1071,
-    "path": "../public/ext/World/node_modules/get-intrinsic/LICENSE"
+    "etag": "\"496-1FI16NnR1lZCCnYKZ26nFSOGlp8\"",
+    "mtime": "2025-01-19T16:22:33.095Z",
+    "size": 1174,
+    "path": "../public/ext/World/node_modules/fresh/LICENSE"
   },
-  "/ext/World/node_modules/get-intrinsic/package.json": {
+  "/ext/World/node_modules/fresh/package.json": {
     "type": "application/json",
-    "etag": "\"a10-Ia2k208PDvbiB9pKkh/2QZZhbWA\"",
-    "mtime": "2025-01-19T16:22:33.177Z",
-    "size": 2576,
-    "path": "../public/ext/World/node_modules/get-intrinsic/package.json"
+    "etag": "\"54d-bZD3ZYJ5GEBmxe55DPo93mkhlRs\"",
+    "mtime": "2025-01-19T16:22:33.030Z",
+    "size": 1357,
+    "path": "../public/ext/World/node_modules/fresh/package.json"
   },
-  "/ext/World/node_modules/get-intrinsic/README.md": {
+  "/ext/World/node_modules/fresh/README.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"ae7-HT0doQdCmeWOJkkEsSuwcxjIVrw\"",
-    "mtime": "2025-01-19T16:22:33.195Z",
-    "size": 2791,
-    "path": "../public/ext/World/node_modules/get-intrinsic/README.md"
+    "etag": "\"d2e-2aRFlK+eAFd79ttXA42r1s7tWKc\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 3374,
+    "path": "../public/ext/World/node_modules/fresh/README.md"
   },
   "/ext/World/node_modules/function-bind/.eslintrc": {
     "type": "text/plain; charset=utf-8",
@@ -5688,61 +5995,54 @@ const assets$1 = {
     "size": 1755,
     "path": "../public/ext/World/node_modules/function-bind/README.md"
   },
-  "/ext/World/node_modules/gopd/.eslintrc": {
+  "/ext/World/node_modules/get-intrinsic/.eslintrc": {
     "type": "text/plain; charset=utf-8",
-    "etag": "\"e0-nKKmbWK9aHw9GMUSF7/jcoAlbsE\"",
+    "etag": "\"25b-T6xC9zz39btVGQ7HqGNp/z4Ufx4\"",
     "mtime": "2025-01-19T16:22:33.014Z",
-    "size": 224,
-    "path": "../public/ext/World/node_modules/gopd/.eslintrc"
+    "size": 603,
+    "path": "../public/ext/World/node_modules/get-intrinsic/.eslintrc"
   },
-  "/ext/World/node_modules/gopd/CHANGELOG.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"c05-imURpURMpE3K78rNsqjGqE9cFj4\"",
-    "mtime": "2025-01-19T16:22:33.192Z",
-    "size": 3077,
-    "path": "../public/ext/World/node_modules/gopd/CHANGELOG.md"
-  },
-  "/ext/World/node_modules/gopd/gOPD.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"61-0a2w9TB40e9iOioZeJ9TrZ3cRuE\"",
-    "mtime": "2025-01-19T16:22:33.080Z",
-    "size": 97,
-    "path": "../public/ext/World/node_modules/gopd/gOPD.js"
-  },
-  "/ext/World/node_modules/gopd/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"ce-Z758E/Ob73AB9sfKo22LCXGR89w\"",
-    "mtime": "2025-01-19T16:22:33.121Z",
-    "size": 206,
-    "path": "../public/ext/World/node_modules/gopd/index.js"
-  },
-  "/ext/World/node_modules/gopd/LICENSE": {
+  "/ext/World/node_modules/get-intrinsic/.nycrc": {
     "type": "text/plain; charset=utf-8",
-    "etag": "\"42f-t5srUcvkLsZVJ3Q1uGPvm6hAhA0\"",
+    "etag": "\"8b-VPnXrfiUPLB/ghQ1uyaetLpAzMI\"",
     "mtime": "2025-01-19T16:22:33.048Z",
-    "size": 1071,
-    "path": "../public/ext/World/node_modules/gopd/LICENSE"
+    "size": 139,
+    "path": "../public/ext/World/node_modules/get-intrinsic/.nycrc"
   },
-  "/ext/World/node_modules/gopd/package.json": {
-    "type": "application/json",
-    "etag": "\"816-aCtLd70EFQFUakhSmNZisaVN5wI\"",
-    "mtime": "2025-01-19T16:22:33.170Z",
-    "size": 2070,
-    "path": "../public/ext/World/node_modules/gopd/package.json"
-  },
-  "/ext/World/node_modules/gopd/README.md": {
+  "/ext/World/node_modules/get-intrinsic/CHANGELOG.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"61a-ToedbCLjtUQRms5ILMIS2drCQHU\"",
-    "mtime": "2025-01-19T16:22:33.202Z",
-    "size": 1562,
-    "path": "../public/ext/World/node_modules/gopd/README.md"
+    "etag": "\"3a5f-D4bv4l4PX9Z7rMSM3DaufcmOvbk\"",
+    "mtime": "2025-01-19T16:22:33.186Z",
+    "size": 14943,
+    "path": "../public/ext/World/node_modules/get-intrinsic/CHANGELOG.md"
   },
-  "/ext/World/node_modules/gopd/tsconfig.json": {
+  "/ext/World/node_modules/get-intrinsic/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"3814-UwPdqOn0qsnlJOU4s9eISZo0gxA\"",
+    "mtime": "2025-01-19T16:22:33.162Z",
+    "size": 14356,
+    "path": "../public/ext/World/node_modules/get-intrinsic/index.js"
+  },
+  "/ext/World/node_modules/get-intrinsic/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"42f-cIepJXfIaAYzijY6iKmjtPdi4m0\"",
+    "mtime": "2025-01-19T16:22:33.080Z",
+    "size": 1071,
+    "path": "../public/ext/World/node_modules/get-intrinsic/LICENSE"
+  },
+  "/ext/World/node_modules/get-intrinsic/package.json": {
     "type": "application/json",
-    "etag": "\"74-oWRyQk+MJhhN5Vfv+NaCSTnR/I4\"",
-    "mtime": "2025-01-19T16:22:33.180Z",
-    "size": 116,
-    "path": "../public/ext/World/node_modules/gopd/tsconfig.json"
+    "etag": "\"a10-Ia2k208PDvbiB9pKkh/2QZZhbWA\"",
+    "mtime": "2025-01-19T16:22:33.177Z",
+    "size": 2576,
+    "path": "../public/ext/World/node_modules/get-intrinsic/package.json"
+  },
+  "/ext/World/node_modules/get-intrinsic/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"ae7-HT0doQdCmeWOJkkEsSuwcxjIVrw\"",
+    "mtime": "2025-01-19T16:22:33.195Z",
+    "size": 2791,
+    "path": "../public/ext/World/node_modules/get-intrinsic/README.md"
   },
   "/ext/World/node_modules/get-proto/.eslintrc": {
     "type": "text/plain; charset=utf-8",
@@ -5814,61 +6114,61 @@ const assets$1 = {
     "size": 118,
     "path": "../public/ext/World/node_modules/get-proto/tsconfig.json"
   },
-  "/ext/World/node_modules/hasown/.eslintrc": {
+  "/ext/World/node_modules/gopd/.eslintrc": {
     "type": "text/plain; charset=utf-8",
-    "etag": "\"2b-r3nIG9YcmpN/yhhCXdhM34MXyLk\"",
+    "etag": "\"e0-nKKmbWK9aHw9GMUSF7/jcoAlbsE\"",
     "mtime": "2025-01-19T16:22:33.014Z",
-    "size": 43,
-    "path": "../public/ext/World/node_modules/hasown/.eslintrc"
+    "size": 224,
+    "path": "../public/ext/World/node_modules/gopd/.eslintrc"
   },
-  "/ext/World/node_modules/hasown/.nycrc": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"d8-lUYhcmmRh6wC6uxgdAJLJubXHP8\"",
-    "mtime": "2025-01-19T16:22:33.048Z",
-    "size": 216,
-    "path": "../public/ext/World/node_modules/hasown/.nycrc"
-  },
-  "/ext/World/node_modules/hasown/CHANGELOG.md": {
+  "/ext/World/node_modules/gopd/CHANGELOG.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"a13-NDOM6hGgGf/V+Gc5rfnMJ1sxB3U\"",
-    "mtime": "2025-01-19T16:22:33.178Z",
-    "size": 2579,
-    "path": "../public/ext/World/node_modules/hasown/CHANGELOG.md"
+    "etag": "\"c05-imURpURMpE3K78rNsqjGqE9cFj4\"",
+    "mtime": "2025-01-19T16:22:33.192Z",
+    "size": 3077,
+    "path": "../public/ext/World/node_modules/gopd/CHANGELOG.md"
   },
-  "/ext/World/node_modules/hasown/index.js": {
+  "/ext/World/node_modules/gopd/gOPD.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"ce-ZohX96fzag97gMi2mStUOBnOOoI\"",
+    "etag": "\"61-0a2w9TB40e9iOioZeJ9TrZ3cRuE\"",
+    "mtime": "2025-01-19T16:22:33.080Z",
+    "size": 97,
+    "path": "../public/ext/World/node_modules/gopd/gOPD.js"
+  },
+  "/ext/World/node_modules/gopd/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"ce-Z758E/Ob73AB9sfKo22LCXGR89w\"",
     "mtime": "2025-01-19T16:22:33.121Z",
     "size": 206,
-    "path": "../public/ext/World/node_modules/hasown/index.js"
+    "path": "../public/ext/World/node_modules/gopd/index.js"
   },
-  "/ext/World/node_modules/hasown/LICENSE": {
+  "/ext/World/node_modules/gopd/LICENSE": {
     "type": "text/plain; charset=utf-8",
-    "etag": "\"43b-rL/5e1KoB6NmEkcyjcRd9jbXuPc\"",
-    "mtime": "2025-01-19T16:22:33.080Z",
-    "size": 1083,
-    "path": "../public/ext/World/node_modules/hasown/LICENSE"
+    "etag": "\"42f-t5srUcvkLsZVJ3Q1uGPvm6hAhA0\"",
+    "mtime": "2025-01-19T16:22:33.048Z",
+    "size": 1071,
+    "path": "../public/ext/World/node_modules/gopd/LICENSE"
   },
-  "/ext/World/node_modules/hasown/package.json": {
+  "/ext/World/node_modules/gopd/package.json": {
     "type": "application/json",
-    "etag": "\"8eb-Kquelk4Z7fNAyOiXjZvX6s1r/E4\"",
-    "mtime": "2025-01-19T16:22:33.145Z",
-    "size": 2283,
-    "path": "../public/ext/World/node_modules/hasown/package.json"
+    "etag": "\"816-aCtLd70EFQFUakhSmNZisaVN5wI\"",
+    "mtime": "2025-01-19T16:22:33.170Z",
+    "size": 2070,
+    "path": "../public/ext/World/node_modules/gopd/package.json"
   },
-  "/ext/World/node_modules/hasown/README.md": {
+  "/ext/World/node_modules/gopd/README.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"64d-NBBposyrYZQYjFYMwBZI6bVQu2k\"",
-    "mtime": "2025-01-19T16:22:33.188Z",
-    "size": 1613,
-    "path": "../public/ext/World/node_modules/hasown/README.md"
+    "etag": "\"61a-ToedbCLjtUQRms5ILMIS2drCQHU\"",
+    "mtime": "2025-01-19T16:22:33.202Z",
+    "size": 1562,
+    "path": "../public/ext/World/node_modules/gopd/README.md"
   },
-  "/ext/World/node_modules/hasown/tsconfig.json": {
+  "/ext/World/node_modules/gopd/tsconfig.json": {
     "type": "application/json",
-    "etag": "\"49-xQtrcSybY5PIt+DfjWabDeOEpvg\"",
-    "mtime": "2025-01-19T16:22:33.163Z",
-    "size": 73,
-    "path": "../public/ext/World/node_modules/hasown/tsconfig.json"
+    "etag": "\"74-oWRyQk+MJhhN5Vfv+NaCSTnR/I4\"",
+    "mtime": "2025-01-19T16:22:33.180Z",
+    "size": 116,
+    "path": "../public/ext/World/node_modules/gopd/tsconfig.json"
   },
   "/ext/World/node_modules/has-symbols/.eslintrc": {
     "type": "text/plain; charset=utf-8",
@@ -5932,6 +6232,62 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.222Z",
     "size": 143,
     "path": "../public/ext/World/node_modules/has-symbols/tsconfig.json"
+  },
+  "/ext/World/node_modules/hasown/.eslintrc": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"2b-r3nIG9YcmpN/yhhCXdhM34MXyLk\"",
+    "mtime": "2025-01-19T16:22:33.014Z",
+    "size": 43,
+    "path": "../public/ext/World/node_modules/hasown/.eslintrc"
+  },
+  "/ext/World/node_modules/hasown/.nycrc": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"d8-lUYhcmmRh6wC6uxgdAJLJubXHP8\"",
+    "mtime": "2025-01-19T16:22:33.048Z",
+    "size": 216,
+    "path": "../public/ext/World/node_modules/hasown/.nycrc"
+  },
+  "/ext/World/node_modules/hasown/CHANGELOG.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"a13-NDOM6hGgGf/V+Gc5rfnMJ1sxB3U\"",
+    "mtime": "2025-01-19T16:22:33.178Z",
+    "size": 2579,
+    "path": "../public/ext/World/node_modules/hasown/CHANGELOG.md"
+  },
+  "/ext/World/node_modules/hasown/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"ce-ZohX96fzag97gMi2mStUOBnOOoI\"",
+    "mtime": "2025-01-19T16:22:33.121Z",
+    "size": 206,
+    "path": "../public/ext/World/node_modules/hasown/index.js"
+  },
+  "/ext/World/node_modules/hasown/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"43b-rL/5e1KoB6NmEkcyjcRd9jbXuPc\"",
+    "mtime": "2025-01-19T16:22:33.080Z",
+    "size": 1083,
+    "path": "../public/ext/World/node_modules/hasown/LICENSE"
+  },
+  "/ext/World/node_modules/hasown/package.json": {
+    "type": "application/json",
+    "etag": "\"8eb-Kquelk4Z7fNAyOiXjZvX6s1r/E4\"",
+    "mtime": "2025-01-19T16:22:33.145Z",
+    "size": 2283,
+    "path": "../public/ext/World/node_modules/hasown/package.json"
+  },
+  "/ext/World/node_modules/hasown/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"64d-NBBposyrYZQYjFYMwBZI6bVQu2k\"",
+    "mtime": "2025-01-19T16:22:33.188Z",
+    "size": 1613,
+    "path": "../public/ext/World/node_modules/hasown/README.md"
+  },
+  "/ext/World/node_modules/hasown/tsconfig.json": {
+    "type": "application/json",
+    "etag": "\"49-xQtrcSybY5PIt+DfjWabDeOEpvg\"",
+    "mtime": "2025-01-19T16:22:33.163Z",
+    "size": 73,
+    "path": "../public/ext/World/node_modules/hasown/tsconfig.json"
   },
   "/ext/World/node_modules/http-errors/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
@@ -6058,76 +6414,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.129Z",
     "size": 8309,
     "path": "../public/ext/World/node_modules/ipaddr.js/README.md"
-  },
-  "/ext/World/node_modules/merge-descriptors/HISTORY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"16b-HP1f7A3HV6kuOoV7GV+TExZVe6c\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 363,
-    "path": "../public/ext/World/node_modules/merge-descriptors/HISTORY.md"
-  },
-  "/ext/World/node_modules/merge-descriptors/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"4c2-uuZvy3OjH81vJ0wGR0osEiblFUE\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 1218,
-    "path": "../public/ext/World/node_modules/merge-descriptors/index.js"
-  },
-  "/ext/World/node_modules/merge-descriptors/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"48f-M49WoJRTx50eUnnE50yRzmePXc8\"",
-    "mtime": "2025-01-19T16:22:33.030Z",
-    "size": 1167,
-    "path": "../public/ext/World/node_modules/merge-descriptors/LICENSE"
-  },
-  "/ext/World/node_modules/merge-descriptors/package.json": {
-    "type": "application/json",
-    "etag": "\"404-05PJHF18UpGVbEhXFiWxPN3SiZA\"",
-    "mtime": "2025-01-19T16:22:33.099Z",
-    "size": 1028,
-    "path": "../public/ext/World/node_modules/merge-descriptors/package.json"
-  },
-  "/ext/World/node_modules/merge-descriptors/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"519-uVSiQ2KHNEqRfXfizFDXuuvPYzA\"",
-    "mtime": "2025-01-19T16:22:33.154Z",
-    "size": 1305,
-    "path": "../public/ext/World/node_modules/merge-descriptors/README.md"
-  },
-  "/ext/World/node_modules/methods/HISTORY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"1ab-ptJdW1XGBcZsoWUsYb7ASUUF+i8\"",
-    "mtime": "2025-01-19T16:22:33.153Z",
-    "size": 427,
-    "path": "../public/ext/World/node_modules/methods/HISTORY.md"
-  },
-  "/ext/World/node_modules/methods/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"410-gutVJF9RDmy8WA9c7R3J1k1mTSo\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 1040,
-    "path": "../public/ext/World/node_modules/methods/index.js"
-  },
-  "/ext/World/node_modules/methods/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"49c-xXYdYopT9Z6/utyk7/cVAIPT69Y\"",
-    "mtime": "2025-01-19T16:22:33.095Z",
-    "size": 1180,
-    "path": "../public/ext/World/node_modules/methods/LICENSE"
-  },
-  "/ext/World/node_modules/methods/package.json": {
-    "type": "application/json",
-    "etag": "\"3b3-k/q3uHSvpCMphqLKuafpALXq7lo\"",
-    "mtime": "2025-01-19T16:22:33.029Z",
-    "size": 947,
-    "path": "../public/ext/World/node_modules/methods/package.json"
-  },
-  "/ext/World/node_modules/methods/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"69e-QUjAgHeBJpCus5nQsGPfR7supnQ\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 1694,
-    "path": "../public/ext/World/node_modules/methods/README.md"
   },
   "/ext/World/node_modules/math-intrinsics/.eslintrc": {
     "type": "text/plain; charset=utf-8",
@@ -6290,6 +6576,76 @@ const assets$1 = {
     "size": 2371,
     "path": "../public/ext/World/node_modules/media-typer/README.md"
   },
+  "/ext/World/node_modules/merge-descriptors/HISTORY.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"16b-HP1f7A3HV6kuOoV7GV+TExZVe6c\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 363,
+    "path": "../public/ext/World/node_modules/merge-descriptors/HISTORY.md"
+  },
+  "/ext/World/node_modules/merge-descriptors/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"4c2-uuZvy3OjH81vJ0wGR0osEiblFUE\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 1218,
+    "path": "../public/ext/World/node_modules/merge-descriptors/index.js"
+  },
+  "/ext/World/node_modules/merge-descriptors/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"48f-M49WoJRTx50eUnnE50yRzmePXc8\"",
+    "mtime": "2025-01-19T16:22:33.030Z",
+    "size": 1167,
+    "path": "../public/ext/World/node_modules/merge-descriptors/LICENSE"
+  },
+  "/ext/World/node_modules/merge-descriptors/package.json": {
+    "type": "application/json",
+    "etag": "\"404-05PJHF18UpGVbEhXFiWxPN3SiZA\"",
+    "mtime": "2025-01-19T16:22:33.099Z",
+    "size": 1028,
+    "path": "../public/ext/World/node_modules/merge-descriptors/package.json"
+  },
+  "/ext/World/node_modules/merge-descriptors/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"519-uVSiQ2KHNEqRfXfizFDXuuvPYzA\"",
+    "mtime": "2025-01-19T16:22:33.154Z",
+    "size": 1305,
+    "path": "../public/ext/World/node_modules/merge-descriptors/README.md"
+  },
+  "/ext/World/node_modules/methods/HISTORY.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"1ab-ptJdW1XGBcZsoWUsYb7ASUUF+i8\"",
+    "mtime": "2025-01-19T16:22:33.153Z",
+    "size": 427,
+    "path": "../public/ext/World/node_modules/methods/HISTORY.md"
+  },
+  "/ext/World/node_modules/methods/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"410-gutVJF9RDmy8WA9c7R3J1k1mTSo\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 1040,
+    "path": "../public/ext/World/node_modules/methods/index.js"
+  },
+  "/ext/World/node_modules/methods/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"49c-xXYdYopT9Z6/utyk7/cVAIPT69Y\"",
+    "mtime": "2025-01-19T16:22:33.095Z",
+    "size": 1180,
+    "path": "../public/ext/World/node_modules/methods/LICENSE"
+  },
+  "/ext/World/node_modules/methods/package.json": {
+    "type": "application/json",
+    "etag": "\"3b3-k/q3uHSvpCMphqLKuafpALXq7lo\"",
+    "mtime": "2025-01-19T16:22:33.029Z",
+    "size": 947,
+    "path": "../public/ext/World/node_modules/methods/package.json"
+  },
+  "/ext/World/node_modules/methods/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"69e-QUjAgHeBJpCus5nQsGPfR7supnQ\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 1694,
+    "path": "../public/ext/World/node_modules/methods/README.md"
+  },
   "/ext/World/node_modules/mime/.npmignore": {
     "type": "text/plain; charset=utf-8",
     "etag": "\"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk\"",
@@ -6388,55 +6744,6 @@ const assets$1 = {
     "size": 4091,
     "path": "../public/ext/World/node_modules/mime-db/README.md"
   },
-  "/ext/World/node_modules/ms/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"acc-DRDukhQ2+l/1mIRFzGdnYhnf/74\"",
-    "mtime": "2025-01-19T16:22:33.048Z",
-    "size": 2764,
-    "path": "../public/ext/World/node_modules/ms/index.js"
-  },
-  "/ext/World/node_modules/ms/license.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"435-iE6E6/3a/ZO1u4FN8HbS69F1e6g\"",
-    "mtime": "2025-01-19T16:22:33.088Z",
-    "size": 1077,
-    "path": "../public/ext/World/node_modules/ms/license.md"
-  },
-  "/ext/World/node_modules/ms/package.json": {
-    "type": "application/json",
-    "etag": "\"2c0-TTVNp+zhx9Vom4EE87bz3LrHeQ4\"",
-    "mtime": "2025-01-19T16:22:33.023Z",
-    "size": 704,
-    "path": "../public/ext/World/node_modules/ms/package.json"
-  },
-  "/ext/World/node_modules/ms/readme.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"6b9-6HXZ+nQf5EiTx3iXSGDzYnJONew\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 1721,
-    "path": "../public/ext/World/node_modules/ms/readme.md"
-  },
-  "/ext/World/node_modules/node/installArchSpecificPackage.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2d-HoFA+r0waNx1vFCnzQkDLATINEg\"",
-    "mtime": "2025-01-19T16:22:33.032Z",
-    "size": 45,
-    "path": "../public/ext/World/node_modules/node/installArchSpecificPackage.js"
-  },
-  "/ext/World/node_modules/node/package.json": {
-    "type": "application/json",
-    "etag": "\"1df-0BdiBqYVn+4cSqIxG7RJoIqHGOo\"",
-    "mtime": "2025-01-19T16:22:36.915Z",
-    "size": 479,
-    "path": "../public/ext/World/node_modules/node/package.json"
-  },
-  "/ext/World/node_modules/node/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"3c5-Dy4gOVkZJY8/yA8iTgHXlDJyeOY\"",
-    "mtime": "2025-01-19T16:22:33.102Z",
-    "size": 965,
-    "path": "../public/ext/World/node_modules/node/README.md"
-  },
   "/ext/World/node_modules/mime-types/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
     "etag": "\"226c-cGfNlC41XszcQWmKwQwoIob3Yx8\"",
@@ -6472,6 +6779,34 @@ const assets$1 = {
     "size": 3481,
     "path": "../public/ext/World/node_modules/mime-types/README.md"
   },
+  "/ext/World/node_modules/ms/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"acc-DRDukhQ2+l/1mIRFzGdnYhnf/74\"",
+    "mtime": "2025-01-19T16:22:33.048Z",
+    "size": 2764,
+    "path": "../public/ext/World/node_modules/ms/index.js"
+  },
+  "/ext/World/node_modules/ms/license.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"435-iE6E6/3a/ZO1u4FN8HbS69F1e6g\"",
+    "mtime": "2025-01-19T16:22:33.088Z",
+    "size": 1077,
+    "path": "../public/ext/World/node_modules/ms/license.md"
+  },
+  "/ext/World/node_modules/ms/package.json": {
+    "type": "application/json",
+    "etag": "\"2c0-TTVNp+zhx9Vom4EE87bz3LrHeQ4\"",
+    "mtime": "2025-01-19T16:22:33.023Z",
+    "size": 704,
+    "path": "../public/ext/World/node_modules/ms/package.json"
+  },
+  "/ext/World/node_modules/ms/readme.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"6b9-6HXZ+nQf5EiTx3iXSGDzYnJONew\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 1721,
+    "path": "../public/ext/World/node_modules/ms/readme.md"
+  },
   "/ext/World/node_modules/negotiator/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
     "etag": "\"9c3-L+VTgvMN7CrnnBFqKAy136Ubl3I\"",
@@ -6506,6 +6841,27 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.208Z",
     "size": 4901,
     "path": "../public/ext/World/node_modules/negotiator/README.md"
+  },
+  "/ext/World/node_modules/node/installArchSpecificPackage.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2d-HoFA+r0waNx1vFCnzQkDLATINEg\"",
+    "mtime": "2025-01-19T16:22:33.032Z",
+    "size": 45,
+    "path": "../public/ext/World/node_modules/node/installArchSpecificPackage.js"
+  },
+  "/ext/World/node_modules/node/package.json": {
+    "type": "application/json",
+    "etag": "\"1df-0BdiBqYVn+4cSqIxG7RJoIqHGOo\"",
+    "mtime": "2025-01-19T16:22:36.915Z",
+    "size": 479,
+    "path": "../public/ext/World/node_modules/node/package.json"
+  },
+  "/ext/World/node_modules/node/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"3c5-Dy4gOVkZJY8/yA8iTgHXlDJyeOY\"",
+    "mtime": "2025-01-19T16:22:33.102Z",
+    "size": 965,
+    "path": "../public/ext/World/node_modules/node/README.md"
   },
   "/ext/World/node_modules/node-bin-setup/index.js": {
     "type": "text/javascript; charset=utf-8",
@@ -6591,33 +6947,40 @@ const assets$1 = {
     "size": 42,
     "path": "../public/ext/World/node_modules/object-inspect/util.inspect.js"
   },
-  "/ext/World/node_modules/path-to-regexp/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"eff-IBRh6luLJj6neQP3YnCh8nv3/gY\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 3839,
-    "path": "../public/ext/World/node_modules/path-to-regexp/index.js"
-  },
-  "/ext/World/node_modules/path-to-regexp/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"44f-On+Ia2MtIZdnakACDTVOhLeGBgQ\"",
-    "mtime": "2025-01-19T16:22:33.029Z",
-    "size": 1103,
-    "path": "../public/ext/World/node_modules/path-to-regexp/LICENSE"
-  },
-  "/ext/World/node_modules/path-to-regexp/package.json": {
-    "type": "application/json",
-    "etag": "\"22a-RHV68Ptu5JKi+Iznwibqx9G9nwI\"",
-    "mtime": "2025-01-19T16:22:33.095Z",
-    "size": 554,
-    "path": "../public/ext/World/node_modules/path-to-regexp/package.json"
-  },
-  "/ext/World/node_modules/path-to-regexp/Readme.md": {
+  "/ext/World/node_modules/on-finished/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"44e-Al1Qooj+lVQiV8d2v0PvyqS+1KA\"",
+    "etag": "\"749-kLSpxxNFZ61MgKuLl0crHXeSQ04\"",
     "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 1102,
-    "path": "../public/ext/World/node_modules/path-to-regexp/Readme.md"
+    "size": 1865,
+    "path": "../public/ext/World/node_modules/on-finished/HISTORY.md"
+  },
+  "/ext/World/node_modules/on-finished/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"114e-P2kwe9BMxN/nHNE2FlCfRDtI+SM\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 4430,
+    "path": "../public/ext/World/node_modules/on-finished/index.js"
+  },
+  "/ext/World/node_modules/on-finished/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"48f-o6oVVDg/JBnsDbzyB8pEnvfcZs8\"",
+    "mtime": "2025-01-19T16:22:33.030Z",
+    "size": 1167,
+    "path": "../public/ext/World/node_modules/on-finished/LICENSE"
+  },
+  "/ext/World/node_modules/on-finished/package.json": {
+    "type": "application/json",
+    "etag": "\"421-d36c1AC0Le4RmerPsyWHbK6v88w\"",
+    "mtime": "2025-01-19T16:22:33.095Z",
+    "size": 1057,
+    "path": "../public/ext/World/node_modules/on-finished/package.json"
+  },
+  "/ext/World/node_modules/on-finished/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"1428-9QY7qHTy47KC/oeSHflF7wNY1hY\"",
+    "mtime": "2025-01-19T16:22:33.154Z",
+    "size": 5160,
+    "path": "../public/ext/World/node_modules/on-finished/README.md"
   },
   "/ext/World/node_modules/parseurl/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
@@ -6654,40 +7017,68 @@ const assets$1 = {
     "size": 4094,
     "path": "../public/ext/World/node_modules/parseurl/README.md"
   },
-  "/ext/World/node_modules/on-finished/HISTORY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"749-kLSpxxNFZ61MgKuLl0crHXeSQ04\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 1865,
-    "path": "../public/ext/World/node_modules/on-finished/HISTORY.md"
-  },
-  "/ext/World/node_modules/on-finished/index.js": {
+  "/ext/World/node_modules/path-to-regexp/index.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"114e-P2kwe9BMxN/nHNE2FlCfRDtI+SM\"",
+    "etag": "\"eff-IBRh6luLJj6neQP3YnCh8nv3/gY\"",
     "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 4430,
-    "path": "../public/ext/World/node_modules/on-finished/index.js"
+    "size": 3839,
+    "path": "../public/ext/World/node_modules/path-to-regexp/index.js"
   },
-  "/ext/World/node_modules/on-finished/LICENSE": {
+  "/ext/World/node_modules/path-to-regexp/LICENSE": {
     "type": "text/plain; charset=utf-8",
-    "etag": "\"48f-o6oVVDg/JBnsDbzyB8pEnvfcZs8\"",
-    "mtime": "2025-01-19T16:22:33.030Z",
-    "size": 1167,
-    "path": "../public/ext/World/node_modules/on-finished/LICENSE"
+    "etag": "\"44f-On+Ia2MtIZdnakACDTVOhLeGBgQ\"",
+    "mtime": "2025-01-19T16:22:33.029Z",
+    "size": 1103,
+    "path": "../public/ext/World/node_modules/path-to-regexp/LICENSE"
   },
-  "/ext/World/node_modules/on-finished/package.json": {
+  "/ext/World/node_modules/path-to-regexp/package.json": {
     "type": "application/json",
-    "etag": "\"421-d36c1AC0Le4RmerPsyWHbK6v88w\"",
+    "etag": "\"22a-RHV68Ptu5JKi+Iznwibqx9G9nwI\"",
     "mtime": "2025-01-19T16:22:33.095Z",
-    "size": 1057,
-    "path": "../public/ext/World/node_modules/on-finished/package.json"
+    "size": 554,
+    "path": "../public/ext/World/node_modules/path-to-regexp/package.json"
   },
-  "/ext/World/node_modules/on-finished/README.md": {
+  "/ext/World/node_modules/path-to-regexp/Readme.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"1428-9QY7qHTy47KC/oeSHflF7wNY1hY\"",
+    "etag": "\"44e-Al1Qooj+lVQiV8d2v0PvyqS+1KA\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 1102,
+    "path": "../public/ext/World/node_modules/path-to-regexp/Readme.md"
+  },
+  "/ext/World/node_modules/proxy-addr/HISTORY.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"baf-qUO9lpBv960cZMDDI8U4xEv+vc4\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 2991,
+    "path": "../public/ext/World/node_modules/proxy-addr/HISTORY.md"
+  },
+  "/ext/World/node_modules/proxy-addr/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1770-sDpURRXl/xInaCjusIrXc2YVE8g\"",
+    "mtime": "2025-01-19T16:22:33.054Z",
+    "size": 6000,
+    "path": "../public/ext/World/node_modules/proxy-addr/index.js"
+  },
+  "/ext/World/node_modules/proxy-addr/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"446-sFihOcsjnGWMjx+EGkdaUIGLX3M\"",
+    "mtime": "2025-01-19T16:22:33.026Z",
+    "size": 1094,
+    "path": "../public/ext/World/node_modules/proxy-addr/LICENSE"
+  },
+  "/ext/World/node_modules/proxy-addr/package.json": {
+    "type": "application/json",
+    "etag": "\"49f-oExg1rJEHW4qbr3cq3WqbvwtHZw\"",
+    "mtime": "2025-01-19T16:22:33.095Z",
+    "size": 1183,
+    "path": "../public/ext/World/node_modules/proxy-addr/package.json"
+  },
+  "/ext/World/node_modules/proxy-addr/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"1023-CsU+PvKXx9G9ytoqLQCtaKNpa5s\"",
     "mtime": "2025-01-19T16:22:33.154Z",
-    "size": 5160,
-    "path": "../public/ext/World/node_modules/on-finished/README.md"
+    "size": 4131,
+    "path": "../public/ext/World/node_modules/proxy-addr/README.md"
   },
   "/ext/World/node_modules/qs/.editorconfig": {
     "type": "text/plain; charset=utf-8",
@@ -6738,41 +7129,6 @@ const assets$1 = {
     "size": 24553,
     "path": "../public/ext/World/node_modules/qs/README.md"
   },
-  "/ext/World/node_modules/proxy-addr/HISTORY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"baf-qUO9lpBv960cZMDDI8U4xEv+vc4\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 2991,
-    "path": "../public/ext/World/node_modules/proxy-addr/HISTORY.md"
-  },
-  "/ext/World/node_modules/proxy-addr/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1770-sDpURRXl/xInaCjusIrXc2YVE8g\"",
-    "mtime": "2025-01-19T16:22:33.054Z",
-    "size": 6000,
-    "path": "../public/ext/World/node_modules/proxy-addr/index.js"
-  },
-  "/ext/World/node_modules/proxy-addr/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"446-sFihOcsjnGWMjx+EGkdaUIGLX3M\"",
-    "mtime": "2025-01-19T16:22:33.026Z",
-    "size": 1094,
-    "path": "../public/ext/World/node_modules/proxy-addr/LICENSE"
-  },
-  "/ext/World/node_modules/proxy-addr/package.json": {
-    "type": "application/json",
-    "etag": "\"49f-oExg1rJEHW4qbr3cq3WqbvwtHZw\"",
-    "mtime": "2025-01-19T16:22:33.095Z",
-    "size": 1183,
-    "path": "../public/ext/World/node_modules/proxy-addr/package.json"
-  },
-  "/ext/World/node_modules/proxy-addr/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"1023-CsU+PvKXx9G9ytoqLQCtaKNpa5s\"",
-    "mtime": "2025-01-19T16:22:33.154Z",
-    "size": 4131,
-    "path": "../public/ext/World/node_modules/proxy-addr/README.md"
-  },
   "/ext/World/node_modules/range-parser/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
     "etag": "\"395-zTw3mt1BiPX0GGvPj6em59TzldA\"",
@@ -6807,34 +7163,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.145Z",
     "size": 2278,
     "path": "../public/ext/World/node_modules/range-parser/README.md"
-  },
-  "/ext/World/node_modules/safe-buffer/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"686-lK5C8IazVTfMadgsD1XG1Z5rjZg\"",
-    "mtime": "2025-01-19T16:22:33.054Z",
-    "size": 1670,
-    "path": "../public/ext/World/node_modules/safe-buffer/index.js"
-  },
-  "/ext/World/node_modules/safe-buffer/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"439-B9lWP2FTZY3hJHB3h/9D8EWKsko\"",
-    "mtime": "2025-01-19T16:22:33.026Z",
-    "size": 1081,
-    "path": "../public/ext/World/node_modules/safe-buffer/LICENSE"
-  },
-  "/ext/World/node_modules/safe-buffer/package.json": {
-    "type": "application/json",
-    "etag": "\"421-bOHd37hznFd64q2E8augFCd5H1c\"",
-    "mtime": "2025-01-19T16:22:33.088Z",
-    "size": 1057,
-    "path": "../public/ext/World/node_modules/safe-buffer/package.json"
-  },
-  "/ext/World/node_modules/safe-buffer/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"4c63-dZFgZZcPqmRbymAzJ+y66gmv4S4\"",
-    "mtime": "2025-01-19T16:22:33.137Z",
-    "size": 19555,
-    "path": "../public/ext/World/node_modules/safe-buffer/README.md"
   },
   "/ext/World/node_modules/raw-body/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
@@ -6878,47 +7206,33 @@ const assets$1 = {
     "size": 1188,
     "path": "../public/ext/World/node_modules/raw-body/SECURITY.md"
   },
-  "/ext/World/node_modules/send/HISTORY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"3455-VI+f61Jx4VI2v9TeFgTyeC8KEUI\"",
-    "mtime": "2025-01-19T16:22:33.140Z",
-    "size": 13397,
-    "path": "../public/ext/World/node_modules/send/HISTORY.md"
-  },
-  "/ext/World/node_modules/send/index.js": {
+  "/ext/World/node_modules/safe-buffer/index.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"5b9f-+esruBK4DOdhb/Moa9H6Cj5/ats\"",
-    "mtime": "2025-01-19T16:22:33.063Z",
-    "size": 23455,
-    "path": "../public/ext/World/node_modules/send/index.js"
+    "etag": "\"686-lK5C8IazVTfMadgsD1XG1Z5rjZg\"",
+    "mtime": "2025-01-19T16:22:33.054Z",
+    "size": 1670,
+    "path": "../public/ext/World/node_modules/safe-buffer/index.js"
   },
-  "/ext/World/node_modules/send/LICENSE": {
+  "/ext/World/node_modules/safe-buffer/LICENSE": {
     "type": "text/plain; charset=utf-8",
-    "etag": "\"468-uPNBo6hqgl7XXg2tW3yw7467vCk\"",
+    "etag": "\"439-B9lWP2FTZY3hJHB3h/9D8EWKsko\"",
     "mtime": "2025-01-19T16:22:33.026Z",
-    "size": 1128,
-    "path": "../public/ext/World/node_modules/send/LICENSE"
+    "size": 1081,
+    "path": "../public/ext/World/node_modules/safe-buffer/LICENSE"
   },
-  "/ext/World/node_modules/send/package.json": {
+  "/ext/World/node_modules/safe-buffer/package.json": {
     "type": "application/json",
-    "etag": "\"623-ykC9c71rf0Vri+oYb0ILXXm7Fdg\"",
-    "mtime": "2025-01-19T16:22:33.103Z",
-    "size": 1571,
-    "path": "../public/ext/World/node_modules/send/package.json"
+    "etag": "\"421-bOHd37hznFd64q2E8augFCd5H1c\"",
+    "mtime": "2025-01-19T16:22:33.088Z",
+    "size": 1057,
+    "path": "../public/ext/World/node_modules/safe-buffer/package.json"
   },
-  "/ext/World/node_modules/send/README.md": {
+  "/ext/World/node_modules/safe-buffer/README.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"2504-kcNUbH/t5meGHJUbgmCA2evdhzg\"",
-    "mtime": "2025-01-19T16:22:33.163Z",
-    "size": 9476,
-    "path": "../public/ext/World/node_modules/send/README.md"
-  },
-  "/ext/World/node_modules/send/SECURITY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"492-/7e4jZHOAOGOt0ltWzCjgBgGnK4\"",
-    "mtime": "2025-01-19T16:22:33.178Z",
-    "size": 1170,
-    "path": "../public/ext/World/node_modules/send/SECURITY.md"
+    "etag": "\"4c63-dZFgZZcPqmRbymAzJ+y66gmv4S4\"",
+    "mtime": "2025-01-19T16:22:33.137Z",
+    "size": 19555,
+    "path": "../public/ext/World/node_modules/safe-buffer/README.md"
   },
   "/ext/World/node_modules/safer-buffer/dangerous.js": {
     "type": "text/javascript; charset=utf-8",
@@ -6969,33 +7283,47 @@ const assets$1 = {
     "size": 15735,
     "path": "../public/ext/World/node_modules/safer-buffer/tests.js"
   },
-  "/ext/World/node_modules/setprototypeof/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"197-P3ciE2QK66ik6ay/XYsxyR/LxLE\"",
-    "mtime": "2025-01-19T16:22:33.088Z",
-    "size": 407,
-    "path": "../public/ext/World/node_modules/setprototypeof/index.js"
-  },
-  "/ext/World/node_modules/setprototypeof/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"2d7-jxB3I6JNzgzINGuJCeEk43gtpq4\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 727,
-    "path": "../public/ext/World/node_modules/setprototypeof/LICENSE"
-  },
-  "/ext/World/node_modules/setprototypeof/package.json": {
-    "type": "application/json",
-    "etag": "\"4f0-y/LXrlQlanq4QkXrbXLFb2oBVFM\"",
-    "mtime": "2025-01-19T16:22:33.026Z",
-    "size": 1264,
-    "path": "../public/ext/World/node_modules/setprototypeof/package.json"
-  },
-  "/ext/World/node_modules/setprototypeof/README.md": {
+  "/ext/World/node_modules/send/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"34c-7ShraPKiTCavSJaa8VA75iQV8xc\"",
-    "mtime": "2025-01-19T16:22:33.145Z",
-    "size": 844,
-    "path": "../public/ext/World/node_modules/setprototypeof/README.md"
+    "etag": "\"3455-VI+f61Jx4VI2v9TeFgTyeC8KEUI\"",
+    "mtime": "2025-01-19T16:22:33.140Z",
+    "size": 13397,
+    "path": "../public/ext/World/node_modules/send/HISTORY.md"
+  },
+  "/ext/World/node_modules/send/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"5b9f-+esruBK4DOdhb/Moa9H6Cj5/ats\"",
+    "mtime": "2025-01-19T16:22:33.063Z",
+    "size": 23455,
+    "path": "../public/ext/World/node_modules/send/index.js"
+  },
+  "/ext/World/node_modules/send/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"468-uPNBo6hqgl7XXg2tW3yw7467vCk\"",
+    "mtime": "2025-01-19T16:22:33.026Z",
+    "size": 1128,
+    "path": "../public/ext/World/node_modules/send/LICENSE"
+  },
+  "/ext/World/node_modules/send/package.json": {
+    "type": "application/json",
+    "etag": "\"623-ykC9c71rf0Vri+oYb0ILXXm7Fdg\"",
+    "mtime": "2025-01-19T16:22:33.103Z",
+    "size": 1571,
+    "path": "../public/ext/World/node_modules/send/package.json"
+  },
+  "/ext/World/node_modules/send/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"2504-kcNUbH/t5meGHJUbgmCA2evdhzg\"",
+    "mtime": "2025-01-19T16:22:33.163Z",
+    "size": 9476,
+    "path": "../public/ext/World/node_modules/send/README.md"
+  },
+  "/ext/World/node_modules/send/SECURITY.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"492-/7e4jZHOAOGOt0ltWzCjgBgGnK4\"",
+    "mtime": "2025-01-19T16:22:33.178Z",
+    "size": 1170,
+    "path": "../public/ext/World/node_modules/send/SECURITY.md"
   },
   "/ext/World/node_modules/serve-static/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
@@ -7031,6 +7359,34 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.154Z",
     "size": 7812,
     "path": "../public/ext/World/node_modules/serve-static/README.md"
+  },
+  "/ext/World/node_modules/setprototypeof/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"197-P3ciE2QK66ik6ay/XYsxyR/LxLE\"",
+    "mtime": "2025-01-19T16:22:33.088Z",
+    "size": 407,
+    "path": "../public/ext/World/node_modules/setprototypeof/index.js"
+  },
+  "/ext/World/node_modules/setprototypeof/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"2d7-jxB3I6JNzgzINGuJCeEk43gtpq4\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 727,
+    "path": "../public/ext/World/node_modules/setprototypeof/LICENSE"
+  },
+  "/ext/World/node_modules/setprototypeof/package.json": {
+    "type": "application/json",
+    "etag": "\"4f0-y/LXrlQlanq4QkXrbXLFb2oBVFM\"",
+    "mtime": "2025-01-19T16:22:33.026Z",
+    "size": 1264,
+    "path": "../public/ext/World/node_modules/setprototypeof/package.json"
+  },
+  "/ext/World/node_modules/setprototypeof/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"34c-7ShraPKiTCavSJaa8VA75iQV8xc\"",
+    "mtime": "2025-01-19T16:22:33.145Z",
+    "size": 844,
+    "path": "../public/ext/World/node_modules/setprototypeof/README.md"
   },
   "/ext/World/node_modules/side-channel/.editorconfig": {
     "type": "text/plain; charset=utf-8",
@@ -7095,68 +7451,68 @@ const assets$1 = {
     "size": 116,
     "path": "../public/ext/World/node_modules/side-channel/tsconfig.json"
   },
-  "/ext/World/node_modules/side-channel-weakmap/.editorconfig": {
+  "/ext/World/node_modules/side-channel-map/.editorconfig": {
     "type": "text/plain; charset=utf-8",
     "etag": "\"91-Iy8vzdx9VMbHAH2u3JtfMIj9s+A\"",
     "mtime": "2025-01-19T16:22:33.021Z",
     "size": 145,
-    "path": "../public/ext/World/node_modules/side-channel-weakmap/.editorconfig"
+    "path": "../public/ext/World/node_modules/side-channel-map/.editorconfig"
   },
-  "/ext/World/node_modules/side-channel-weakmap/.eslintrc": {
+  "/ext/World/node_modules/side-channel-map/.eslintrc": {
     "type": "text/plain; charset=utf-8",
-    "etag": "\"cb-8pX75q3wt4IGQMEPHlq0cDtRvi4\"",
+    "etag": "\"b9-ZuADQsNjVziNUD2vBjxmRe1knMo\"",
     "mtime": "2025-01-19T16:22:33.048Z",
-    "size": 203,
-    "path": "../public/ext/World/node_modules/side-channel-weakmap/.eslintrc"
+    "size": 185,
+    "path": "../public/ext/World/node_modules/side-channel-map/.eslintrc"
   },
-  "/ext/World/node_modules/side-channel-weakmap/.nycrc": {
+  "/ext/World/node_modules/side-channel-map/.nycrc": {
     "type": "text/plain; charset=utf-8",
     "etag": "\"d8-lUYhcmmRh6wC6uxgdAJLJubXHP8\"",
     "mtime": "2025-01-19T16:22:33.087Z",
     "size": 216,
-    "path": "../public/ext/World/node_modules/side-channel-weakmap/.nycrc"
+    "path": "../public/ext/World/node_modules/side-channel-map/.nycrc"
   },
-  "/ext/World/node_modules/side-channel-weakmap/CHANGELOG.md": {
+  "/ext/World/node_modules/side-channel-map/CHANGELOG.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"5c5-nSVGJDjLE9VO7IWF43lmJmq7ric\"",
-    "mtime": "2025-01-19T16:22:33.202Z",
-    "size": 1477,
-    "path": "../public/ext/World/node_modules/side-channel-weakmap/CHANGELOG.md"
+    "etag": "\"4a7-otnGcAo5J7ahjE8JRbZShkZgh7k\"",
+    "mtime": "2025-01-19T16:22:33.203Z",
+    "size": 1191,
+    "path": "../public/ext/World/node_modules/side-channel-map/CHANGELOG.md"
   },
-  "/ext/World/node_modules/side-channel-weakmap/index.js": {
+  "/ext/World/node_modules/side-channel-map/index.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"a94-pJBST7hVT8ExwDC8Q7Qi/7/QDOs\"",
+    "etag": "\"7bd-klNnq7LPvHNsZjp+nNtYXlksVCo\"",
     "mtime": "2025-01-19T16:22:33.145Z",
-    "size": 2708,
-    "path": "../public/ext/World/node_modules/side-channel-weakmap/index.js"
+    "size": 1981,
+    "path": "../public/ext/World/node_modules/side-channel-map/index.js"
   },
-  "/ext/World/node_modules/side-channel-weakmap/LICENSE": {
+  "/ext/World/node_modules/side-channel-map/LICENSE": {
     "type": "text/plain; charset=utf-8",
-    "etag": "\"42f-dc3ZyNeVlB+FH0Oxj8fa5G6KWfw\"",
+    "etag": "\"42f-pHhoq5C1Mt+Cq+Pk9Qe8supEE2Q\"",
     "mtime": "2025-01-19T16:22:33.121Z",
     "size": 1071,
-    "path": "../public/ext/World/node_modules/side-channel-weakmap/LICENSE"
+    "path": "../public/ext/World/node_modules/side-channel-map/LICENSE"
   },
-  "/ext/World/node_modules/side-channel-weakmap/package.json": {
+  "/ext/World/node_modules/side-channel-map/package.json": {
     "type": "application/json",
-    "etag": "\"98f-zbM3kI0Z0yp53Bice85jmBurw14\"",
+    "etag": "\"920-qxD0RNuap0IBJeMhiEyn12WFSy8\"",
     "mtime": "2025-01-19T16:22:33.180Z",
-    "size": 2447,
-    "path": "../public/ext/World/node_modules/side-channel-weakmap/package.json"
+    "size": 2336,
+    "path": "../public/ext/World/node_modules/side-channel-map/package.json"
   },
-  "/ext/World/node_modules/side-channel-weakmap/README.md": {
+  "/ext/World/node_modules/side-channel-map/README.md": {
     "type": "text/markdown; charset=utf-8",
-    "etag": "\"926-hYQnQ1KYbhfY0f4hrgwmkVJpjPk\"",
+    "etag": "\"8e6-yyx06j9aaQRyMtRl76iU2G6pSHQ\"",
     "mtime": "2025-01-19T16:22:33.211Z",
-    "size": 2342,
-    "path": "../public/ext/World/node_modules/side-channel-weakmap/README.md"
+    "size": 2278,
+    "path": "../public/ext/World/node_modules/side-channel-map/README.md"
   },
-  "/ext/World/node_modules/side-channel-weakmap/tsconfig.json": {
+  "/ext/World/node_modules/side-channel-map/tsconfig.json": {
     "type": "application/json",
     "etag": "\"74-oWRyQk+MJhhN5Vfv+NaCSTnR/I4\"",
-    "mtime": "2025-01-19T16:22:33.193Z",
+    "mtime": "2025-01-19T16:22:33.192Z",
     "size": 116,
-    "path": "../public/ext/World/node_modules/side-channel-weakmap/tsconfig.json"
+    "path": "../public/ext/World/node_modules/side-channel-map/tsconfig.json"
   },
   "/ext/World/node_modules/side-channel-list/.editorconfig": {
     "type": "text/plain; charset=utf-8",
@@ -7221,6 +7577,104 @@ const assets$1 = {
     "size": 116,
     "path": "../public/ext/World/node_modules/side-channel-list/tsconfig.json"
   },
+  "/ext/World/node_modules/side-channel-weakmap/.editorconfig": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"91-Iy8vzdx9VMbHAH2u3JtfMIj9s+A\"",
+    "mtime": "2025-01-19T16:22:33.021Z",
+    "size": 145,
+    "path": "../public/ext/World/node_modules/side-channel-weakmap/.editorconfig"
+  },
+  "/ext/World/node_modules/side-channel-weakmap/.eslintrc": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"cb-8pX75q3wt4IGQMEPHlq0cDtRvi4\"",
+    "mtime": "2025-01-19T16:22:33.048Z",
+    "size": 203,
+    "path": "../public/ext/World/node_modules/side-channel-weakmap/.eslintrc"
+  },
+  "/ext/World/node_modules/side-channel-weakmap/.nycrc": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"d8-lUYhcmmRh6wC6uxgdAJLJubXHP8\"",
+    "mtime": "2025-01-19T16:22:33.087Z",
+    "size": 216,
+    "path": "../public/ext/World/node_modules/side-channel-weakmap/.nycrc"
+  },
+  "/ext/World/node_modules/side-channel-weakmap/CHANGELOG.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"5c5-nSVGJDjLE9VO7IWF43lmJmq7ric\"",
+    "mtime": "2025-01-19T16:22:33.202Z",
+    "size": 1477,
+    "path": "../public/ext/World/node_modules/side-channel-weakmap/CHANGELOG.md"
+  },
+  "/ext/World/node_modules/side-channel-weakmap/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"a94-pJBST7hVT8ExwDC8Q7Qi/7/QDOs\"",
+    "mtime": "2025-01-19T16:22:33.145Z",
+    "size": 2708,
+    "path": "../public/ext/World/node_modules/side-channel-weakmap/index.js"
+  },
+  "/ext/World/node_modules/side-channel-weakmap/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"42f-dc3ZyNeVlB+FH0Oxj8fa5G6KWfw\"",
+    "mtime": "2025-01-19T16:22:33.121Z",
+    "size": 1071,
+    "path": "../public/ext/World/node_modules/side-channel-weakmap/LICENSE"
+  },
+  "/ext/World/node_modules/side-channel-weakmap/package.json": {
+    "type": "application/json",
+    "etag": "\"98f-zbM3kI0Z0yp53Bice85jmBurw14\"",
+    "mtime": "2025-01-19T16:22:33.180Z",
+    "size": 2447,
+    "path": "../public/ext/World/node_modules/side-channel-weakmap/package.json"
+  },
+  "/ext/World/node_modules/side-channel-weakmap/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"926-hYQnQ1KYbhfY0f4hrgwmkVJpjPk\"",
+    "mtime": "2025-01-19T16:22:33.211Z",
+    "size": 2342,
+    "path": "../public/ext/World/node_modules/side-channel-weakmap/README.md"
+  },
+  "/ext/World/node_modules/side-channel-weakmap/tsconfig.json": {
+    "type": "application/json",
+    "etag": "\"74-oWRyQk+MJhhN5Vfv+NaCSTnR/I4\"",
+    "mtime": "2025-01-19T16:22:33.193Z",
+    "size": 116,
+    "path": "../public/ext/World/node_modules/side-channel-weakmap/tsconfig.json"
+  },
+  "/ext/World/node_modules/toidentifier/HISTORY.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"80-inEyjY+x0PmVeT9zH1vkYv1I0Eg\"",
+    "mtime": "2025-01-19T16:22:33.121Z",
+    "size": 128,
+    "path": "../public/ext/World/node_modules/toidentifier/HISTORY.md"
+  },
+  "/ext/World/node_modules/toidentifier/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1f8-/GbkRFAhtJsfQ4bKcsrWVNxAjTQ\"",
+    "mtime": "2025-01-19T16:22:33.048Z",
+    "size": 504,
+    "path": "../public/ext/World/node_modules/toidentifier/index.js"
+  },
+  "/ext/World/node_modules/toidentifier/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"454-Piqf7URQwcuQbo4UOukyfCVC7k0\"",
+    "mtime": "2025-01-19T16:22:33.023Z",
+    "size": 1108,
+    "path": "../public/ext/World/node_modules/toidentifier/LICENSE"
+  },
+  "/ext/World/node_modules/toidentifier/package.json": {
+    "type": "application/json",
+    "etag": "\"476-6P4dAqOBtxoz5BWIriZ0bTT6SQM\"",
+    "mtime": "2025-01-19T16:22:33.088Z",
+    "size": 1142,
+    "path": "../public/ext/World/node_modules/toidentifier/package.json"
+  },
+  "/ext/World/node_modules/toidentifier/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"70b-S5/TWypmmzPUPSVCNUOrK9UiwUQ\"",
+    "mtime": "2025-01-19T16:22:33.145Z",
+    "size": 1803,
+    "path": "../public/ext/World/node_modules/toidentifier/README.md"
+  },
   "/ext/World/node_modules/statuses/codes.json": {
     "type": "application/json",
     "etag": "\"6fd-iV/quD1vequFCEK1MysvKqfyo0Q\"",
@@ -7262,139 +7716,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.172Z",
     "size": 3559,
     "path": "../public/ext/World/node_modules/statuses/README.md"
-  },
-  "/ext/World/node_modules/side-channel-map/.editorconfig": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"91-Iy8vzdx9VMbHAH2u3JtfMIj9s+A\"",
-    "mtime": "2025-01-19T16:22:33.021Z",
-    "size": 145,
-    "path": "../public/ext/World/node_modules/side-channel-map/.editorconfig"
-  },
-  "/ext/World/node_modules/side-channel-map/.eslintrc": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"b9-ZuADQsNjVziNUD2vBjxmRe1knMo\"",
-    "mtime": "2025-01-19T16:22:33.048Z",
-    "size": 185,
-    "path": "../public/ext/World/node_modules/side-channel-map/.eslintrc"
-  },
-  "/ext/World/node_modules/side-channel-map/.nycrc": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"d8-lUYhcmmRh6wC6uxgdAJLJubXHP8\"",
-    "mtime": "2025-01-19T16:22:33.087Z",
-    "size": 216,
-    "path": "../public/ext/World/node_modules/side-channel-map/.nycrc"
-  },
-  "/ext/World/node_modules/side-channel-map/CHANGELOG.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"4a7-otnGcAo5J7ahjE8JRbZShkZgh7k\"",
-    "mtime": "2025-01-19T16:22:33.203Z",
-    "size": 1191,
-    "path": "../public/ext/World/node_modules/side-channel-map/CHANGELOG.md"
-  },
-  "/ext/World/node_modules/side-channel-map/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"7bd-klNnq7LPvHNsZjp+nNtYXlksVCo\"",
-    "mtime": "2025-01-19T16:22:33.145Z",
-    "size": 1981,
-    "path": "../public/ext/World/node_modules/side-channel-map/index.js"
-  },
-  "/ext/World/node_modules/side-channel-map/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"42f-pHhoq5C1Mt+Cq+Pk9Qe8supEE2Q\"",
-    "mtime": "2025-01-19T16:22:33.121Z",
-    "size": 1071,
-    "path": "../public/ext/World/node_modules/side-channel-map/LICENSE"
-  },
-  "/ext/World/node_modules/side-channel-map/package.json": {
-    "type": "application/json",
-    "etag": "\"920-qxD0RNuap0IBJeMhiEyn12WFSy8\"",
-    "mtime": "2025-01-19T16:22:33.180Z",
-    "size": 2336,
-    "path": "../public/ext/World/node_modules/side-channel-map/package.json"
-  },
-  "/ext/World/node_modules/side-channel-map/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"8e6-yyx06j9aaQRyMtRl76iU2G6pSHQ\"",
-    "mtime": "2025-01-19T16:22:33.211Z",
-    "size": 2278,
-    "path": "../public/ext/World/node_modules/side-channel-map/README.md"
-  },
-  "/ext/World/node_modules/side-channel-map/tsconfig.json": {
-    "type": "application/json",
-    "etag": "\"74-oWRyQk+MJhhN5Vfv+NaCSTnR/I4\"",
-    "mtime": "2025-01-19T16:22:33.192Z",
-    "size": 116,
-    "path": "../public/ext/World/node_modules/side-channel-map/tsconfig.json"
-  },
-  "/ext/World/node_modules/toidentifier/HISTORY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"80-inEyjY+x0PmVeT9zH1vkYv1I0Eg\"",
-    "mtime": "2025-01-19T16:22:33.121Z",
-    "size": 128,
-    "path": "../public/ext/World/node_modules/toidentifier/HISTORY.md"
-  },
-  "/ext/World/node_modules/toidentifier/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1f8-/GbkRFAhtJsfQ4bKcsrWVNxAjTQ\"",
-    "mtime": "2025-01-19T16:22:33.048Z",
-    "size": 504,
-    "path": "../public/ext/World/node_modules/toidentifier/index.js"
-  },
-  "/ext/World/node_modules/toidentifier/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"454-Piqf7URQwcuQbo4UOukyfCVC7k0\"",
-    "mtime": "2025-01-19T16:22:33.023Z",
-    "size": 1108,
-    "path": "../public/ext/World/node_modules/toidentifier/LICENSE"
-  },
-  "/ext/World/node_modules/toidentifier/package.json": {
-    "type": "application/json",
-    "etag": "\"476-6P4dAqOBtxoz5BWIriZ0bTT6SQM\"",
-    "mtime": "2025-01-19T16:22:33.088Z",
-    "size": 1142,
-    "path": "../public/ext/World/node_modules/toidentifier/package.json"
-  },
-  "/ext/World/node_modules/toidentifier/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"70b-S5/TWypmmzPUPSVCNUOrK9UiwUQ\"",
-    "mtime": "2025-01-19T16:22:33.145Z",
-    "size": 1803,
-    "path": "../public/ext/World/node_modules/toidentifier/README.md"
-  },
-  "/ext/World/node_modules/unpipe/HISTORY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"3b-fTBcAUhPNPG2zsYpNoMXocdq/W8\"",
-    "mtime": "2025-01-19T16:22:33.145Z",
-    "size": 59,
-    "path": "../public/ext/World/node_modules/unpipe/HISTORY.md"
-  },
-  "/ext/World/node_modules/unpipe/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"45e-35EG0gGf4uS/rpiC5Ki+cBLrVc8\"",
-    "mtime": "2025-01-19T16:22:33.121Z",
-    "size": 1118,
-    "path": "../public/ext/World/node_modules/unpipe/index.js"
-  },
-  "/ext/World/node_modules/unpipe/LICENSE": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"45a-FAwO1/h350JG1Fl1CISq3X80ZqA\"",
-    "mtime": "2025-01-19T16:22:33.088Z",
-    "size": 1114,
-    "path": "../public/ext/World/node_modules/unpipe/LICENSE"
-  },
-  "/ext/World/node_modules/unpipe/package.json": {
-    "type": "application/json",
-    "etag": "\"302-9n8tF6GMPe2TyUI5A9+OZnj05BY\"",
-    "mtime": "2025-01-19T16:22:33.023Z",
-    "size": 770,
-    "path": "../public/ext/World/node_modules/unpipe/package.json"
-  },
-  "/ext/World/node_modules/unpipe/README.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"4e2-vabgd+JFPlI0UQj6lzsuPQB02hQ\"",
-    "mtime": "2025-01-19T16:22:33.048Z",
-    "size": 1250,
-    "path": "../public/ext/World/node_modules/unpipe/README.md"
   },
   "/ext/World/node_modules/type-is/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
@@ -7501,6 +7822,41 @@ const assets$1 = {
     "size": 2716,
     "path": "../public/ext/World/node_modules/vary/README.md"
   },
+  "/ext/World/node_modules/unpipe/HISTORY.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"3b-fTBcAUhPNPG2zsYpNoMXocdq/W8\"",
+    "mtime": "2025-01-19T16:22:33.145Z",
+    "size": 59,
+    "path": "../public/ext/World/node_modules/unpipe/HISTORY.md"
+  },
+  "/ext/World/node_modules/unpipe/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"45e-35EG0gGf4uS/rpiC5Ki+cBLrVc8\"",
+    "mtime": "2025-01-19T16:22:33.121Z",
+    "size": 1118,
+    "path": "../public/ext/World/node_modules/unpipe/index.js"
+  },
+  "/ext/World/node_modules/unpipe/LICENSE": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"45a-FAwO1/h350JG1Fl1CISq3X80ZqA\"",
+    "mtime": "2025-01-19T16:22:33.088Z",
+    "size": 1114,
+    "path": "../public/ext/World/node_modules/unpipe/LICENSE"
+  },
+  "/ext/World/node_modules/unpipe/package.json": {
+    "type": "application/json",
+    "etag": "\"302-9n8tF6GMPe2TyUI5A9+OZnj05BY\"",
+    "mtime": "2025-01-19T16:22:33.023Z",
+    "size": 770,
+    "path": "../public/ext/World/node_modules/unpipe/package.json"
+  },
+  "/ext/World/node_modules/unpipe/README.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"4e2-vabgd+JFPlI0UQj6lzsuPQB02hQ\"",
+    "mtime": "2025-01-19T16:22:33.048Z",
+    "size": 1250,
+    "path": "../public/ext/World/node_modules/unpipe/README.md"
+  },
   "/ext/World/node_modules/body-parser/lib/read.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"10e5-An8/vYpTcN3sdE0z7J1ZTbQfYpM\"",
@@ -7515,6 +7871,13 @@ const assets$1 = {
     "size": 594,
     "path": "../public/ext/World/node_modules/call-bind-apply-helpers/.github/FUNDING.yml"
   },
+  "/ext/World/node_modules/call-bind-apply-helpers/test/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"a2d-RBJOt8npJn4iFlKhzeW70B0Ya4o\"",
+    "mtime": "2025-01-19T16:22:33.202Z",
+    "size": 2605,
+    "path": "../public/ext/World/node_modules/call-bind-apply-helpers/test/index.js"
+  },
   "/ext/World/node_modules/call-bound/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
     "etag": "\"245-5AfvbJTmjKMj1jPw/dc0fr7safA\"",
@@ -7522,12 +7885,12 @@ const assets$1 = {
     "size": 581,
     "path": "../public/ext/World/node_modules/call-bound/.github/FUNDING.yml"
   },
-  "/ext/World/node_modules/call-bind-apply-helpers/test/index.js": {
+  "/ext/World/node_modules/call-bound/test/index.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"a2d-RBJOt8npJn4iFlKhzeW70B0Ya4o\"",
-    "mtime": "2025-01-19T16:22:33.202Z",
-    "size": 2605,
-    "path": "../public/ext/World/node_modules/call-bind-apply-helpers/test/index.js"
+    "etag": "\"924-msXrkNQ2IiL+AW0BzkkR5hoVqx0\"",
+    "mtime": "2025-01-19T16:22:33.154Z",
+    "size": 2340,
+    "path": "../public/ext/World/node_modules/call-bound/test/index.js"
   },
   "/ext/World/node_modules/debug/src/browser.js": {
     "type": "text/javascript; charset=utf-8",
@@ -7564,13 +7927,6 @@ const assets$1 = {
     "size": 6015,
     "path": "../public/ext/World/node_modules/debug/src/node.js"
   },
-  "/ext/World/node_modules/call-bound/test/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"924-msXrkNQ2IiL+AW0BzkkR5hoVqx0\"",
-    "mtime": "2025-01-19T16:22:33.154Z",
-    "size": 2340,
-    "path": "../public/ext/World/node_modules/call-bound/test/index.js"
-  },
   "/ext/World/node_modules/dunder-proto/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
     "etag": "\"247-ix5gxwvmn8KUn4K+uiI5F1jRuo4\"",
@@ -7599,26 +7955,19 @@ const assets$1 = {
     "size": 1695,
     "path": "../public/ext/World/node_modules/dunder-proto/test/set.js"
   },
-  "/ext/World/node_modules/es-define-property/test/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"513-UgnsRl+6y3LKYlIkT54iNOeQAfk\"",
-    "mtime": "2025-01-19T16:22:33.154Z",
-    "size": 1299,
-    "path": "../public/ext/World/node_modules/es-define-property/test/index.js"
-  },
-  "/ext/World/node_modules/es-errors/.github/FUNDING.yml": {
-    "type": "text/yaml; charset=utf-8",
-    "etag": "\"22b-mazxXlDzkYLAj4jd603OKzvM8Ho\"",
-    "mtime": "2025-01-19T16:22:33.270Z",
-    "size": 555,
-    "path": "../public/ext/World/node_modules/es-errors/.github/FUNDING.yml"
-  },
   "/ext/World/node_modules/es-define-property/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
     "etag": "\"234-w0pXCmBMhNTgQkQvhRj+tH/WwCc\"",
     "mtime": "2025-01-19T16:22:33.221Z",
     "size": 564,
     "path": "../public/ext/World/node_modules/es-define-property/.github/FUNDING.yml"
+  },
+  "/ext/World/node_modules/es-define-property/test/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"513-UgnsRl+6y3LKYlIkT54iNOeQAfk\"",
+    "mtime": "2025-01-19T16:22:33.154Z",
+    "size": 1299,
+    "path": "../public/ext/World/node_modules/es-define-property/test/index.js"
   },
   "/ext/World/node_modules/es-errors/test/index.js": {
     "type": "text/javascript; charset=utf-8",
@@ -7627,12 +7976,26 @@ const assets$1 = {
     "size": 356,
     "path": "../public/ext/World/node_modules/es-errors/test/index.js"
   },
+  "/ext/World/node_modules/es-errors/.github/FUNDING.yml": {
+    "type": "text/yaml; charset=utf-8",
+    "etag": "\"22b-mazxXlDzkYLAj4jd603OKzvM8Ho\"",
+    "mtime": "2025-01-19T16:22:33.270Z",
+    "size": 555,
+    "path": "../public/ext/World/node_modules/es-errors/.github/FUNDING.yml"
+  },
   "/ext/World/node_modules/es-object-atoms/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
     "etag": "\"22b-s6fOh/YuPFSOy70I+lhuog+wQUQ\"",
     "mtime": "2025-01-19T16:22:33.247Z",
     "size": 555,
     "path": "../public/ext/World/node_modules/es-object-atoms/.github/FUNDING.yml"
+  },
+  "/ext/World/node_modules/es-object-atoms/test/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"449-8ZN2Fwv15cOAvKt/Lue9TGJo6qw\"",
+    "mtime": "2025-01-19T16:22:33.129Z",
+    "size": 1097,
+    "path": "../public/ext/World/node_modules/es-object-atoms/test/index.js"
   },
   "/ext/World/node_modules/express/lib/application.js": {
     "type": "text/javascript; charset=utf-8",
@@ -7676,19 +8039,19 @@ const assets$1 = {
     "size": 3325,
     "path": "../public/ext/World/node_modules/express/lib/view.js"
   },
-  "/ext/World/node_modules/es-object-atoms/test/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"449-8ZN2Fwv15cOAvKt/Lue9TGJo6qw\"",
-    "mtime": "2025-01-19T16:22:33.129Z",
-    "size": 1097,
-    "path": "../public/ext/World/node_modules/es-object-atoms/test/index.js"
-  },
-  "/ext/World/node_modules/get-intrinsic/.github/FUNDING.yml": {
+  "/ext/World/node_modules/function-bind/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
-    "etag": "\"248-Y93704njcqUbYpqcZK4bquxr4ls\"",
-    "mtime": "2025-01-19T16:22:33.208Z",
+    "etag": "\"248-hkNO3ujb1akNBcWOL2gIiRUbQ64\"",
+    "mtime": "2025-01-19T16:22:33.229Z",
     "size": 584,
-    "path": "../public/ext/World/node_modules/get-intrinsic/.github/FUNDING.yml"
+    "path": "../public/ext/World/node_modules/function-bind/.github/FUNDING.yml"
+  },
+  "/ext/World/node_modules/function-bind/.github/SECURITY.md": {
+    "type": "text/markdown; charset=utf-8",
+    "etag": "\"9d-8wB/h+x8IJ+E59ZNrrB9dujfH24\"",
+    "mtime": "2025-01-19T16:22:33.222Z",
+    "size": 157,
+    "path": "../public/ext/World/node_modules/function-bind/.github/SECURITY.md"
   },
   "/ext/World/node_modules/function-bind/test/.eslintrc": {
     "type": "text/plain; charset=utf-8",
@@ -7704,6 +8067,13 @@ const assets$1 = {
     "size": 8991,
     "path": "../public/ext/World/node_modules/function-bind/test/index.js"
   },
+  "/ext/World/node_modules/get-intrinsic/.github/FUNDING.yml": {
+    "type": "text/yaml; charset=utf-8",
+    "etag": "\"248-Y93704njcqUbYpqcZK4bquxr4ls\"",
+    "mtime": "2025-01-19T16:22:33.208Z",
+    "size": 584,
+    "path": "../public/ext/World/node_modules/get-intrinsic/.github/FUNDING.yml"
+  },
   "/ext/World/node_modules/get-intrinsic/test/GetIntrinsic.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"2236-YRp+do5+kjrBuNtgmW2zUS6Tekk\"",
@@ -7711,19 +8081,19 @@ const assets$1 = {
     "size": 8758,
     "path": "../public/ext/World/node_modules/get-intrinsic/test/GetIntrinsic.js"
   },
-  "/ext/World/node_modules/function-bind/.github/FUNDING.yml": {
+  "/ext/World/node_modules/get-proto/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
-    "etag": "\"248-hkNO3ujb1akNBcWOL2gIiRUbQ64\"",
-    "mtime": "2025-01-19T16:22:33.229Z",
-    "size": 584,
-    "path": "../public/ext/World/node_modules/function-bind/.github/FUNDING.yml"
+    "etag": "\"244-nJwqm4ustOKQ4YTjyZIHknAF0Qg\"",
+    "mtime": "2025-01-19T16:22:33.245Z",
+    "size": 580,
+    "path": "../public/ext/World/node_modules/get-proto/.github/FUNDING.yml"
   },
-  "/ext/World/node_modules/function-bind/.github/SECURITY.md": {
-    "type": "text/markdown; charset=utf-8",
-    "etag": "\"9d-8wB/h+x8IJ+E59ZNrrB9dujfH24\"",
-    "mtime": "2025-01-19T16:22:33.222Z",
-    "size": 157,
-    "path": "../public/ext/World/node_modules/function-bind/.github/SECURITY.md"
+  "/ext/World/node_modules/get-proto/test/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"937-wzf8r/oGRgD7CEMFon0iN9niszk\"",
+    "mtime": "2025-01-19T16:22:33.154Z",
+    "size": 2359,
+    "path": "../public/ext/World/node_modules/get-proto/test/index.js"
   },
   "/ext/World/node_modules/gopd/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
@@ -7738,27 +8108,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.154Z",
     "size": 656,
     "path": "../public/ext/World/node_modules/gopd/test/index.js"
-  },
-  "/ext/World/node_modules/get-proto/test/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"937-wzf8r/oGRgD7CEMFon0iN9niszk\"",
-    "mtime": "2025-01-19T16:22:33.154Z",
-    "size": 2359,
-    "path": "../public/ext/World/node_modules/get-proto/test/index.js"
-  },
-  "/ext/World/node_modules/get-proto/.github/FUNDING.yml": {
-    "type": "text/yaml; charset=utf-8",
-    "etag": "\"244-nJwqm4ustOKQ4YTjyZIHknAF0Qg\"",
-    "mtime": "2025-01-19T16:22:33.245Z",
-    "size": 580,
-    "path": "../public/ext/World/node_modules/get-proto/.github/FUNDING.yml"
-  },
-  "/ext/World/node_modules/hasown/.github/FUNDING.yml": {
-    "type": "text/yaml; charset=utf-8",
-    "etag": "\"228-4gDdlnld+eYS1m+YyxvJ2EXqNE8\"",
-    "mtime": "2025-01-19T16:22:33.208Z",
-    "size": 552,
-    "path": "../public/ext/World/node_modules/hasown/.github/FUNDING.yml"
   },
   "/ext/World/node_modules/has-symbols/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
@@ -7780,6 +8129,13 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.207Z",
     "size": 2139,
     "path": "../public/ext/World/node_modules/has-symbols/test/tests.js"
+  },
+  "/ext/World/node_modules/hasown/.github/FUNDING.yml": {
+    "type": "text/yaml; charset=utf-8",
+    "etag": "\"228-4gDdlnld+eYS1m+YyxvJ2EXqNE8\"",
+    "mtime": "2025-01-19T16:22:33.208Z",
+    "size": 552,
+    "path": "../public/ext/World/node_modules/hasown/.github/FUNDING.yml"
   },
   "/ext/World/node_modules/iconv-lite/encodings/dbcs-codec.js": {
     "type": "text/javascript; charset=utf-8",
@@ -7928,27 +8284,6 @@ const assets$1 = {
     "size": 2334,
     "path": "../public/ext/World/node_modules/mime/src/test.js"
   },
-  "/ext/World/node_modules/node/bin/node": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"22-VNeXCbzatxV87kKRkhWN5s/m9jU\"",
-    "mtime": "2025-01-19T16:22:36.915Z",
-    "size": 34,
-    "path": "../public/ext/World/node_modules/node/bin/node"
-  },
-  "/ext/World/node_modules/node/bin/node.exe": {
-    "type": "application/octet-stream",
-    "etag": "\"4f5aa90-zp5t5GRSMBeMVkDeQTFlaYHX2S4\"",
-    "mtime": "2025-01-19T16:22:35.987Z",
-    "size": 83208848,
-    "path": "../public/ext/World/node_modules/node/bin/node.exe"
-  },
-  "/ext/World/node_modules/node/node_modules/.package-lock.json": {
-    "type": "application/json",
-    "etag": "\"2e3-gv1rrG+Mwq0cFRF70CI7u2P+ZTE\"",
-    "mtime": "2025-01-19T16:22:36.859Z",
-    "size": 739,
-    "path": "../public/ext/World/node_modules/node/node_modules/.package-lock.json"
-  },
   "/ext/World/node_modules/negotiator/lib/charset.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"c09-v58lp79twhdrcLydoE/BYr379MQ\"",
@@ -7976,6 +8311,27 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.176Z",
     "size": 5358,
     "path": "../public/ext/World/node_modules/negotiator/lib/mediaType.js"
+  },
+  "/ext/World/node_modules/node/bin/node": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"22-VNeXCbzatxV87kKRkhWN5s/m9jU\"",
+    "mtime": "2025-01-19T16:22:36.915Z",
+    "size": 34,
+    "path": "../public/ext/World/node_modules/node/bin/node"
+  },
+  "/ext/World/node_modules/node/bin/node.exe": {
+    "type": "application/octet-stream",
+    "etag": "\"4f5aa90-zp5t5GRSMBeMVkDeQTFlaYHX2S4\"",
+    "mtime": "2025-01-19T16:22:35.987Z",
+    "size": 83208848,
+    "path": "../public/ext/World/node_modules/node/bin/node.exe"
+  },
+  "/ext/World/node_modules/node/node_modules/.package-lock.json": {
+    "type": "application/json",
+    "etag": "\"2e3-gv1rrG+Mwq0cFRF70CI7u2P+ZTE\"",
+    "mtime": "2025-01-19T16:22:36.859Z",
+    "size": 739,
+    "path": "../public/ext/World/node_modules/node/node_modules/.package-lock.json"
   },
   "/ext/World/node_modules/node-bin-setup/.github/dependabot.yml": {
     "type": "text/yaml; charset=utf-8",
@@ -8025,41 +8381,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.274Z",
     "size": 548,
     "path": "../public/ext/World/node_modules/qs/.github/FUNDING.yml"
-  },
-  "/ext/World/node_modules/qs/lib/formats.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1dc-7dw7KBI72ekls3Q2JGWySIc0/94\"",
-    "mtime": "2025-01-19T16:22:33.163Z",
-    "size": 476,
-    "path": "../public/ext/World/node_modules/qs/lib/formats.js"
-  },
-  "/ext/World/node_modules/qs/lib/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"d3-kDmu9DvrucmZ5HEdNnIRzJe3ENM\"",
-    "mtime": "2025-01-19T16:22:33.175Z",
-    "size": 211,
-    "path": "../public/ext/World/node_modules/qs/lib/index.js"
-  },
-  "/ext/World/node_modules/qs/lib/parse.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2c35-fK60/9xIvPbrMeDO6MHxVh1yJNU\"",
-    "mtime": "2025-01-19T16:22:33.186Z",
-    "size": 11317,
-    "path": "../public/ext/World/node_modules/qs/lib/parse.js"
-  },
-  "/ext/World/node_modules/qs/lib/stringify.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2c43-9IlnKMMtTJKMLMbc+2zZkRFyDuo\"",
-    "mtime": "2025-01-19T16:22:33.229Z",
-    "size": 11331,
-    "path": "../public/ext/World/node_modules/qs/lib/stringify.js"
-  },
-  "/ext/World/node_modules/qs/lib/utils.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1c63-Frvt8LFQ4CT20smRQ6swcOEkptM\"",
-    "mtime": "2025-01-19T16:22:33.247Z",
-    "size": 7267,
-    "path": "../public/ext/World/node_modules/qs/lib/utils.js"
   },
   "/ext/World/node_modules/object-inspect/test/bigint.js": {
     "type": "text/javascript; charset=utf-8",
@@ -8187,13 +8508,6 @@ const assets$1 = {
     "size": 7034,
     "path": "../public/ext/World/node_modules/object-inspect/test/values.js"
   },
-  "/ext/World/node_modules/qs/dist/qs.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"b639-l/gtnkiYnWQOPva9+Athz8umelE\"",
-    "mtime": "2025-01-19T16:22:33.222Z",
-    "size": 46649,
-    "path": "../public/ext/World/node_modules/qs/dist/qs.js"
-  },
   "/ext/World/node_modules/qs/test/empty-keys-cases.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1e12-AmRV6jiOwKrvgIh8iHouKzERZrw\"",
@@ -8222,12 +8536,47 @@ const assets$1 = {
     "size": 5112,
     "path": "../public/ext/World/node_modules/qs/test/utils.js"
   },
-  "/ext/World/node_modules/setprototypeof/test/index.js": {
+  "/ext/World/node_modules/qs/lib/formats.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2b2-uRu27nE9hHOzsJe1hUn2UcZGlBA\"",
-    "mtime": "2025-01-19T16:22:33.172Z",
-    "size": 690,
-    "path": "../public/ext/World/node_modules/setprototypeof/test/index.js"
+    "etag": "\"1dc-7dw7KBI72ekls3Q2JGWySIc0/94\"",
+    "mtime": "2025-01-19T16:22:33.163Z",
+    "size": 476,
+    "path": "../public/ext/World/node_modules/qs/lib/formats.js"
+  },
+  "/ext/World/node_modules/qs/lib/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"d3-kDmu9DvrucmZ5HEdNnIRzJe3ENM\"",
+    "mtime": "2025-01-19T16:22:33.175Z",
+    "size": 211,
+    "path": "../public/ext/World/node_modules/qs/lib/index.js"
+  },
+  "/ext/World/node_modules/qs/lib/parse.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2c35-fK60/9xIvPbrMeDO6MHxVh1yJNU\"",
+    "mtime": "2025-01-19T16:22:33.186Z",
+    "size": 11317,
+    "path": "../public/ext/World/node_modules/qs/lib/parse.js"
+  },
+  "/ext/World/node_modules/qs/lib/stringify.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2c43-9IlnKMMtTJKMLMbc+2zZkRFyDuo\"",
+    "mtime": "2025-01-19T16:22:33.229Z",
+    "size": 11331,
+    "path": "../public/ext/World/node_modules/qs/lib/stringify.js"
+  },
+  "/ext/World/node_modules/qs/lib/utils.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1c63-Frvt8LFQ4CT20smRQ6swcOEkptM\"",
+    "mtime": "2025-01-19T16:22:33.247Z",
+    "size": 7267,
+    "path": "../public/ext/World/node_modules/qs/lib/utils.js"
+  },
+  "/ext/World/node_modules/qs/dist/qs.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"b639-l/gtnkiYnWQOPva9+Athz8umelE\"",
+    "mtime": "2025-01-19T16:22:33.222Z",
+    "size": 46649,
+    "path": "../public/ext/World/node_modules/qs/dist/qs.js"
   },
   "/ext/World/node_modules/side-channel/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
@@ -8236,12 +8585,47 @@ const assets$1 = {
     "size": 583,
     "path": "../public/ext/World/node_modules/side-channel/.github/FUNDING.yml"
   },
+  "/ext/World/node_modules/setprototypeof/test/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2b2-uRu27nE9hHOzsJe1hUn2UcZGlBA\"",
+    "mtime": "2025-01-19T16:22:33.172Z",
+    "size": 690,
+    "path": "../public/ext/World/node_modules/setprototypeof/test/index.js"
+  },
   "/ext/World/node_modules/side-channel/test/index.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"a0d-spsUgDZ9AlraVegzIKSSkFn2u1g\"",
     "mtime": "2025-01-19T16:22:33.171Z",
     "size": 2573,
     "path": "../public/ext/World/node_modules/side-channel/test/index.js"
+  },
+  "/ext/World/node_modules/side-channel-map/.github/FUNDING.yml": {
+    "type": "text/yaml; charset=utf-8",
+    "etag": "\"24b-Xgqno6LDjPShHpryCRMMxkUlzXk\"",
+    "mtime": "2025-01-19T16:22:33.229Z",
+    "size": 587,
+    "path": "../public/ext/World/node_modules/side-channel-map/.github/FUNDING.yml"
+  },
+  "/ext/World/node_modules/side-channel-map/test/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"b3b-OZtu02B7P+SISrlyy6i0eZBxxLk\"",
+    "mtime": "2025-01-19T16:22:33.171Z",
+    "size": 2875,
+    "path": "../public/ext/World/node_modules/side-channel-map/test/index.js"
+  },
+  "/ext/World/node_modules/side-channel-list/test/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"a35-iUICAr2F6c74z7bDS2pgJ7CZt2U\"",
+    "mtime": "2025-01-19T16:22:33.171Z",
+    "size": 2613,
+    "path": "../public/ext/World/node_modules/side-channel-list/test/index.js"
+  },
+  "/ext/World/node_modules/side-channel-list/.github/FUNDING.yml": {
+    "type": "text/yaml; charset=utf-8",
+    "etag": "\"24c-DXyAu7dbcVU2KuoY3CFBaMyIsR8\"",
+    "mtime": "2025-01-19T16:22:33.233Z",
+    "size": 588,
+    "path": "../public/ext/World/node_modules/side-channel-list/.github/FUNDING.yml"
   },
   "/ext/World/node_modules/side-channel-weakmap/.github/FUNDING.yml": {
     "type": "text/yaml; charset=utf-8",
@@ -8256,27 +8640,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.172Z",
     "size": 2969,
     "path": "../public/ext/World/node_modules/side-channel-weakmap/test/index.js"
-  },
-  "/ext/World/node_modules/side-channel-list/.github/FUNDING.yml": {
-    "type": "text/yaml; charset=utf-8",
-    "etag": "\"24c-DXyAu7dbcVU2KuoY3CFBaMyIsR8\"",
-    "mtime": "2025-01-19T16:22:33.233Z",
-    "size": 588,
-    "path": "../public/ext/World/node_modules/side-channel-list/.github/FUNDING.yml"
-  },
-  "/ext/World/node_modules/side-channel-list/test/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"a35-iUICAr2F6c74z7bDS2pgJ7CZt2U\"",
-    "mtime": "2025-01-19T16:22:33.171Z",
-    "size": 2613,
-    "path": "../public/ext/World/node_modules/side-channel-list/test/index.js"
-  },
-  "/ext/World/node_modules/side-channel-map/.github/FUNDING.yml": {
-    "type": "text/yaml; charset=utf-8",
-    "etag": "\"24b-Xgqno6LDjPShHpryCRMMxkUlzXk\"",
-    "mtime": "2025-01-19T16:22:33.229Z",
-    "size": 587,
-    "path": "../public/ext/World/node_modules/side-channel-map/.github/FUNDING.yml"
   },
   "/ext/World/node_modules/body-parser/lib/types/json.js": {
     "type": "text/javascript; charset=utf-8",
@@ -8306,20 +8669,6 @@ const assets$1 = {
     "size": 6404,
     "path": "../public/ext/World/node_modules/body-parser/lib/types/urlencoded.js"
   },
-  "/ext/World/node_modules/side-channel-map/test/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"b3b-OZtu02B7P+SISrlyy6i0eZBxxLk\"",
-    "mtime": "2025-01-19T16:22:33.171Z",
-    "size": 2875,
-    "path": "../public/ext/World/node_modules/side-channel-map/test/index.js"
-  },
-  "/ext/World/node_modules/depd/lib/browser/index.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"5e8-wBD3VOzR6Vn2usrBDpdr7iTCFaA\"",
-    "mtime": "2025-01-19T16:22:33.178Z",
-    "size": 1512,
-    "path": "../public/ext/World/node_modules/depd/lib/browser/index.js"
-  },
   "/ext/World/node_modules/express/lib/middleware/init.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"355-S4uUVrVyZ9WJKwl9T/MWg45B390\"",
@@ -8333,6 +8682,13 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.205Z",
     "size": 885,
     "path": "../public/ext/World/node_modules/express/lib/middleware/query.js"
+  },
+  "/ext/World/node_modules/depd/lib/browser/index.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"5e8-wBD3VOzR6Vn2usrBDpdr7iTCFaA\"",
+    "mtime": "2025-01-19T16:22:33.178Z",
+    "size": 1512,
+    "path": "../public/ext/World/node_modules/depd/lib/browser/index.js"
   },
   "/ext/World/node_modules/express/lib/router/index.js": {
     "type": "text/javascript; charset=utf-8",
@@ -8368,6 +8724,27 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.161Z",
     "size": 760,
     "path": "../public/ext/World/node_modules/has-symbols/test/shams/get-own-property-symbols.js"
+  },
+  "/ext/World/node_modules/node/node_modules/.bin/node": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"11b-EPr83zqnCwKUsOVxFrss4+6XJXM\"",
+    "mtime": "2025-01-19T16:22:36.850Z",
+    "size": 283,
+    "path": "../public/ext/World/node_modules/node/node_modules/.bin/node"
+  },
+  "/ext/World/node_modules/node/node_modules/.bin/node.cmd": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"87-Ib3/UGbGEH6q1wUOsoKZbicIago\"",
+    "mtime": "2025-01-19T16:22:36.850Z",
+    "size": 135,
+    "path": "../public/ext/World/node_modules/node/node_modules/.bin/node.cmd"
+  },
+  "/ext/World/node_modules/node/node_modules/.bin/node.ps1": {
+    "type": "text/plain; charset=utf-8",
+    "etag": "\"1d6-yZ6dbNwIlhHuvu6fjabzBC4lkOU\"",
+    "mtime": "2025-01-19T16:22:36.845Z",
+    "size": 470,
+    "path": "../public/ext/World/node_modules/node/node_modules/.bin/node.ps1"
   },
   "/ext/World/node_modules/iconv-lite/encodings/tables/big5-added.json": {
     "type": "application/json",
@@ -8425,27 +8802,6 @@ const assets$1 = {
     "size": 23782,
     "path": "../public/ext/World/node_modules/iconv-lite/encodings/tables/shiftjis.json"
   },
-  "/ext/World/node_modules/node/node_modules/.bin/node": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"11b-EPr83zqnCwKUsOVxFrss4+6XJXM\"",
-    "mtime": "2025-01-19T16:22:36.850Z",
-    "size": 283,
-    "path": "../public/ext/World/node_modules/node/node_modules/.bin/node"
-  },
-  "/ext/World/node_modules/node/node_modules/.bin/node.cmd": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"87-Ib3/UGbGEH6q1wUOsoKZbicIago\"",
-    "mtime": "2025-01-19T16:22:36.850Z",
-    "size": 135,
-    "path": "../public/ext/World/node_modules/node/node_modules/.bin/node.cmd"
-  },
-  "/ext/World/node_modules/node/node_modules/.bin/node.ps1": {
-    "type": "text/plain; charset=utf-8",
-    "etag": "\"1d6-yZ6dbNwIlhHuvu6fjabzBC4lkOU\"",
-    "mtime": "2025-01-19T16:22:36.845Z",
-    "size": 470,
-    "path": "../public/ext/World/node_modules/node/node_modules/.bin/node.ps1"
-  },
   "/ext/World/node_modules/node/node_modules/node-bin-setup/index.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"6d5-5bf48B3tszLqupCGeNGmR10/bMU\"",
@@ -8459,20 +8815,6 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:34.948Z",
     "size": 351,
     "path": "../public/ext/World/node_modules/node/node_modules/node-bin-setup/package.json"
-  },
-  "/ext/World/node_modules/node/node_modules/node-win-x64/package.json": {
-    "type": "application/json",
-    "etag": "\"f6-ZCTJR3HtTFEgLp9BzlAAI2q6bfs\"",
-    "mtime": "2025-01-19T16:22:35.989Z",
-    "size": 246,
-    "path": "../public/ext/World/node_modules/node/node_modules/node-win-x64/package.json"
-  },
-  "/ext/World/node_modules/object-inspect/test/browser/dom.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1a0-LNUWXPm4rfGm6l96gk9hsyY76OQ\"",
-    "mtime": "2025-01-19T16:22:33.207Z",
-    "size": 416,
-    "path": "../public/ext/World/node_modules/object-inspect/test/browser/dom.js"
   },
   "/ext/World/node_modules/send/node_modules/encodeurl/HISTORY.md": {
     "type": "text/markdown; charset=utf-8",
@@ -8508,6 +8850,20 @@ const assets$1 = {
     "mtime": "2025-01-19T16:22:33.063Z",
     "size": 3855,
     "path": "../public/ext/World/node_modules/send/node_modules/encodeurl/README.md"
+  },
+  "/ext/World/node_modules/object-inspect/test/browser/dom.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1a0-LNUWXPm4rfGm6l96gk9hsyY76OQ\"",
+    "mtime": "2025-01-19T16:22:33.207Z",
+    "size": 416,
+    "path": "../public/ext/World/node_modules/object-inspect/test/browser/dom.js"
+  },
+  "/ext/World/node_modules/node/node_modules/node-win-x64/package.json": {
+    "type": "application/json",
+    "etag": "\"f6-ZCTJR3HtTFEgLp9BzlAAI2q6bfs\"",
+    "mtime": "2025-01-19T16:22:35.989Z",
+    "size": 246,
+    "path": "../public/ext/World/node_modules/node/node_modules/node-win-x64/package.json"
   },
   "/ext/World/node_modules/send/node_modules/ms/index.js": {
     "type": "text/javascript; charset=utf-8",
@@ -8568,7 +8924,7 @@ function cwd() {
   }
   return "/";
 }
-const resolve = function(...arguments_) {
+const resolve$1 = function(...arguments_) {
   arguments_ = arguments_.map((argument) => normalizeWindowsPath(argument));
   let resolvedPath = "";
   let resolvedAbsolute = false;
@@ -8658,7 +9014,7 @@ const dirname = function(p) {
 
 function readAsset (id) {
   const serverDir = dirname(fileURLToPath(globalThis._importMeta_.url));
-  return promises.readFile(resolve(serverDir, assets$1[id].path))
+  return promises.readFile(resolve$1(serverDir, assets$1[id].path))
 }
 
 const publicAssetBases = {"/_nuxt/builds/meta/":{"maxAge":31536000},"/_nuxt/builds/":{"maxAge":1},"/_nuxt/":{"maxAge":31536000}};
@@ -8745,6 +9101,152 @@ const _ToOWU7 = eventHandler((event) => {
   }
   return readAsset(id);
 });
+
+function useNitroOrigin(e) {
+  process.env.NITRO_SSL_CERT;
+  process.env.NITRO_SSL_KEY;
+  let host = process.env.NITRO_HOST || process.env.HOST || false;
+  let port = false;
+  let protocol = "https" ;
+  if (e) {
+    host = getRequestHost(e, { xForwardedHost: true }) || host;
+    protocol = getRequestProtocol(e, { xForwardedProto: true }) || protocol;
+  }
+  if (typeof host === "string" && host.includes(":")) {
+    port = host.split(":").pop();
+    host = host.split(":")[0];
+  }
+  port = port ? `:${port}` : "";
+  return withTrailingSlash(`${protocol}://${host}${port}`);
+}
+
+const _0J81iL = defineEventHandler(async (e) => {
+  if (e.context.siteConfig)
+    return;
+  const runtimeConfig = useRuntimeConfig(e);
+  const config = runtimeConfig["nuxt-site-config"];
+  const nitroApp = useNitroApp();
+  const siteConfig = createSiteConfigStack({
+    debug: config.debug
+  });
+  const nitroOrigin = useNitroOrigin(e);
+  e.context.siteConfigNitroOrigin = nitroOrigin;
+  {
+    siteConfig.push({
+      _context: "nitro:init",
+      _priority: -4,
+      url: nitroOrigin
+    });
+  }
+  siteConfig.push({
+    _context: "runtimeEnv",
+    _priority: 0,
+    ...runtimeConfig.site || {},
+    ...runtimeConfig.public.site || {},
+    // @ts-expect-error untyped
+    ...envSiteConfig(globalThis._importMeta_.env)
+    // just in-case, shouldn't be needed
+  });
+  const buildStack = config.stack || [];
+  buildStack.forEach((c) => siteConfig.push(c));
+  if (e.context._nitro.routeRules.site) {
+    siteConfig.push({
+      _context: "route-rules",
+      ...e.context._nitro.routeRules.site
+    });
+  }
+  const ctx = { siteConfig, event: e };
+  await nitroApp.hooks.callHook("site-config:init", ctx);
+  e.context.siteConfig = ctx.siteConfig;
+});
+
+const basicReporter = {
+  log(logObj) {
+    (console[logObj.type] || console.log)(...logObj.args);
+  }
+};
+function createConsola(options = {}) {
+  return createConsola$1({
+    reporters: [basicReporter],
+    ...options
+  });
+}
+const consola = createConsola();
+consola.consola = consola;
+
+createConsola({
+  defaults: {
+    tag: "@nuxt/sitemap"
+  }
+});
+const merger = createDefu((obj, key, value) => {
+  if (Array.isArray(obj[key]) && Array.isArray(value))
+    obj[key] = Array.from(/* @__PURE__ */ new Set([...obj[key], ...value]));
+  return obj[key];
+});
+function mergeOnKey(arr, key) {
+  const res = {};
+  arr.forEach((item) => {
+    const k = item[key];
+    res[k] = merger(item, res[k] || {});
+  });
+  return Object.values(res);
+}
+function splitForLocales(path, locales) {
+  const prefix = withLeadingSlash(path).split("/")[1];
+  if (locales.includes(prefix))
+    return [prefix, path.replace(`/${prefix}`, "")];
+  return [null, path];
+}
+const StringifiedRegExpPattern = /\/(.*?)\/([gimsuy]*)$/;
+function normalizeRuntimeFilters(input) {
+  return (input || []).map((rule) => {
+    if (rule instanceof RegExp || typeof rule === "string")
+      return rule;
+    const match = rule.regex.match(StringifiedRegExpPattern);
+    if (match)
+      return new RegExp(match[1], match[2]);
+    return false;
+  }).filter(Boolean);
+}
+function createPathFilter(options = {}) {
+  const urlFilter = createFilter(options);
+  return (loc) => {
+    let path = loc;
+    try {
+      path = parseURL(loc).pathname;
+    } catch {
+      return false;
+    }
+    return urlFilter(path);
+  };
+}
+function createFilter(options = {}) {
+  const include = options.include || [];
+  const exclude = options.exclude || [];
+  if (include.length === 0 && exclude.length === 0)
+    return () => true;
+  return function(path) {
+    for (const v of [{ rules: exclude, result: false }, { rules: include, result: true }]) {
+      const regexRules = v.rules.filter((r) => r instanceof RegExp);
+      if (regexRules.some((r) => r.test(path)))
+        return v.result;
+      const stringRules = v.rules.filter((r) => typeof r === "string");
+      if (stringRules.length > 0) {
+        const routes = {};
+        for (const r of stringRules) {
+          if (r === path)
+            return v.result;
+          routes[r] = true;
+        }
+        const routeRulesMatcher = toRouteMatcher(createRouter$1({ routes, strictTrailingSlash: false }));
+        if (routeRulesMatcher.matchAll(path).length > 0)
+          return Boolean(v.result);
+      }
+    }
+    return include.length === 0;
+  };
+}
 
 function klona(x) {
 	if (typeof x !== 'object') return x;
@@ -8840,7 +9342,7 @@ const NUMBER_CHAR_RE = /\d/;
 const STR_SPLITTERS = ["-", "_", "/", "."];
 function isUppercase(char = "") {
   if (NUMBER_CHAR_RE.test(char)) {
-    return undefined;
+    return void 0;
   }
   return char !== char.toLowerCase();
 }
@@ -8858,7 +9360,7 @@ function splitByCase(str, separators) {
     if (isSplitter === true) {
       parts.push(buff);
       buff = "";
-      previousUpper = undefined;
+      previousUpper = void 0;
       continue;
     }
     const isUpper = isUppercase(char);
@@ -8908,7 +9410,7 @@ function applyEnv(obj, opts, parentKey = "") {
       if (_isObject(envValue)) {
         obj[key] = { ...obj[key], ...envValue };
         applyEnv(obj[key], opts, subKey);
-      } else if (envValue === undefined) {
+      } else if (envValue === void 0) {
         applyEnv(obj[key], opts, subKey);
       } else {
         obj[key] = envValue ?? obj[key];
@@ -8932,7 +9434,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "b13b1193-0891-47bb-8a52-9285a7c461e8",
+    "buildId": "856565f9-7a96-4276-9518-f91868a4db56",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -8941,6 +9443,23 @@ const _inlineRuntimeConfig = {
     "routeRules": {
       "/__nuxt_error": {
         "cache": false
+      },
+      "/__sitemap__/style.xsl": {
+        "headers": {
+          "Content-Type": "application/xslt+xml"
+        }
+      },
+      "/sitemap.xml": {
+        "swr": 600,
+        "cache": {
+          "swr": true,
+          "maxAge": 600,
+          "varies": [
+            "X-Forwarded-Host",
+            "X-Forwarded-Proto",
+            "Host"
+          ]
+        }
       },
       "/_nuxt/builds/meta/**": {
         "headers": {
@@ -8960,6 +9479,77 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {},
+  "sitemap": {
+    "isI18nMapped": false,
+    "sitemapName": "sitemap.xml",
+    "isMultiSitemap": false,
+    "excludeAppSources": [],
+    "cacheMaxAgeSeconds": 600,
+    "autoLastmod": false,
+    "defaultSitemapsChunkSize": 1000,
+    "minify": false,
+    "sortEntries": true,
+    "debug": false,
+    "discoverImages": true,
+    "discoverVideos": true,
+    "sitemapsPathPrefix": "/__sitemap__/",
+    "isNuxtContentDocumentDriven": false,
+    "xsl": "/__sitemap__/style.xsl",
+    "xslTips": true,
+    "xslColumns": [
+      {
+        "label": "URL",
+        "width": "50%"
+      },
+      {
+        "label": "Images",
+        "width": "25%",
+        "select": "count(image:image)"
+      },
+      {
+        "label": "Last Updated",
+        "width": "25%",
+        "select": "concat(substring(sitemap:lastmod,0,11),concat(' ', substring(sitemap:lastmod,12,5)),concat(' ', substring(sitemap:lastmod,20,6)))"
+      }
+    ],
+    "credits": true,
+    "version": "7.2.4",
+    "sitemaps": {
+      "sitemap.xml": {
+        "sitemapName": "sitemap.xml",
+        "route": "sitemap.xml",
+        "defaults": {},
+        "include": [],
+        "exclude": [
+          "/_nuxt/**",
+          "/_**"
+        ],
+        "includeAppSources": true
+      }
+    }
+  },
+  "nuxt-site-config": {
+    "stack": [
+      {
+        "_context": "system",
+        "_priority": -15,
+        "name": "Portfolio",
+        "env": "production"
+      },
+      {
+        "_context": "package.json",
+        "_priority": -10,
+        "name": "nuxt-app"
+      },
+      {
+        "_priority": -3,
+        "_context": "nuxt-site-config:config",
+        "url": "https://portfolionurdjedd.com"
+      }
+    ],
+    "version": "3.0.6",
+    "debug": false
+  },
   "ipx": {
     "baseURL": "/_ipx",
     "alias": {},
@@ -9013,9 +9603,13 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
     if (prop in runtimeConfig) {
       return runtimeConfig[prop];
     }
-    return undefined;
+    return void 0;
   }
 });
+
+function defineNitroPlugin(def) {
+  return def;
+}
 
 function wrapToPromise(value) {
   if (!value || typeof value.then !== "function") {
@@ -9194,7 +9788,7 @@ function createStorage(options = {}) {
     return context.mountpoints.filter(
       (mountpoint) => mountpoint.startsWith(base) || includeParent && base.startsWith(mountpoint)
     ).map((mountpoint) => ({
-      relativeBase: base.length > mountpoint.length ? base.slice(mountpoint.length) : undefined,
+      relativeBase: base.length > mountpoint.length ? base.slice(mountpoint.length) : void 0,
       mountpoint,
       driver: context.mounts[mountpoint]
     }));
@@ -9248,7 +9842,7 @@ function createStorage(options = {}) {
     for (const item of items) {
       const isStringItem = typeof item === "string";
       const key = normalizeKey$1(isStringItem ? item : item.key);
-      const value = isStringItem ? undefined : item.value;
+      const value = isStringItem ? void 0 : item.value;
       const options2 = isStringItem || !item.options ? commonOptions : { ...commonOptions, ...item.options };
       const mount = getMount(key);
       getBatch(mount).items.push({
@@ -9318,7 +9912,7 @@ function createStorage(options = {}) {
       );
     },
     async setItem(key, value, opts = {}) {
-      if (value === undefined) {
+      if (value === void 0) {
         return storage.removeItem(key);
       }
       key = normalizeKey$1(key);
@@ -9360,7 +9954,7 @@ function createStorage(options = {}) {
       });
     },
     async setItemRaw(key, value, opts = {}) {
-      if (value === undefined) {
+      if (value === void 0) {
         return storage.removeItem(key, opts);
       }
       key = normalizeKey$1(key);
@@ -9645,7 +10239,7 @@ async function readdirRecursive(dir, ignore) {
   const files = [];
   await Promise.all(
     entries.map(async (entry) => {
-      const entryPath = resolve$1(dir, entry.name);
+      const entryPath = resolve$2(dir, entry.name);
       if (entry.isDirectory()) {
         const dirFiles = await readdirRecursive(entryPath, ignore);
         files.push(...dirFiles.map((f) => entry.name + "/" + f));
@@ -9662,7 +10256,7 @@ async function rmRecursive(dir) {
   const entries = await readdir(dir);
   await Promise.all(
     entries.map((entry) => {
-      const entryPath = resolve$1(dir, entry.name);
+      const entryPath = resolve$2(dir, entry.name);
       if (entry.isDirectory()) {
         return rmRecursive(entryPath).then(() => promises.rmdir(entryPath));
       } else {
@@ -9678,7 +10272,7 @@ const unstorage_47drivers_47fs_45lite = defineDriver((opts = {}) => {
   if (!opts.base) {
     throw createRequiredError(DRIVER_NAME, "base");
   }
-  opts.base = resolve$1(opts.base);
+  opts.base = resolve$2(opts.base);
   const r = (key) => {
     if (PATH_TRAVERSE_RE.test(key)) {
       throw createError(
@@ -9759,7 +10353,7 @@ function defineCachedFunction(fn, opts = {}) {
   const group = opts.group || "nitro/functions";
   const name = opts.name || fn.name || "_";
   const integrity = opts.integrity || hash([fn, opts]);
-  const validate = opts.validate || ((entry) => entry.value !== undefined);
+  const validate = opts.validate || ((entry) => entry.value !== void 0);
   async function get(key, resolver, shouldInvalidateCache, event) {
     const cacheKey = [opts.base, group, name, key + ".json"].filter(Boolean).join(":").replace(/:\/$/, ":index");
     let entry = await useStorage().getItem(cacheKey).catch((error) => {
@@ -9780,11 +10374,11 @@ function defineCachedFunction(fn, opts = {}) {
     const _resolve = async () => {
       const isPending = pending[key];
       if (!isPending) {
-        if (entry.value !== undefined && (opts.staleMaxAge || 0) >= 0 && opts.swr === false) {
-          entry.value = undefined;
-          entry.integrity = undefined;
-          entry.mtime = undefined;
-          entry.expires = undefined;
+        if (entry.value !== void 0 && (opts.staleMaxAge || 0) >= 0 && opts.swr === false) {
+          entry.value = void 0;
+          entry.integrity = void 0;
+          entry.mtime = void 0;
+          entry.expires = void 0;
         }
         pending[key] = Promise.resolve(resolver());
       }
@@ -9816,7 +10410,7 @@ function defineCachedFunction(fn, opts = {}) {
       }
     };
     const _resolvePromise = expired ? _resolve() : Promise.resolve();
-    if (entry.value === undefined) {
+    if (entry.value === void 0) {
       await _resolvePromise;
     } else if (expired && event && event.waitUntil) {
       event.waitUntil(_resolvePromise);
@@ -9841,7 +10435,7 @@ function defineCachedFunction(fn, opts = {}) {
       key,
       () => fn(...args),
       shouldInvalidateCache,
-      args[0] && isEvent(args[0]) ? args[0] : undefined
+      args[0] && isEvent(args[0]) ? args[0] : void 0
     );
     let value = entry.value;
     if (opts.transform) {
@@ -9886,7 +10480,7 @@ function defineCachedEventHandler(handler, opts = defaultCacheOptions()) {
       if (entry.value.code >= 400) {
         return false;
       }
-      if (entry.value.body === undefined) {
+      if (entry.value.body === void 0) {
         return false;
       }
       if (entry.value.headers.etag === "undefined" || entry.value.headers["last-modified"] === "undefined") {
@@ -9902,7 +10496,7 @@ function defineCachedEventHandler(handler, opts = defaultCacheOptions()) {
       const variableHeaders = {};
       for (const header of variableHeaderNames) {
         const value = incomingEvent.node.req.headers[header];
-        if (value !== undefined) {
+        if (value !== void 0) {
           variableHeaders[header] = value;
         }
       }
@@ -9953,7 +10547,7 @@ function defineCachedEventHandler(handler, opts = defaultCacheOptions()) {
             _resSendBody = chunk;
           }
           if (typeof arg2 === "function") {
-            arg2(undefined);
+            arg2(void 0);
           }
           if (typeof arg3 === "function") {
             arg3();
@@ -9968,7 +10562,7 @@ function defineCachedEventHandler(handler, opts = defaultCacheOptions()) {
             }
             for (const header in headers2) {
               const value = headers2[header];
-              if (value !== undefined) {
+              if (value !== void 0) {
                 this.setHeader(
                   header,
                   value
@@ -10052,7 +10646,7 @@ function defineCachedEventHandler(handler, opts = defaultCacheOptions()) {
           splitCookiesString(value)
         );
       } else {
-        if (value !== undefined) {
+        if (value !== void 0) {
           event.node.res.setHeader(name, value);
         }
       }
@@ -10083,7 +10677,7 @@ function defineRenderHandler(render) {
   const runtimeConfig = useRuntimeConfig();
   return eventHandler(async (event) => {
     const nitroApp = useNitroApp();
-    const ctx = { event, render, response: undefined };
+    const ctx = { event, render, response: void 0 };
     await nitroApp.hooks.callHook("render:before", ctx);
     if (!ctx.response) {
       if (event.path === `${runtimeConfig.app.baseURL}favicon.ico`) {
@@ -10196,7 +10790,7 @@ function createContext(opts = {}) {
   const _getCurrentInstance = () => {
     if (als) {
       const instance = als.getStore();
-      if (instance !== undefined) {
+      if (instance !== void 0) {
         return instance;
       }
     }
@@ -10205,7 +10799,7 @@ function createContext(opts = {}) {
   return {
     use: () => {
       const _instance = _getCurrentInstance();
-      if (_instance === undefined) {
+      if (_instance === void 0) {
         throw new Error("Context is not available");
       }
       return _instance;
@@ -10221,7 +10815,7 @@ function createContext(opts = {}) {
       isSingleton = true;
     },
     unset: () => {
-      currentInstance = undefined;
+      currentInstance = void 0;
       isSingleton = false;
     },
     call: (instance, callback) => {
@@ -10231,7 +10825,7 @@ function createContext(opts = {}) {
         return als ? als.run(instance, callback) : callback();
       } finally {
         if (!isSingleton) {
-          currentInstance = undefined;
+          currentInstance = void 0;
         }
       }
     },
@@ -10240,7 +10834,7 @@ function createContext(opts = {}) {
       const onRestore = () => {
         currentInstance = instance;
       };
-      const onLeave = () => currentInstance === instance ? onRestore : undefined;
+      const onLeave = () => currentInstance === instance ? onRestore : void 0;
       asyncHandlers.add(onLeave);
       try {
         const r = als ? als.run(instance, callback) : callback();
@@ -10287,11 +10881,983 @@ function publicAssetsURL(...path) {
   return path.length ? joinRelativeURL(publicBase, ...path) : publicBase;
 }
 
+function resolveSitePath(pathOrUrl, options) {
+  let path = pathOrUrl;
+  if (hasProtocol(pathOrUrl, { strict: false, acceptRelative: true })) {
+    const parsed = parseURL(pathOrUrl);
+    path = parsed.pathname;
+  }
+  const base = withLeadingSlash(options.base || "/");
+  if (base !== "/" && path.startsWith(base)) {
+    path = path.slice(base.length);
+  }
+  let origin = withoutTrailingSlash(options.absolute ? options.siteUrl : "");
+  if (base !== "/" && origin.endsWith(base)) {
+    origin = origin.slice(0, origin.indexOf(base));
+  }
+  const baseWithOrigin = options.withBase ? withBase(base, origin || "/") : origin;
+  const resolvedUrl = withBase(path, baseWithOrigin);
+  return path === "/" && !options.withBase ? withTrailingSlash(resolvedUrl) : fixSlashes(options.trailingSlash, resolvedUrl);
+}
+function isPathFile(path) {
+  const lastSegment = path.split("/").pop();
+  return !!(lastSegment || path).match(/\.[0-9a-z]+$/i)?.[0];
+}
+function fixSlashes(trailingSlash, pathOrUrl) {
+  const $url = parseURL(pathOrUrl);
+  if (isPathFile($url.pathname))
+    return pathOrUrl;
+  const fixedPath = trailingSlash ? withTrailingSlash($url.pathname) : withoutTrailingSlash($url.pathname);
+  return `${$url.protocol ? `${$url.protocol}//` : ""}${$url.host || ""}${fixedPath}${$url.search || ""}${$url.hash || ""}`;
+}
+
+function createSitePathResolver(e, options = {}) {
+  const siteConfig = useSiteConfig(e);
+  const nitroOrigin = useNitroOrigin(e);
+  const nuxtBase = useRuntimeConfig(e).app.baseURL || "/";
+  return (path) => {
+    return resolveSitePath(path, {
+      ...options,
+      siteUrl: options.canonical !== false || false ? siteConfig.url : nitroOrigin,
+      trailingSlash: siteConfig.trailingSlash,
+      base: nuxtBase
+    });
+  };
+}
+
+function useSitemapRuntimeConfig(e) {
+  const clone = JSON.parse(JSON.stringify(useRuntimeConfig(e).sitemap));
+  for (const k in clone.sitemaps) {
+    const sitemap = clone.sitemaps[k];
+    sitemap.include = normalizeRuntimeFilters(sitemap.include);
+    sitemap.exclude = normalizeRuntimeFilters(sitemap.exclude);
+    clone.sitemaps[k] = sitemap;
+  }
+  return Object.freeze(clone);
+}
+
+const _7GTb0N = defineEventHandler(async (e) => {
+  const fixPath = createSitePathResolver(e, { absolute: false, withBase: true });
+  const { sitemapName: fallbackSitemapName, cacheMaxAgeSeconds, version, xslColumns, xslTips } = useSitemapRuntimeConfig();
+  setHeader(e, "Content-Type", "application/xslt+xml");
+  if (cacheMaxAgeSeconds)
+    setHeader(e, "Cache-Control", `public, max-age=${cacheMaxAgeSeconds}, must-revalidate`);
+  else
+    setHeader(e, "Cache-Control", `no-cache, no-store`);
+  const { name: siteName, url: siteUrl } = useSiteConfig(e);
+  const referrer = getHeader(e, "Referer") || "/";
+  const referrerPath = parseURL(referrer).pathname;
+  const isNotIndexButHasIndex = referrerPath !== "/sitemap.xml" && referrerPath !== "/sitemap_index.xml" && referrerPath.endsWith(".xml");
+  const sitemapName = parseURL(referrer).pathname.split("/").pop()?.split("-sitemap")[0] || fallbackSitemapName;
+  const title = `${siteName}${sitemapName !== "sitemap.xml" ? ` - ${sitemapName === "sitemap_index.xml" ? "index" : sitemapName}` : ""}`.replace(/&/g, "&amp;");
+  const canonicalQuery = getQuery$1(referrer).canonical;
+  const isShowingCanonical = typeof canonicalQuery !== "undefined" && canonicalQuery !== "false";
+  const conditionalTips = [
+    'You are looking at a <a href="https://developer.mozilla.org/en-US/docs/Web/XSLT/Transforming_XML_with_XSLT/An_Overview" style="color: #398465" target="_blank">XML stylesheet</a>. Read the <a href="https://nuxtseo.com/sitemap/guides/customising-ui" style="color: #398465" target="_blank">docs</a> to learn how to customize it. View the page source to see the raw XML.',
+    `URLs missing? Check Nuxt Devtools Sitemap tab (or the <a href="${withQuery("/__sitemap__/debug.json", { sitemap: sitemapName })}" style="color: #398465" target="_blank">debug endpoint</a>).`
+  ];
+  if (!isShowingCanonical) {
+    const canonicalPreviewUrl = withQuery(referrer, { canonical: "" });
+    conditionalTips.push(`Your canonical site URL is <strong>${siteUrl}</strong>.`);
+    conditionalTips.push(`You can preview your canonical sitemap by visiting <a href="${canonicalPreviewUrl}" style="color: #398465; white-space: nowrap;">${fixPath(canonicalPreviewUrl)}?canonical</a>`);
+  } else {
+    conditionalTips.push(`You are viewing the canonical sitemap. You can switch to using the request origin: <a href="${fixPath(referrer)}" style="color: #398465; white-space: nowrap ">${fixPath(referrer)}</a>`);
+  }
+  let columns = [...xslColumns];
+  if (!columns.length) {
+    columns = [
+      { label: "URL", width: "50%" },
+      { label: "Images", width: "25%", select: "count(image:image)" },
+      { label: "Last Updated", width: "25%", select: "concat(substring(sitemap:lastmod,0,11),concat(' ', substring(sitemap:lastmod,12,5)),concat(' ', substring(sitemap:lastmod,20,6)))" }
+    ];
+  }
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="2.0"
+                xmlns:html="http://www.w3.org/TR/REC-html40"
+                xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+                xmlns:sitemap="http://www.sitemaps.org/schemas/sitemap/0.9"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
+  <xsl:template match="/">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+        <title>XML Sitemap</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <style type="text/css">
+          body {
+            font-family: Inter, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+          }
+
+          table {
+            border: none;
+            border-collapse: collapse;
+          }
+
+          .bg-yellow-200 {
+            background-color: #fef9c3;
+          }
+
+          .p-5 {
+            padding: 1.25rem;
+          }
+
+          .rounded {
+            border-radius: 4px;
+            }
+
+          .shadow {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          }
+
+          #sitemap tr:nth-child(odd) td {
+            background-color: #f8f8f8 !important;
+          }
+
+          #sitemap tbody tr:hover td {
+            background-color: #fff;
+          }
+
+          #sitemap tbody tr:hover td, #sitemap tbody tr:hover td a {
+            color: #000;
+          }
+
+          .expl a {
+            color: #398465
+            font-weight: 600;
+          }
+
+          .expl a:visited {
+            color: #398465
+          }
+
+          a {
+            color: #000;
+            text-decoration: none;
+          }
+
+          a:visited {
+            color: #777;
+          }
+
+          a:hover {
+            text-decoration: underline;
+          }
+
+          td {
+            font-size: 12px;
+          }
+
+          .text-2xl {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.25;
+          }
+
+          th {
+            text-align: left;
+            padding-right: 30px;
+            font-size: 12px;
+          }
+
+          thead th {
+            border-bottom: 1px solid #000;
+          }
+          .fixed { position: fixed; }
+          .right-2 { right: 2rem; }
+          .top-2 { top: 2rem; }
+          .w-30 { width: 30rem; }
+          p { margin: 0; }
+          li { padding-bottom: 0.5rem; line-height: 1.5; }
+          h1 { margin: 0; }
+          .mb-5 { margin-bottom: 1.25rem; }
+          .mb-3 { margin-bottom: 0.75rem; }
+        </style>
+      </head>
+      <body>
+        <div style="grid-template-columns: 1fr 1fr; display: grid; margin: 3rem;">
+            <div>
+             <div id="content">
+          <h1 class="text-2xl mb-3">XML Sitemap</h1>
+          <h2>${title}</h2>
+          ${isNotIndexButHasIndex ? `<p style="font-size: 12px; margin-bottom: 1rem;"><a href="${fixPath("/sitemap_index.xml")}">${fixPath("/sitemap_index.xml")}</a></p>` : ""}
+          <xsl:if test="count(sitemap:sitemapindex/sitemap:sitemap) &gt; 0">
+            <p class="expl" style="margin-bottom: 1rem;">
+              This XML Sitemap Index file contains
+              <xsl:value-of select="count(sitemap:sitemapindex/sitemap:sitemap)"/> sitemaps.
+            </p>
+            <table id="sitemap" cellpadding="3">
+              <thead>
+                <tr>
+                  <th width="75%">Sitemap</th>
+                  <th width="25%">Last Modified</th>
+                </tr>
+              </thead>
+              <tbody>
+                <xsl:for-each select="sitemap:sitemapindex/sitemap:sitemap">
+                  <xsl:variable name="sitemapURL">
+                    <xsl:value-of select="sitemap:loc"/>
+                  </xsl:variable>
+                  <tr>
+                    <td>
+                      <a href="{$sitemapURL}">
+                        <xsl:value-of select="sitemap:loc"/>
+                      </a>
+                    </td>
+                    <td>
+                      <xsl:value-of
+                        select="concat(substring(sitemap:lastmod,0,11),concat(' ', substring(sitemap:lastmod,12,5)),concat(' ', substring(sitemap:lastmod,20,6)))"/>
+                    </td>
+                  </tr>
+                </xsl:for-each>
+              </tbody>
+            </table>
+          </xsl:if>
+          <xsl:if test="count(sitemap:sitemapindex/sitemap:sitemap) &lt; 1">
+            <p class="expl" style="margin-bottom: 1rem;">
+              This XML Sitemap contains
+              <xsl:value-of select="count(sitemap:urlset/sitemap:url)"/> URLs.
+            </p>
+            <table id="sitemap" cellpadding="3">
+              <thead>
+                <tr>
+                  ${columns.map((c) => `<th width="${c.width}">${c.label}</th>`).join("\n")}
+                </tr>
+              </thead>
+              <tbody>
+                <xsl:variable name="lower" select="'abcdefghijklmnopqrstuvwxyz'"/>
+                <xsl:variable name="upper" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
+                <xsl:for-each select="sitemap:urlset/sitemap:url">
+                  <tr>
+                    <td>
+                      <xsl:variable name="itemURL">
+                        <xsl:value-of select="sitemap:loc"/>
+                      </xsl:variable>
+                      <a href="{$itemURL}">
+                        <xsl:value-of select="sitemap:loc"/>
+                      </a>
+                    </td>
+                    ${columns.filter((c) => c.label !== "URL").map((c) => `<td>
+<xsl:value-of select="${c.select}"/>
+</td>`).join("\n")}
+                  </tr>
+                </xsl:for-each>
+              </tbody>
+            </table>
+          </xsl:if>
+        </div>
+        </div>
+                    ${""}
+        </div>
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>
+`;
+});
+
+function withoutQuery(path) {
+  return path.split("?")[0];
+}
+function createNitroRouteRuleMatcher() {
+  const { nitro, app } = useRuntimeConfig();
+  const _routeRulesMatcher = toRouteMatcher(
+    createRouter$1({
+      routes: Object.fromEntries(
+        Object.entries(nitro?.routeRules || {}).map(([path, rules]) => [path === "/" ? path : withoutTrailingSlash(path), rules])
+      )
+    })
+  );
+  return (pathOrUrl) => {
+    const path = pathOrUrl[0] === "/" ? pathOrUrl : parseURL(pathOrUrl, app.baseURL).pathname;
+    const pathWithoutQuery = withoutQuery(path);
+    return defu({}, ..._routeRulesMatcher.matchAll(
+      // radix3 does not support trailing slashes
+      withoutBase(pathWithoutQuery === "/" ? pathWithoutQuery : withoutTrailingSlash(pathWithoutQuery), app.baseURL)
+    ).reverse());
+  };
+}
+
+function resolve(s, resolvers) {
+  if (typeof s === "undefined" || !resolvers)
+    return s;
+  s = typeof s === "string" ? s : s.toString();
+  if (hasProtocol(s, { acceptRelative: true, strict: false }))
+    return resolvers.fixSlashes(s);
+  return resolvers.canonicalUrlResolver(s);
+}
+function removeTrailingSlash(s) {
+  return s.replace(/\/(\?|#|$)/, "$1");
+}
+function preNormalizeEntry(_e, resolvers) {
+  const e = typeof _e === "string" ? { loc: _e } : { ..._e };
+  if (e.url && !e.loc) {
+    e.loc = e.url;
+    delete e.url;
+  }
+  if (typeof e.loc !== "string") {
+    e.loc = "";
+  }
+  e.loc = removeTrailingSlash(e.loc);
+  e._abs = hasProtocol(e.loc, { acceptRelative: false, strict: false });
+  try {
+    e._path = e._abs ? parseURL(e.loc) : parsePath(e.loc);
+  } catch (e2) {
+    e2._path = null;
+  }
+  if (e._path) {
+    const query = parseQuery(e._path.search);
+    const qs = stringifyQuery(query);
+    e._relativeLoc = `${encodePath(e._path?.pathname)}${qs.length ? `?${qs}` : ""}`;
+    if (e._path.host) {
+      e.loc = stringifyParsedURL(e._path);
+    } else {
+      e.loc = e._relativeLoc;
+    }
+  } else if (!isEncoded(e.loc)) {
+    e.loc = encodeURI(e.loc);
+  }
+  if (e.loc === "")
+    e.loc = `/`;
+  e.loc = resolve(e.loc, resolvers);
+  e._key = `${e._sitemap || ""}${withoutTrailingSlash(e.loc)}`;
+  return e;
+}
+function isEncoded(url) {
+  try {
+    return url !== decodeURIComponent(url);
+  } catch {
+    return false;
+  }
+}
+function normaliseEntry(_e, defaults, resolvers) {
+  const e = defu(_e, defaults);
+  if (e.lastmod) {
+    const date = normaliseDate(e.lastmod);
+    if (date)
+      e.lastmod = date;
+    else
+      delete e.lastmod;
+  }
+  if (!e.lastmod)
+    delete e.lastmod;
+  e.loc = resolve(e.loc, resolvers);
+  if (e.alternatives) {
+    e.alternatives = mergeOnKey(e.alternatives.map((e2) => {
+      const a = { ...e2 };
+      if (typeof a.href === "string")
+        a.href = resolve(a.href, resolvers);
+      else if (typeof a.href === "object" && a.href)
+        a.href = resolve(a.href.href, resolvers);
+      return a;
+    }), "hreflang");
+  }
+  if (e.images) {
+    e.images = mergeOnKey(e.images.map((i) => {
+      i = { ...i };
+      i.loc = resolve(i.loc, resolvers);
+      return i;
+    }), "loc");
+  }
+  if (e.videos) {
+    e.videos = e.videos.map((v) => {
+      v = { ...v };
+      if (v.content_loc)
+        v.content_loc = resolve(v.content_loc, resolvers);
+      return v;
+    });
+  }
+  return e;
+}
+const IS_VALID_W3C_DATE = [
+  /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/,
+  /^\d{4}-[01]\d-[0-3]\d$/,
+  /^\d{4}-[01]\d$/,
+  /^\d{4}$/
+];
+function isValidW3CDate(d) {
+  return IS_VALID_W3C_DATE.some((r) => r.test(d));
+}
+function normaliseDate(d) {
+  if (typeof d === "string") {
+    if (d.includes("T")) {
+      const t = d.split("T")[1];
+      if (!t.includes("+") && !t.includes("-") && !t.includes("Z")) {
+        d += "Z";
+      }
+    }
+    if (!isValidW3CDate(d))
+      return false;
+    d = new Date(d);
+    d.setMilliseconds(0);
+    if (Number.isNaN(d.getTime()))
+      return false;
+  }
+  const z = (n) => `0${n}`.slice(-2);
+  const date = `${d.getUTCFullYear()}-${z(d.getUTCMonth() + 1)}-${z(d.getUTCDate())}`;
+  if (d.getUTCHours() > 0 || d.getUTCMinutes() > 0 || d.getUTCSeconds() > 0) {
+    return `${date}T${z(d.getUTCHours())}:${z(d.getUTCMinutes())}:${z(d.getUTCSeconds())}Z`;
+  }
+  return date;
+}
+
+function extractSitemapXML(xml) {
+  const urls = xml.match(/<url>[\s\S]*?<\/url>/g) || [];
+  return urls.map((url) => {
+    const loc = url.match(/<loc>([^<]+)<\/loc>/)?.[1];
+    if (!loc) return null;
+    const lastmod = url.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
+    const changefreq = url.match(/<changefreq>([^<]+)<\/changefreq>/)?.[1];
+    const priority = url.match(/<priority>([^<]+)<\/priority>/) ? Number.parseFloat(url.match(/<priority>([^<]+)<\/priority>/)[1]) : void 0;
+    const images = (url.match(/<image:image>[\s\S]*?<\/image:image>/g) || []).map((image) => {
+      const imageLoc = image.match(/<image:loc>([^<]+)<\/image:loc>/)?.[1];
+      return imageLoc ? { loc: imageLoc } : null;
+    }).filter(Boolean);
+    const videos = (url.match(/<video:video>[\s\S]*?<\/video:video>/g) || []).map((video) => {
+      const videoObj = {};
+      const title = video.match(/<video:title>([^<]+)<\/video:title>/)?.[1];
+      const thumbnail_loc = video.match(/<video:thumbnail_loc>([^<]+)<\/video:thumbnail_loc>/)?.[1];
+      const description = video.match(/<video:description>([^<]+)<\/video:description>/)?.[1];
+      const content_loc = video.match(/<video:content_loc>([^<]+)<\/video:content_loc>/)?.[1];
+      if (!title || !thumbnail_loc || !description || !content_loc) return null;
+      videoObj.title = title;
+      videoObj.thumbnail_loc = thumbnail_loc;
+      videoObj.description = description;
+      videoObj.content_loc = content_loc;
+      const player_loc = video.match(/<video:player_loc>([^<]+)<\/video:player_loc>/)?.[1];
+      if (player_loc) videoObj.player_loc = player_loc;
+      const duration = video.match(/<video:duration>([^<]+)<\/video:duration>/) ? Number.parseInt(video.match(/<video:duration>([^<]+)<\/video:duration>/)[1], 10) : void 0;
+      if (duration) videoObj.duration = duration;
+      const expiration_date = video.match(/<video:expiration_date>([^<]+)<\/video:expiration_date>/)?.[1];
+      if (expiration_date) videoObj.expiration_date = expiration_date;
+      const rating = video.match(/<video:rating>([^<]+)<\/video:rating>/) ? Number.parseFloat(video.match(/<video:rating>([^<]+)<\/video:rating>/)[1]) : void 0;
+      if (rating) videoObj.rating = rating;
+      const view_count = video.match(/<video:view_count>([^<]+)<\/video:view_count>/) ? Number.parseInt(video.match(/<video:view_count>([^<]+)<\/video:view_count>/)[1], 10) : void 0;
+      if (view_count) videoObj.view_count = view_count;
+      const publication_date = video.match(/<video:publication_date>([^<]+)<\/video:publication_date>/)?.[1];
+      if (publication_date) videoObj.publication_date = publication_date;
+      const family_friendly = video.match(/<video:family_friendly>([^<]+)<\/video:family_friendly>/)?.[1];
+      if (family_friendly) videoObj.family_friendly = family_friendly;
+      const restriction = video.match(/<video:restriction relationship="([^"]+)">([^<]+)<\/video:restriction>/);
+      if (restriction) videoObj.restriction = { relationship: restriction[1], restriction: restriction[2] };
+      const platform = video.match(/<video:platform relationship="([^"]+)">([^<]+)<\/video:platform>/);
+      if (platform) videoObj.platform = { relationship: platform[1], platform: platform[2] };
+      const price = (video.match(/<video:price [^>]+>([^<]+)<\/video:price>/g) || []).map((price2) => {
+        const priceValue = price2.match(/<video:price [^>]+>([^<]+)<\/video:price>/)?.[1];
+        const currency = price2.match(/currency="([^"]+)"/)?.[1];
+        const type = price2.match(/type="([^"]+)"/)?.[1];
+        return priceValue ? { price: priceValue, currency, type } : null;
+      }).filter(Boolean);
+      if (price.length) videoObj.price = price;
+      const requires_subscription = video.match(/<video:requires_subscription>([^<]+)<\/video:requires_subscription>/)?.[1];
+      if (requires_subscription) videoObj.requires_subscription = requires_subscription;
+      const uploader = video.match(/<video:uploader info="([^"]+)">([^<]+)<\/video:uploader>/);
+      if (uploader) videoObj.uploader = { uploader: uploader[2], info: uploader[1] };
+      const live = video.match(/<video:live>([^<]+)<\/video:live>/)?.[1];
+      if (live) videoObj.live = live;
+      const tag = (video.match(/<video:tag>([^<]+)<\/video:tag>/g) || []).map((tag2) => tag2.match(/<video:tag>([^<]+)<\/video:tag>/)?.[1]).filter(Boolean);
+      if (tag.length) videoObj.tag = tag;
+      return videoObj;
+    }).filter(Boolean);
+    const alternatives = (url.match(/<xhtml:link[\s\S]*?\/>/g) || []).map((link) => {
+      const hreflang = link.match(/hreflang="([^"]+)"/)?.[1];
+      const href = link.match(/href="([^"]+)"/)?.[1];
+      return hreflang && href ? { hreflang, href } : null;
+    }).filter(Boolean);
+    const news = url.match(/<news:news>[\s\S]*?<\/news:news>/) ? {
+      title: url.match(/<news:title>([^<]+)<\/news:title>/)?.[1],
+      publication_date: url.match(/<news:publication_date>([^<]+)<\/news:publication_date>/)?.[1],
+      publication: {
+        name: url.match(/<news:name>([^<]+)<\/news:name>/)?.[1],
+        language: url.match(/<news:language>([^<]+)<\/news:language>/)?.[1]
+      }
+    } : void 0;
+    const urlObj = { loc, lastmod, changefreq, priority, images, videos, alternatives, news };
+    return Object.fromEntries(Object.entries(urlObj).filter(([_, v]) => v != null && v.length !== 0));
+  }).filter(Boolean);
+}
+
+async function fetchDataSource(input, event) {
+  const context = typeof input.context === "string" ? { name: input.context } : input.context || { name: "fetch" };
+  context.tips = context.tips || [];
+  const url = typeof input.fetch === "string" ? input.fetch : input.fetch[0];
+  const options = typeof input.fetch === "string" ? {} : input.fetch[1];
+  const start = Date.now();
+  const timeout = options.timeout || 5e3;
+  const timeoutController = new AbortController();
+  const abortRequestTimeout = setTimeout(() => timeoutController.abort(), timeout);
+  let isMaybeErrorResponse = false;
+  const isXmlRequest = parseURL(url).pathname.endsWith(".xml");
+  const fetchContainer = url.startsWith("/") && event ? event : globalThis;
+  try {
+    const res = await fetchContainer.$fetch(url, {
+      ...options,
+      responseType: isXmlRequest ? "text" : "json",
+      signal: timeoutController.signal,
+      headers: defu(options?.headers, {
+        Accept: isXmlRequest ? "text/xml" : "application/json"
+      }, event ? { host: getRequestHost(event, { xForwardedHost: true }) } : {}),
+      // @ts-expect-error untyped
+      onResponse({ response }) {
+        if (typeof response._data === "string" && response._data.startsWith("<!DOCTYPE html>"))
+          isMaybeErrorResponse = true;
+      }
+    });
+    const timeTakenMs = Date.now() - start;
+    if (isMaybeErrorResponse) {
+      context.tips.push("This is usually because the URL isn't correct or is throwing an error. Please check the URL");
+      return {
+        ...input,
+        context,
+        urls: [],
+        timeTakenMs,
+        error: "Received HTML response instead of JSON"
+      };
+    }
+    let urls = [];
+    if (typeof res === "object") {
+      urls = res.urls || res;
+    } else if (typeof res === "string" && parseURL(url).pathname.endsWith(".xml")) {
+      urls = extractSitemapXML(res);
+    }
+    return {
+      ...input,
+      context,
+      timeTakenMs,
+      urls
+    };
+  } catch (_err) {
+    const error = _err;
+    if (error.message.includes("This operation was aborted"))
+      context.tips.push("The request has taken too long. Make sure app sources respond within 5 seconds or adjust the timeout fetch option.");
+    else
+      context.tips.push(`Response returned a status of ${error.response?.status || "unknown"}.`);
+    console.error("[@nuxtjs/sitemap] Failed to fetch source.", { url, error });
+    return {
+      ...input,
+      context,
+      urls: [],
+      error: error.message
+    };
+  } finally {
+    if (abortRequestTimeout) {
+      clearTimeout(abortRequestTimeout);
+    }
+  }
+}
+function globalSitemapSources() {
+  return import('../virtual/global-sources.mjs').then((m) => m.sources);
+}
+function childSitemapSources(definition) {
+  return definition?._hasSourceChunk ? import('../virtual/child-sources.mjs').then((m) => m.sources[definition.sitemapName] || []) : Promise.resolve([]);
+}
+async function resolveSitemapSources(sources, event) {
+  return (await Promise.all(
+    sources.map((source) => {
+      if (typeof source === "object" && "urls" in source) {
+        return {
+          timeTakenMs: 0,
+          ...source,
+          urls: source.urls
+        };
+      }
+      if (source.fetch)
+        return fetchDataSource(source, event);
+      return {
+        ...source,
+        error: "Invalid source"
+      };
+    })
+  )).flat();
+}
+
+function sortSitemapUrls(urls) {
+  return urls.sort(
+    (a, b) => {
+      const aLoc = typeof a === "string" ? a : a.loc;
+      const bLoc = typeof b === "string" ? b : b.loc;
+      return aLoc.localeCompare(bLoc, void 0, { numeric: true });
+    }
+  ).sort((a, b) => {
+    const aLoc = (typeof a === "string" ? a : a.loc) || "";
+    const bLoc = (typeof b === "string" ? b : b.loc) || "";
+    const aSegments = aLoc.split("/").length;
+    const bSegments = bLoc.split("/").length;
+    if (aSegments > bSegments)
+      return 1;
+    if (aSegments < bSegments)
+      return -1;
+    return 0;
+  });
+}
+
+function resolveKey(k) {
+  switch (k) {
+    case "images":
+      return "image";
+    case "videos":
+      return "video";
+    // news & others?
+    case "news":
+      return "news";
+    default:
+      return k;
+  }
+}
+function handleObject(key, obj) {
+  return [
+    `        <${key}:${key}>`,
+    ...Object.entries(obj).map(([sk, sv]) => {
+      if (key === "video" && Array.isArray(sv)) {
+        return sv.map((v) => {
+          if (typeof v === "string") {
+            return [
+              `            `,
+              `<${key}:${sk}>`,
+              escapeValueForXml(v),
+              `</${key}:${sk}>`
+            ].join("");
+          }
+          const attributes = Object.entries(v).filter(([ssk]) => ssk !== sk).map(([ssk, ssv]) => `${ssk}="${escapeValueForXml(ssv)}"`).join(" ");
+          return [
+            `            <${key}:${sk} ${attributes}>`,
+            // value is the same sk
+            v[sk],
+            `</${key}:${sk}>`
+          ].join("");
+        }).join("\n");
+      }
+      if (typeof sv === "object") {
+        if (key === "video") {
+          const attributes = Object.entries(sv).filter(([ssk]) => ssk !== sk).map(([ssk, ssv]) => `${ssk}="${escapeValueForXml(ssv)}"`).join(" ");
+          return [
+            `            <${key}:${sk} ${attributes}>`,
+            // value is the same sk
+            sv[sk],
+            `</${key}:${sk}>`
+          ].join("");
+        }
+        return [
+          `            <${key}:${sk}>`,
+          ...Object.entries(sv).map(([ssk, ssv]) => `                <${key}:${ssk}>${escapeValueForXml(ssv)}</${key}:${ssk}>`),
+          `            </${key}:${sk}>`
+        ].join("\n");
+      }
+      return `            <${key}:${sk}>${escapeValueForXml(sv)}</${key}:${sk}>`;
+    }),
+    `        </${key}:${key}>`
+  ].join("\n");
+}
+function handleArray(key, arr) {
+  if (arr.length === 0)
+    return false;
+  key = resolveKey(key);
+  if (key === "alternatives") {
+    return arr.map((obj) => [
+      `        <xhtml:link rel="alternate" ${Object.entries(obj).map(([sk, sv]) => `${sk}="${escapeValueForXml(sv)}"`).join(" ")} />`
+    ].join("\n")).join("\n");
+  }
+  return arr.map((obj) => handleObject(key, obj)).join("\n");
+}
+function handleEntry(k, e) {
+  return Array.isArray(e[k]) ? handleArray(k, e[k]) : typeof e[k] === "object" ? handleObject(k, e[k]) : `        <${k}>${escapeValueForXml(e[k])}</${k}>`;
+}
+function wrapSitemapXml(input, resolvers, options) {
+  const xsl = options.xsl ? resolvers.relativeBaseUrlResolver(options.xsl) : false;
+  const credits = options.credits;
+  input.unshift(`<?xml version="1.0" encoding="UTF-8"?>${xsl ? `<?xml-stylesheet type="text/xsl" href="${xsl}"?>` : ""}`);
+  if (credits)
+    input.push(`<!-- XML Sitemap generated by @nuxtjs/sitemap v${options.version} at ${(/* @__PURE__ */ new Date()).toISOString()} -->`);
+  if (options.minify)
+    return input.join("").replace(/(?<!<[^>]*)\s(?![^<]*>)/g, "");
+  return input.join("\n");
+}
+function escapeValueForXml(value) {
+  if (value === true || value === false)
+    return value ? "yes" : "no";
+  return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+}
+
+function resolveSitemapEntries(sitemap, urls, runtimeConfig, resolvers) {
+  const {
+    autoI18n,
+    isI18nMapped
+  } = runtimeConfig;
+  const filterPath = createPathFilter({
+    include: sitemap.include,
+    exclude: sitemap.exclude
+  });
+  const _urls = urls.map((_e) => {
+    const e = preNormalizeEntry(_e, resolvers);
+    if (!e.loc || !filterPath(e.loc))
+      return false;
+    return e;
+  }).filter(Boolean);
+  let validI18nUrlsForTransform = [];
+  const withoutPrefixPaths = {};
+  if (autoI18n && autoI18n.strategy !== "no_prefix") {
+    const localeCodes = autoI18n.locales.map((l) => l.code);
+    validI18nUrlsForTransform = _urls.map((_e, i) => {
+      if (_e._abs)
+        return false;
+      const split = splitForLocales(_e._relativeLoc, localeCodes);
+      let localeCode = split[0];
+      const pathWithoutPrefix = split[1];
+      if (!localeCode)
+        localeCode = autoI18n.defaultLocale;
+      const e = _e;
+      e._pathWithoutPrefix = pathWithoutPrefix;
+      const locale = autoI18n.locales.find((l) => l.code === localeCode);
+      if (!locale)
+        return false;
+      e._locale = locale;
+      e._index = i;
+      e._key = `${e._sitemap || ""}${e._path?.pathname || "/"}${e._path.search}`;
+      withoutPrefixPaths[pathWithoutPrefix] = withoutPrefixPaths[pathWithoutPrefix] || [];
+      if (!withoutPrefixPaths[pathWithoutPrefix].some((e2) => e2._locale.code === locale.code))
+        withoutPrefixPaths[pathWithoutPrefix].push(e);
+      return e;
+    }).filter(Boolean);
+    for (const e of validI18nUrlsForTransform) {
+      if (!e._i18nTransform && !e.alternatives?.length) {
+        const alternatives = withoutPrefixPaths[e._pathWithoutPrefix].map((u) => {
+          const entries = [];
+          if (u._locale.code === autoI18n.defaultLocale) {
+            entries.push({
+              href: u.loc,
+              hreflang: "x-default"
+            });
+          }
+          entries.push({
+            href: u.loc,
+            hreflang: u._locale._hreflang || autoI18n.defaultLocale
+          });
+          return entries;
+        }).flat().filter(Boolean);
+        if (alternatives.length)
+          e.alternatives = alternatives;
+      } else if (e._i18nTransform) {
+        delete e._i18nTransform;
+        if (autoI18n.strategy === "no_prefix") ;
+        if (autoI18n.differentDomains) {
+          e.alternatives = [
+            {
+              // apply default locale domain
+              ...autoI18n.locales.find((l) => [l.code, l.language].includes(autoI18n.defaultLocale)),
+              code: "x-default"
+            },
+            ...autoI18n.locales.filter((l) => !!l.domain)
+          ].map((locale) => {
+            return {
+              hreflang: locale._hreflang,
+              href: joinURL(withHttps(locale.domain), e._pathWithoutPrefix)
+            };
+          });
+        } else {
+          for (const l of autoI18n.locales) {
+            let loc = joinURL(`/${l.code}`, e._pathWithoutPrefix);
+            if (autoI18n.differentDomains || ["prefix_and_default", "prefix_except_default"].includes(autoI18n.strategy) && l.code === autoI18n.defaultLocale)
+              loc = e._pathWithoutPrefix;
+            const _sitemap = isI18nMapped ? l._sitemap : void 0;
+            const newEntry = preNormalizeEntry({
+              _sitemap,
+              ...e,
+              _index: void 0,
+              _key: `${_sitemap || ""}${loc || "/"}${e._path.search}`,
+              _locale: l,
+              loc,
+              alternatives: [{ code: "x-default", _hreflang: "x-default" }, ...autoI18n.locales].map((locale) => {
+                const code = locale.code === "x-default" ? autoI18n.defaultLocale : locale.code;
+                const isDefault = locale.code === "x-default" || locale.code === autoI18n.defaultLocale;
+                let href = "";
+                if (autoI18n.strategy === "prefix") {
+                  href = joinURL("/", code, e._pathWithoutPrefix);
+                } else if (["prefix_and_default", "prefix_except_default"].includes(autoI18n.strategy)) {
+                  if (isDefault) {
+                    href = e._pathWithoutPrefix;
+                  } else {
+                    href = joinURL("/", code, e._pathWithoutPrefix);
+                  }
+                }
+                if (!filterPath(href))
+                  return false;
+                return {
+                  hreflang: locale._hreflang,
+                  href
+                };
+              }).filter(Boolean)
+            }, resolvers);
+            if (e._locale.code === newEntry._locale.code) {
+              _urls[e._index] = newEntry;
+              e._index = void 0;
+            } else {
+              _urls.push(newEntry);
+            }
+          }
+        }
+      }
+      if (isI18nMapped) {
+        e._sitemap = e._sitemap || e._locale._sitemap;
+        e._key = `${e._sitemap || ""}${e.loc || "/"}${e._path.search}`;
+      }
+      if (e._index)
+        _urls[e._index] = e;
+    }
+  }
+  return _urls;
+}
+async function buildSitemapUrls(sitemap, resolvers, runtimeConfig, nitro) {
+  const {
+    sitemaps,
+    // enhancing
+    autoI18n,
+    isI18nMapped,
+    isMultiSitemap,
+    // sorting
+    sortEntries,
+    // chunking
+    defaultSitemapsChunkSize
+  } = runtimeConfig;
+  const isChunking = typeof sitemaps.chunks !== "undefined" && !Number.isNaN(Number(sitemap.sitemapName));
+  function maybeSort(urls) {
+    return sortEntries ? sortSitemapUrls(urls) : urls;
+  }
+  function maybeSlice(urls) {
+    if (isChunking && defaultSitemapsChunkSize) {
+      const chunk = Number(sitemap.sitemapName);
+      return urls.slice(chunk * defaultSitemapsChunkSize, (chunk + 1) * defaultSitemapsChunkSize);
+    }
+    return urls;
+  }
+  if (autoI18n?.differentDomains) {
+    const domain = autoI18n.locales.find((e) => [e.language, e.code].includes(sitemap.sitemapName))?.domain;
+    if (domain) {
+      const _tester = resolvers.canonicalUrlResolver;
+      resolvers.canonicalUrlResolver = (path) => resolveSitePath(path, {
+        absolute: true,
+        withBase: false,
+        siteUrl: withHttps(domain),
+        trailingSlash: _tester("/test/").endsWith("/"),
+        base: "/"
+      });
+    }
+  }
+  const sourcesInput = sitemap.includeAppSources ? await globalSitemapSources() : [];
+  sourcesInput.push(...await childSitemapSources(sitemap));
+  const sources = await resolveSitemapSources(sourcesInput, resolvers.event);
+  const resolvedCtx = {
+    urls: sources.flatMap((s) => s.urls),
+    sitemapName: sitemap.sitemapName
+  };
+  await nitro?.hooks.callHook("sitemap:input", resolvedCtx);
+  const enhancedUrls = resolveSitemapEntries(sitemap, resolvedCtx.urls, { autoI18n, isI18nMapped }, resolvers);
+  const filteredUrls = enhancedUrls.filter((e) => {
+    if (isMultiSitemap && e._sitemap && sitemap.sitemapName)
+      return e._sitemap === sitemap.sitemapName;
+    return true;
+  });
+  const sortedUrls = maybeSort(filteredUrls);
+  return maybeSlice(sortedUrls);
+}
+function urlsToXml(urls, resolvers, { version, xsl, credits, minify }) {
+  const urlset = urls.map((e) => {
+    const keys = Object.keys(e).filter((k) => !k.startsWith("_"));
+    return [
+      "    <url>",
+      keys.map((k) => handleEntry(k, e)).filter(Boolean).join("\n"),
+      "    </url>"
+    ].join("\n");
+  });
+  return wrapSitemapXml([
+    '<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    urlset.join("\n"),
+    "</urlset>"
+  ], resolvers, { version, xsl, credits, minify });
+}
+
+function useNitroUrlResolvers(e) {
+  const canonicalQuery = getQuery(e).canonical;
+  const isShowingCanonical = typeof canonicalQuery !== "undefined" && canonicalQuery !== "false";
+  const siteConfig = useSiteConfig(e);
+  return {
+    event: e,
+    fixSlashes: (path) => fixSlashes(siteConfig.trailingSlash, path),
+    // we need these as they depend on the nitro event
+    canonicalUrlResolver: createSitePathResolver(e, {
+      canonical: isShowingCanonical || true,
+      absolute: true,
+      withBase: true
+    }),
+    relativeBaseUrlResolver: createSitePathResolver(e, { absolute: false, withBase: true })
+  };
+}
+async function createSitemap(event, definition, runtimeConfig) {
+  const { sitemapName } = definition;
+  const nitro = useNitroApp();
+  const resolvers = useNitroUrlResolvers(event);
+  let sitemapUrls = await buildSitemapUrls(definition, resolvers, runtimeConfig, nitro);
+  const routeRuleMatcher = createNitroRouteRuleMatcher();
+  const { autoI18n } = runtimeConfig;
+  sitemapUrls = sitemapUrls.map((u) => {
+    const path = u._path?.pathname || u.loc;
+    let routeRules = routeRuleMatcher(path);
+    if (autoI18n?.locales && autoI18n?.strategy !== "no_prefix") {
+      const match = splitForLocales(path, autoI18n.locales.map((l) => l.code));
+      const pathWithoutPrefix = match[1];
+      if (pathWithoutPrefix && pathWithoutPrefix !== path)
+        routeRules = defu(routeRules, routeRuleMatcher(pathWithoutPrefix));
+    }
+    if (routeRules.sitemap === false)
+      return false;
+    if (typeof routeRules.robots !== "undefined" && !routeRules.robots) {
+      return false;
+    }
+    const hasRobotsDisabled = Object.entries(routeRules.headers || {}).some(([name, value]) => name.toLowerCase() === "x-robots-tag" && value.toLowerCase().includes("noindex"));
+    if (routeRules.redirect || hasRobotsDisabled)
+      return false;
+    return routeRules.sitemap ? defu(u, routeRules.sitemap) : u;
+  }).filter(Boolean);
+  const locSize = sitemapUrls.length;
+  const resolvedCtx = {
+    urls: sitemapUrls,
+    sitemapName
+  };
+  await nitro.hooks.callHook("sitemap:resolved", resolvedCtx);
+  if (resolvedCtx.urls.length !== locSize) {
+    resolvedCtx.urls = resolvedCtx.urls.map((e) => preNormalizeEntry(e, resolvers));
+  }
+  const maybeSort = (urls2) => runtimeConfig.sortEntries ? sortSitemapUrls(urls2) : urls2;
+  const normalizedPreDedupe = resolvedCtx.urls.map((e) => normaliseEntry(e, definition.defaults, resolvers));
+  const urls = maybeSort(mergeOnKey(normalizedPreDedupe, "_key").map((e) => normaliseEntry(e, definition.defaults, resolvers)));
+  const sitemap = urlsToXml(urls, resolvers, runtimeConfig);
+  const ctx = { sitemap, sitemapName };
+  await nitro.hooks.callHook("sitemap:output", ctx);
+  setHeader(event, "Content-Type", "text/xml; charset=UTF-8");
+  if (runtimeConfig.cacheMaxAgeSeconds)
+    setHeader(event, "Cache-Control", `public, max-age=${runtimeConfig.cacheMaxAgeSeconds}, must-revalidate`);
+  else
+    setHeader(event, "Cache-Control", `no-cache, no-store`);
+  event.context._isSitemap = true;
+  return ctx.sitemap;
+}
+
+const _9B6xTs = defineEventHandler(async (e) => {
+  const runtimeConfig = useSitemapRuntimeConfig();
+  const { sitemaps } = runtimeConfig;
+  if ("index" in sitemaps) {
+    return sendRedirect(e, withBase("/sitemap_index.xml", useRuntimeConfig().app.baseURL), 301);
+  }
+  return createSitemap(e, Object.values(sitemaps)[0], runtimeConfig);
+});
+
 const _VSNWbu = lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx || {};
-  const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map((dir) => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, globalThis._importMeta_.url))) : undefined;
-  const fsStorage = opts.fs?.dir ? ipxFSStorage({ ...opts.fs, dir: fsDir }) : undefined;
-  const httpStorage = opts.http?.domains ? ipxHttpStorage({ ...opts.http }) : undefined;
+  const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map((dir) => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, globalThis._importMeta_.url))) : void 0;
+  const fsStorage = opts.fs?.dir ? ipxFSStorage({ ...opts.fs, dir: fsDir }) : void 0;
+  const httpStorage = opts.http?.domains ? ipxHttpStorage({ ...opts.http }) : void 0;
   if (!fsStorage && !httpStorage) {
     throw new Error("IPX storage is not configured!");
   }
@@ -10314,6 +11880,9 @@ const handlers = [
   { route: '/api/news', handler: _lazy_J1BZl5, lazy: true, middleware: false, method: undefined },
   { route: '/api/send-mail', handler: _lazy_xdUejA, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_Z8gmGm, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _0J81iL, lazy: false, middleware: true, method: undefined },
+  { route: '/__sitemap__/style.xsl', handler: _7GTb0N, lazy: false, middleware: false, method: undefined },
+  { route: '/sitemap.xml', handler: _9B6xTs, lazy: false, middleware: false, method: undefined },
   { route: '/_ipx/**', handler: _VSNWbu, lazy: false, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_Z8gmGm, lazy: true, middleware: false, method: undefined }
 ];
@@ -10484,11 +12053,13 @@ function GracefulShutdown(server, opts) {
   const signals = options.signals.split(" ").map((s) => s.trim()).filter((s) => s.length > 0);
   const once = onceFactory();
   once(process, signals, (signal) => {
+    debug("received shut down signal", signal);
     shutdown(signal).then(() => {
       if (options.forceExit) {
         process.exit(failed ? 1 : 0);
       }
     }).catch((error) => {
+      debug("server shut down error occurred", error);
       process.exit(1);
     });
   });
@@ -10507,6 +12078,9 @@ function GracefulShutdown(server, opts) {
     }
   }
   function destroyAllConnections(force = false) {
+    debug("Destroy Connections : " + (force ? "forced close" : "close"));
+    let counter = 0;
+    let secureCounter = 0;
     for (const key of Object.keys(connections)) {
       const socket = connections[key];
       const serverResponse = socket._httpMessage;
@@ -10515,9 +12089,12 @@ function GracefulShutdown(server, opts) {
           serverResponse.setHeader("connection", "close");
         }
       } else {
+        counter++;
         destroy(socket);
       }
     }
+    debug("Connections destroyed : " + counter);
+    debug("Connection Counter    : " + connectionCounter);
     for (const key of Object.keys(secureConnections)) {
       const socket = secureConnections[key];
       const serverResponse = socket._httpMessage;
@@ -10526,9 +12103,12 @@ function GracefulShutdown(server, opts) {
           serverResponse.setHeader("connection", "close");
         }
       } else {
+        secureCounter++;
         destroy(socket);
       }
     }
+    debug("Secure Connections destroyed : " + secureCounter);
+    debug("Secure Connection Counter    : " + secureConnectionCounter);
   }
   server.on("request", (req, res) => {
     req.socket._isIdle = false;
@@ -10567,10 +12147,12 @@ function GracefulShutdown(server, opts) {
     }
   });
   process.on("close", () => {
+    debug("closed");
   });
   function shutdown(sig) {
     function cleanupHttp() {
       destroyAllConnections();
+      debug("Close http server");
       return new Promise((resolve, reject) => {
         server.close((err) => {
           if (err) {
@@ -10580,19 +12162,23 @@ function GracefulShutdown(server, opts) {
         });
       });
     }
+    debug("shutdown signal - " + sig);
     if (options.development) {
+      debug("DEV-Mode - immediate forceful shutdown");
       return process.exit(0);
     }
     function finalHandler() {
       if (!finalRun) {
         finalRun = true;
         if (options.finally && isFunction(options.finally)) {
+          debug("executing finally()");
           options.finally();
         }
       }
       return Promise.resolve();
     }
     function waitForReadyToShutDown(totalNumInterval) {
+      debug(`waitForReadyToShutDown... ${totalNumInterval}`);
       if (totalNumInterval === 0) {
         debug(
           `Could not close connections in time (${options.timeout}ms), will forcefully shut down`
@@ -10601,8 +12187,10 @@ function GracefulShutdown(server, opts) {
       }
       const allConnectionsClosed = Object.keys(connections).length === 0 && Object.keys(secureConnections).length === 0;
       if (allConnectionsClosed) {
+        debug("All connections closed. Continue to shutting down");
         return Promise.resolve(false);
       }
+      debug("Schedule the next waitForReadyToShutdown");
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(waitForReadyToShutDown(totalNumInterval - 1));
@@ -10612,6 +12200,7 @@ function GracefulShutdown(server, opts) {
     if (isShuttingDown) {
       return Promise.resolve();
     }
+    debug("shutting down");
     return options.preShutdown(sig).then(() => {
       isShuttingDown = true;
       cleanupHttp();
@@ -10619,12 +12208,14 @@ function GracefulShutdown(server, opts) {
       const pollIterations = options.timeout ? Math.round(options.timeout / 250) : 0;
       return waitForReadyToShutDown(pollIterations);
     }).then((force) => {
+      debug("Do onShutdown now");
       if (force) {
         destroyAllConnections(force);
       }
       return options.onShutdown(sig);
     }).then(finalHandler).catch((error) => {
       const errString = typeof error === "string" ? error : JSON.stringify(error);
+      debug(errString);
       failed = true;
       throw errString;
     });
@@ -10669,5 +12260,5 @@ function setupGracefulShutdown(listener, nitroApp) {
   });
 }
 
-export { $fetch as $, withTrailingSlash as A, withoutTrailingSlash as B, toRouteMatcher as C, createRouter$1 as D, trapUnhandledNodeErrors as a, useNitroApp as b, defineEventHandler as c, destr as d, defineRenderHandler as e, buildAssetsURL as f, getQuery as g, createError$1 as h, getRouteRules as i, getResponseStatus as j, getResponseStatusText as k, baseURL as l, defu as m, parseQuery as n, createHooks as o, publicAssetsURL as p, hasProtocol as q, readBody as r, setupGracefulShutdown as s, toNodeListener as t, useRuntimeConfig as u, joinURL as v, getContext as w, isScriptProtocol as x, withQuery as y, sanitizeStatusCode as z };
+export { $fetch as $, createHooks as A, toRouteMatcher as B, createRouter$1 as C, defu as D, trapUnhandledNodeErrors as a, useNitroApp as b, defineEventHandler as c, destr as d, defineRenderHandler as e, buildAssetsURL as f, getQuery as g, createError$1 as h, getRouteRules as i, getResponseStatusText as j, getResponseStatus as k, parseQuery as l, hasProtocol as m, joinURL as n, isScriptProtocol as o, publicAssetsURL as p, withTrailingSlash as q, readBody as r, setupGracefulShutdown as s, toNodeListener as t, useRuntimeConfig as u, withoutTrailingSlash as v, withQuery as w, sanitizeStatusCode as x, getContext as y, baseURL as z };
 //# sourceMappingURL=nitro.mjs.map

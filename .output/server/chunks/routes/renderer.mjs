@@ -1,15 +1,16 @@
 import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'vue-bundle-renderer/runtime';
-import { e as defineRenderHandler, f as buildAssetsURL, p as publicAssetsURL, g as getQuery, h as createError, i as getRouteRules, u as useRuntimeConfig, j as getResponseStatus, k as getResponseStatusText, b as useNitroApp } from '../_/nitro.mjs';
+import { e as defineRenderHandler, f as buildAssetsURL, p as publicAssetsURL, g as getQuery, h as createError, i as getRouteRules, u as useRuntimeConfig, b as useNitroApp, j as getResponseStatusText, k as getResponseStatus } from '../_/nitro.mjs';
 import { stringify, uneval } from 'devalue';
 import { renderToString } from 'vue/server-renderer';
 import { propsToString, renderSSRHead } from '@unhead/ssr';
 import { createServerHead as createServerHead$1, CapoPlugin } from 'unhead';
-import { version, unref } from 'vue';
+import { unref, version } from 'vue';
 import { defineHeadPlugin } from '@unhead/shared';
 import 'node:http';
 import 'node:https';
 import 'node:fs';
 import 'node:url';
+import 'consola/core';
 import 'ipx';
 import 'node:path';
 
@@ -171,7 +172,7 @@ const renderer = defineRenderHandler(async (event) => {
     });
   }
   const isRenderingIsland = componentIslands;
-  const islandContext = undefined;
+  const islandContext = void 0;
   let url = ssrError?.url || islandContext?.url || event.path;
   const isRenderingPayload = PAYLOAD_URL_RE.test(url) && true;
   if (isRenderingPayload) {
@@ -194,7 +195,7 @@ const renderer = defineRenderHandler(async (event) => {
     noSSR: event.context.nuxt?.noSSR || routeOptions.ssr === false && true || (false),
     head,
     error: !!ssrError,
-    nuxt: undefined,
+    nuxt: void 0,
     /* NuxtApp */
     payload: ssrError ? { error: ssrError } : {},
     _payloadReducers: /* @__PURE__ */ Object.create(null),
