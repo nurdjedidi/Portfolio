@@ -49,6 +49,10 @@ export default defineNuxtConfig({
     url: 'https://portfolionurdjedd.com',
   },
   sitemap: {
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+    },
   },
   devtools: { enabled: true },
   modules: ['@nuxt/image', '@nuxtjs/sitemap',
