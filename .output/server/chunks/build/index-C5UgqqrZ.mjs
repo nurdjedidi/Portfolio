@@ -65,7 +65,7 @@ function isFixedPosition(el) {
 }
 const urbanstyle = "" + buildAssetsURL("urbanstyle.QgN-5x_1.avif");
 const news = "" + buildAssetsURL("news.TMP8sPdg.avif");
-const fitness = "" + buildAssetsURL("fitness.BbG25ixC.avif");
+const fitness = "" + buildAssetsURL("portfolio-nutriweb.DCO15oTY.avif");
 function calculateUpdatedTarget(_ref) {
   let {
     selectedElement,
@@ -2563,4 +2563,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { index as default };
-//# sourceMappingURL=index-BgNdKisP.mjs.map
+//# sourceMappingURL=index-C5UgqqrZ.mjs.map

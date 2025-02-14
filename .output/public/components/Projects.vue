@@ -1,38 +1,40 @@
 <template>
-    <div>
-        <!-- Projects -->
-      <v-row>
-        <v-col cols="12" sm="6" md="4" v-for="(projects, index) in projects" :key="index">
-          <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
-            <v-img height="200px"
-            width="100%" :src="projects.img"  loading="lazy" :alt="projects.title" class="card-image">
+  <div>
+    <!-- Projects -->
+    <v-row>
+      <v-col cols="12" sm="6" md="4" v-for="(projects, index) in projects" :key="index">
+        <v-card rounded="lg" color="#FFFFFF00" class="border-thin d-flex flex-column hover-transition">
+          <v-img height="200px" width="100%" :src="projects.img" loading="lazy" :alt="projects.title"
+            class="card-image">
           </v-img>
-            <v-card-text class="card-content d-flex flex-column flex-grow-1">
-              <h2 class="card-title">{{ projects.title }}</h2>
-              <p class="card-description">{{ projects.description }}</p>
-              <v-chip-group class="card-skill d-flex flex-wrap" column>
-                <v-chip v-for="(skill, skillIndex) in projects.skills" :key="skillIndex" :prepend-icon="skill.icon" class="d-flex">{{ skill.name }}</v-chip>
-              </v-chip-group>
-              <a :href="projects.link" target="_blank" class="card-link mt-auto">See the projects</a>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </div>
-  </template>
+          <v-card-text class="card-content d-flex flex-column flex-grow-1">
+            <h2 class="card-title">{{ projects.title }}</h2>
+            <p class="card-description">{{ projects.description }}</p>
+            <v-chip-group class="card-skill d-flex flex-wrap" column>
+              <v-chip v-for="(skill, skillIndex) in projects.skills" :key="skillIndex" :prepend-icon="skill.icon"
+                class="d-flex">{{ skill.name }}</v-chip>
+            </v-chip-group>
+            <a :href="projects.link" target="_blank" class="card-link mt-auto">See the projects</a>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
+</template>
 
-  <script>
-  import urbanstyle from '../images/urbanstyle.avif';
+<script>
+import urbanstyle from '../images/urbanstyle.avif';
 import news from '../images/news.avif';
-import fitness from '../images/fitness.avif';
+import fitness from '../images/portfolio-nutriweb.avif';
 
-  export default { 
-    name: 'Projects',
-    data() { 
-        return {
-            projects: [ 
-        { img: urbanstyle, 
-          title: 'Urbanstyle', 
+export default {
+  name: 'Projects',
+  data() {
+    return {
+      projects: [
+        {
+          img: urbanstyle,
+          title: 'Urbanstyle',
           description: 'Below is the link to a fictitious online shop that I designed.',
           skills: [
             { name: 'HTML', icon: 'mdi-language-html5' },
@@ -42,9 +44,10 @@ import fitness from '../images/fitness.avif';
           ],
           link: 'https://urbanstyle-mvwkc.ondigitalocean.app/'
         },
-        { img: news, 
-          title: 'World news', 
-          description: 'Below is a link to see the latest news in your country.', 
+        {
+          img: news,
+          title: 'World news',
+          description: 'Below is a link to see the latest news in your country.',
           skills: [
             { name: 'HTML', icon: 'mdi-language-html5' },
             { name: 'CSS', icon: 'mdi-language-css3' },
@@ -54,9 +57,10 @@ import fitness from '../images/fitness.avif';
           ],
           link: '/news'
         },
-        { img: fitness, 
-          title: 'NutriWeb', 
-          description: 'Below is the link to a fitness and health monitoring project.', 
+        {
+          img: fitness,
+          title: 'NutriWeb',
+          description: 'Below is the link to a fitness and health monitoring project.',
           skills: [
             { name: 'HTML', icon: 'mdi-language-html5' },
             { name: 'CSS', icon: 'mdi-language-css3' },
@@ -68,27 +72,27 @@ import fitness from '../images/fitness.avif';
           link: 'https://softai.info'
         }
       ]
-        }
     }
   }
-    </script>
+}
+</script>
 
-    <style>
-     .presentation { 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+<style>
+.presentation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .profil-img {
-  width: 100%; 
-  max-width: 400px; 
-  height: auto; 
+.profil-img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
 }
 
 
-  .hover-transition {
+.hover-transition {
   transition: transform 0.3s ease-in-out;
 }
 
@@ -96,8 +100,8 @@ import fitness from '../images/fitness.avif';
   transform: scale(1..01)
 }
 
-  section {
-  margin: 50px ;
+section {
+  margin: 50px;
   padding: 20px;
   max-width: 1200px;
   text-align: center;
@@ -165,18 +169,18 @@ p {
   background-color: #003f88;
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
   .presentation {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px; 
+    padding: 20px;
   }
 
   section {
-    margin: 0; 
+    margin: 0;
     padding: 20px;
   }
 
@@ -187,21 +191,21 @@ p {
 
   .card-container {
     display: grid;
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 
   .card {
     width: 100%;
-    padding: 0; 
+    padding: 0;
   }
 
   .card-image {
-    height: 180px; 
+    height: 180px;
   }
 
   .card-title {
-    font-size: 1.4em; 
+    font-size: 1.4em;
   }
 
   .card-description {
@@ -209,13 +213,13 @@ p {
   }
 
   .card-skill {
-    flex-direction: row; 
+    flex-direction: row;
     justify-content: center;
   }
 
   .skill {
     font-size: 0.8em;
-    padding: 3px 8px; 
+    padding: 3px 8px;
   }
 
   .card-link {
@@ -223,5 +227,4 @@ p {
     padding: 8px 18px;
   }
 }
-
 </style>

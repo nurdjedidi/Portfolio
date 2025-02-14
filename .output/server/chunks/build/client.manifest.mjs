@@ -1,21 +1,10 @@
 const client_manifest = {
-  "_C4EHMjRV.js": {
+  "_Cl8_k0-H.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "C4EHMjRV.js",
-    "name": "vue.-sixQ7xP",
-    "imports": [
-      "node_modules/nuxt/dist/app/entry.js"
-    ]
-  },
-  "_DVj5NFde.js": {
-    "resourceType": "script",
-    "module": true,
-    "prefetch": true,
-    "preload": true,
-    "file": "DVj5NFde.js",
+    "file": "Cl8_k0-H.js",
     "name": "VCard",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
@@ -29,6 +18,17 @@ const client_manifest = {
     "resourceType": "style",
     "prefetch": true,
     "preload": true
+  },
+  "_DEGjfXGE.js": {
+    "resourceType": "script",
+    "module": true,
+    "prefetch": true,
+    "preload": true,
+    "file": "DEGjfXGE.js",
+    "name": "vue.-sixQ7xP",
+    "imports": [
+      "node_modules/nuxt/dist/app/entry.js"
+    ]
   },
   "_VCard.8Js4-u2y.css": {
     "resourceType": "style",
@@ -66,13 +66,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DF4SawNa.js",
+    "file": "C8GMhMno.js",
     "name": "error-404",
     "src": "node_modules/nuxt/dist/app/components/error-404.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_C4EHMjRV.js"
+      "_DEGjfXGE.js"
     ],
     "css": []
   },
@@ -87,13 +87,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DzvJKQEW.js",
+    "file": "DKNoNWXj.js",
     "name": "error-500",
     "src": "node_modules/nuxt/dist/app/components/error-500.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_C4EHMjRV.js"
+      "_DEGjfXGE.js"
     ],
     "css": []
   },
@@ -108,7 +108,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "C1nx06wZ.js",
+    "file": "B1lBN_6y.js",
     "name": "entry",
     "src": "node_modules/nuxt/dist/app/entry.js",
     "isEntry": true,
@@ -158,7 +158,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DZijhJPA.js",
+    "file": "BBjlN30N.js",
     "name": "animation",
     "src": "pages/animation.vue",
     "isDynamicEntry": true,
@@ -178,19 +178,19 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DtVttvxc.js",
+    "file": "BCAGF85_.js",
     "name": "index",
     "src": "pages/index.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_DVj5NFde.js"
+      "_Cl8_k0-H.js"
     ],
     "css": [],
     "assets": [
       "urbanstyle.QgN-5x_1.avif",
       "news.TMP8sPdg.avif",
-      "fitness.BbG25ixC.avif"
+      "portfolio-nutriweb.DCO15oTY.avif"
     ]
   },
   "index.BFP2UTz4.css": {
@@ -207,8 +207,8 @@ const client_manifest = {
     "file": "news.TMP8sPdg.avif",
     "prefetch": true
   },
-  "fitness.BbG25ixC.avif": {
-    "file": "fitness.BbG25ixC.avif",
+  "portfolio-nutriweb.DCO15oTY.avif": {
+    "file": "portfolio-nutriweb.DCO15oTY.avif",
     "prefetch": true
   },
   "pages/news.vue": {
@@ -216,7 +216,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "Asr4L45h.js",
+    "file": "DQAsqqAQ.js",
     "name": "news",
     "src": "pages/news.vue",
     "isDynamicEntry": true,
@@ -236,13 +236,13 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CzEf9JOR.js",
+    "file": "DfXUs_Ax.js",
     "name": "skills",
     "src": "pages/skills.vue",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_DVj5NFde.js"
+      "_Cl8_k0-H.js"
     ],
     "css": []
   },
@@ -252,15 +252,15 @@ const client_manifest = {
     "prefetch": true,
     "preload": true
   },
-  "public/images/fitness.avif": {
-    "prefetch": true,
-    "file": "fitness.BbG25ixC.avif",
-    "src": "public/images/fitness.avif"
-  },
   "public/images/news.avif": {
     "prefetch": true,
     "file": "news.TMP8sPdg.avif",
     "src": "public/images/news.avif"
+  },
+  "public/images/portfolio-nutriweb.avif": {
+    "prefetch": true,
+    "file": "portfolio-nutriweb.DCO15oTY.avif",
+    "src": "public/images/portfolio-nutriweb.avif"
   },
   "public/images/urbanstyle.avif": {
     "prefetch": true,
