@@ -4,7 +4,43 @@ const sources = [
             "name": "sitemap:urls",
             "description": "Set with the `sitemap.urls` config."
         },
-        "urls": [],
+        "urls": [
+            {
+                "loc": "/",
+                "images": [
+                    {
+                        "loc": "/images/Vignette.avif",
+                        "caption": "Full stack website",
+                        "geoLocation": "Paris, France",
+                        "title": "Create your website"
+                    },
+                    {
+                        "loc": "/images/urban.avif",
+                        "caption": "Shop project",
+                        "geoLocation": "Paris, France",
+                        "title": "Urbanstyle"
+                    },
+                    {
+                        "loc": "/images/news.avif",
+                        "caption": "news for your country",
+                        "geoLocation": "Paris, France",
+                        "title": "World news"
+                    },
+                    {
+                        "loc": "/images/fitness.avif",
+                        "caption": "Nutritional dashboard",
+                        "geoLocation": "Paris, France",
+                        "title": "NutriWeb"
+                    }
+                ]
+            },
+            {
+                "loc": "/skills"
+            },
+            {
+                "loc": "/animation"
+            }
+        ],
         "sourceType": "user"
     },
     {

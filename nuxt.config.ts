@@ -3,9 +3,11 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   ssr: true,
   css: ['@/public/style.css'],
+
   build: {
     transpile: ['vuetify'],
   },
+
   app: {
     head: {
       htmlAttrs: {
@@ -45,16 +47,55 @@ export default defineNuxtConfig({
       title: 'Portfolio | Nûr',
     },
   },
+
   site: {
     url: 'https://portfolionurdjedd.com',
+    name: 'My portfolio'
   },
   sitemap: {
     defaults: {
-      changefreq: 'daily',
-      priority: 1,
+      lastmod: new Date().toISOString(),
     },
+    urls: [
+      {
+        loc: '/',
+        images: [
+          {
+            loc: '/images/Vignette.avif',
+            caption: 'Full stack website',
+            geoLocation: 'Paris, France',
+            title: 'Create your website'
+          },
+          {
+            loc: '/images/urban.avif',
+            caption: 'Shop project',
+            geoLocation: 'Paris, France',
+            title: 'Urbanstyle'
+          },
+          {
+            loc: '/images/news.avif',
+            caption: 'news for your country',
+            geoLocation: 'Paris, France',
+            title: 'World news'
+          },
+          {
+            loc: '/images/fitness.avif',
+            caption: 'Nutritional dashboard',
+            geoLocation: 'Paris, France',
+            title: 'NutriWeb'
+          }
+        ]
+      },
+      {
+        loc: '/skills',
+      },
+      {
+        loc: '/animation',
+      }
+    ]
   },
   devtools: { enabled: true },
+
   modules: ['@nuxt/image', '@nuxtjs/sitemap',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
@@ -63,9 +104,11 @@ export default defineNuxtConfig({
       })
     },
   ],
+
   image: {
     domains: ['portfolionurdjedd.com']
   },
+
   vite: {
     vue: {
       template: {
@@ -73,4 +116,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: '2025-02-14',
 });
