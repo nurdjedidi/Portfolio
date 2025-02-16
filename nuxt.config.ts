@@ -47,7 +47,17 @@ export default defineNuxtConfig({
       title: 'Portfolio | Nûr',
     },
   },
-
+  nitro: {
+    routeRules: {
+      '/**': {
+        headers: {
+          'X-Frame-Options': 'DENY',
+          'X-Content-Type-Options': 'nosniff',
+          'X-XSS-Protection': '1; mode=block'
+        }
+      }
+    }
+  },
   site: {
     url: 'https://portfolionurdjedd.com',
     name: 'My portfolio'
