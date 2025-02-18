@@ -9,7 +9,7 @@
             Learning
           </v-card-subtitle>
           <v-card-text>
-            <v-icon icon="mdi-calendar-check" left></v-icon> 1 year
+            <v-icon icon="mdi-calendar-check" left></v-icon> > 1 year
           </v-card-text>
           <v-card-text>
             <v-icon icon="mdi-code-tags" left></v-icon> Full-Stack Developer
@@ -21,7 +21,7 @@
             Professional
           </v-card-subtitle>
           <v-card-text>
-            <v-icon icon="mdi-calendar-check" left></v-icon> < 1 year
+            <v-icon icon="mdi-calendar-check" left></v-icon> 0-2 years
           </v-card-text>
           <v-card-text>
             <v-icon icon="mdi-code-tags" left></v-icon> Full-Stack Developer

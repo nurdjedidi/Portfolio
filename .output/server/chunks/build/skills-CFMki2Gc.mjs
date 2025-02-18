@@ -78,14 +78,14 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                             icon: "mdi-calendar-check",
                             left: ""
                           }, null, _parent5, _scopeId4));
-                          _push5(` 1 year `);
+                          _push5(` &gt; 1 year `);
                         } else {
                           return [
                             createVNode(VIcon, {
                               icon: "mdi-calendar-check",
                               left: ""
                             }),
-                            createTextVNode(" 1 year ")
+                            createTextVNode(" > 1 year ")
                           ];
                         }
                       }),
@@ -129,7 +129,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                             icon: "mdi-calendar-check",
                             left: ""
                           }),
-                          createTextVNode(" 1 year ")
+                          createTextVNode(" > 1 year ")
                         ]),
                         _: 1
                       }),
@@ -181,14 +181,14 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                             icon: "mdi-calendar-check",
                             left: ""
                           }, null, _parent5, _scopeId4));
-                          _push5(` &lt; 1 year `);
+                          _push5(` 0-2 years `);
                         } else {
                           return [
                             createVNode(VIcon, {
                               icon: "mdi-calendar-check",
                               left: ""
                             }),
-                            createTextVNode(" < 1 year ")
+                            createTextVNode(" 0-2 years ")
                           ];
                         }
                       }),
@@ -232,7 +232,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                             icon: "mdi-calendar-check",
                             left: ""
                           }),
-                          createTextVNode(" < 1 year ")
+                          createTextVNode(" 0-2 years ")
                         ]),
                         _: 1
                       }),
@@ -274,7 +274,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           icon: "mdi-calendar-check",
                           left: ""
                         }),
-                        createTextVNode(" 1 year ")
+                        createTextVNode(" > 1 year ")
                       ]),
                       _: 1
                     }),
@@ -312,7 +312,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                           icon: "mdi-calendar-check",
                           left: ""
                         }),
-                        createTextVNode(" < 1 year ")
+                        createTextVNode(" 0-2 years ")
                       ]),
                       _: 1
                     }),
@@ -365,7 +365,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         icon: "mdi-calendar-check",
                         left: ""
                       }),
-                      createTextVNode(" 1 year ")
+                      createTextVNode(" > 1 year ")
                     ]),
                     _: 1
                   }),
@@ -403,7 +403,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                         icon: "mdi-calendar-check",
                         left: ""
                       }),
-                      createTextVNode(" < 1 year ")
+                      createTextVNode(" 0-2 years ")
                     ]),
                     _: 1
                   }),
@@ -454,4 +454,4 @@ _sfc_main.setup = (props, ctx) => {
 const skills = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
 
 export { skills as default };
-//# sourceMappingURL=skills-Cp2xsdnx.mjs.map
+//# sourceMappingURL=skills-CFMki2Gc.mjs.map

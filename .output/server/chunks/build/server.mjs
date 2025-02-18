@@ -585,7 +585,7 @@ const _routes = [
   {
     name: "skills",
     path: "/skills",
-    component: () => import('./skills-Cp2xsdnx.mjs')
+    component: () => import('./skills-CFMki2Gc.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
