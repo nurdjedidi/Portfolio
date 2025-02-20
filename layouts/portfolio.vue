@@ -9,10 +9,8 @@
     <v-navigation-drawer v-if="isMounted" v-model="drawer" color="white" class="mt-4" temporary app>
       <v-list dense>
         <div class="mx-auto mb-5 bg-black" style="width: 40vw; height: 1px;" color="black"></div>
-        <v-list-item v-for="item in items" :key="item.title">
-          <v-list-item-title class="text--primary" :to="item.link" nuxt>
-            {{ item.title }}
-          </v-list-item-title>
+        <v-list-item v-for="item in items" class="text--primary" :key="item.title" :to="item.link" nuxt>
+          {{ item.title }}
         </v-list-item>
         <div class="mx-auto mt-5 bg-black" style="width: 40vw; height: 1px;" color="black"></div>
       </v-list>
