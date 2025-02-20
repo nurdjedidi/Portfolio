@@ -1,4 +1,4 @@
-import { defineComponent as defineComponent$1, inject as inject$1, computed, ref, unref, provide, toRaw, warn, Fragment, capitalize, watch, h, Suspense, onScopeDispose, getCurrentInstance as getCurrentInstance$1, shallowRef, reactive, watchEffect, toRefs, createVNode, mergeProps, hasInjectionContext, shallowReactive, effectScope, version as version$1, defineAsyncComponent, useSSRContext, createApp, withCtx, toRef, onErrorCaptured, onServerPrefetch, resolveDynamicComponent, isReadonly, isRef, isShallow, isReactive, nextTick, getCurrentScope } from 'vue';
+import { defineComponent as defineComponent$1, inject as inject$1, computed, ref, toRaw, warn, unref, Fragment, capitalize, watch, h, Suspense, provide, onScopeDispose, getCurrentInstance as getCurrentInstance$1, reactive, watchEffect, toRefs, shallowRef, createVNode, mergeProps, hasInjectionContext, shallowReactive, effectScope, version as version$1, defineAsyncComponent, useSSRContext, createApp, withCtx, toRef, onErrorCaptured, onServerPrefetch, resolveDynamicComponent, isReadonly, isRef, isShallow, isReactive, nextTick, getCurrentScope } from 'vue';
 import { l as hasProtocol, m as isScriptProtocol, n as joinURL, w as withQuery, o as sanitizeStatusCode, q as getContext, $ as $fetch, v as baseURL, x as createHooks, h as createError$1, y as toRouteMatcher, z as createRouter$1, A as defu } from '../_/nitro.mjs';
 import { getActiveHead, CapoPlugin } from 'unhead';
 import { defineHeadPlugin } from '@unhead/shared';
@@ -571,17 +571,17 @@ const _routes = [
   {
     name: "about",
     path: "/about",
-    component: () => import('./about-CezIPvly.mjs')
+    component: () => import('./about-DSPb-W-l.mjs')
   },
   {
     name: "contact",
     path: "/contact",
-    component: () => import('./contact-2FQvQoYx.mjs')
+    component: () => import('./contact-C0NPG88j.mjs')
   },
   {
     name: "index",
     path: "/",
-    component: () => import('./index-Ch2mQvvm.mjs')
+    component: () => import('./index-0odcmQ6u.mjs')
   },
   {
     name: "news",
@@ -591,12 +591,12 @@ const _routes = [
   {
     name: "projects",
     path: "/projects",
-    component: () => import('./projects-In5tGrI6.mjs')
+    component: () => import('./projects-C3R0E0XI.mjs')
   },
   {
     name: "services",
     path: "/services",
-    component: () => import('./services-CfYA-4OI.mjs')
+    component: () => import('./services-OOg52QvS.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -3735,7 +3735,7 @@ const plugins = [
   vuetify_8NhHJigKc1
 ];
 const layouts = {
-  portfolio: defineAsyncComponent(() => import('./portfolio-DR9oQ9Hu.mjs').then((m) => m.default || m))
+  portfolio: defineAsyncComponent(() => import('./portfolio-Trr-wVY2.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent$1({
   name: "LayoutLoader",
@@ -4092,5 +4092,5 @@ let entry;
 }
 const entry$1 = (ssrContext) => entry(ssrContext);
 
-export { useDisplay as $, provideDefaults as A, useProxiedModel as B, deepEqual as C, wrapInArray as D, consoleWarn as E, useIcon as F, flattenFragments as G, clamp as H, IconValue as I, hasEvent as J, isObject as K, keyCodes as L, consoleError as M, defineComponent as N, EventProp as O, deprecate as P, focusChild as Q, getPropertyFromItem as R, isPrimitive as S, omit as T, useLocale as U, callEvent as V, isOn as W, pick as X, only as Y, filterInputAttrs as Z, breakpoints as _, useNuxtApp as a, useGoTo as a0, makeDisplayProps as a1, focusableChildren as a2, defer as a3, __nuxt_component_1 as a4, useRuntimeConfig as b, nuxtLinkDefaults as c, resolveUnrefHeadInput as d, entry$1 as default, provideTheme as e, useToggleScope as f, genericComponent as g, convertToUnit as h, injectHead as i, useRtl as j, includes as k, getCurrentInstance as l, makeThemeProps as m, navigateTo as n, findChildrenWithProvide as o, propsFactory as p, getUid as q, resolveRouteObject as r, getCurrentInstanceName as s, templateRef as t, useRouter as u, destructComputed as v, isCssColor as w, isParsableColor as x, parseColor as y, getForeground as z };
+export { useDisplay as $, useProxiedModel as A, deepEqual as B, wrapInArray as C, consoleWarn as D, useIcon as E, flattenFragments as F, useRtl as G, clamp as H, IconValue as I, hasEvent as J, isObject as K, keyCodes as L, consoleError as M, defineComponent as N, EventProp as O, deprecate as P, focusChild as Q, getPropertyFromItem as R, isPrimitive as S, omit as T, useLocale as U, callEvent as V, isOn as W, pick as X, only as Y, filterInputAttrs as Z, breakpoints as _, useNuxtApp as a, useGoTo as a0, makeDisplayProps as a1, focusableChildren as a2, defer as a3, __nuxt_component_1 as a4, useRuntimeConfig as b, nuxtLinkDefaults as c, resolveUnrefHeadInput as d, entry$1 as default, provideTheme as e, useToggleScope as f, genericComponent as g, convertToUnit as h, injectHead as i, includes as j, getCurrentInstance as k, findChildrenWithProvide as l, makeThemeProps as m, navigateTo as n, getUid as o, propsFactory as p, getCurrentInstanceName as q, resolveRouteObject as r, destructComputed as s, templateRef as t, useRouter as u, isCssColor as v, isParsableColor as w, parseColor as x, getForeground as y, provideDefaults as z };
 //# sourceMappingURL=server.mjs.map

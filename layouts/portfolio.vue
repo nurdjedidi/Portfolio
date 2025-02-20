@@ -6,7 +6,7 @@
       <v-toolbar-title>My Portfolio</v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" color="white" class="mt-6" temporary app>
+    <v-navigation-drawer v-if="isMounted" v-model="drawer" color="white" class="mt-6" temporary app>
       <v-list dense>
         <div class="mx-auto mb-5 bg-black" style="width: 40vw; height: 1px;" color="black"></div>
         <v-list-item v-for="item in items" :key="item.title">
@@ -32,7 +32,13 @@
 </template>
 
 <script lang="ts" setup>
-import { shallowRef } from 'vue';
+import { shallowRef, onMounted } from 'vue';
+
+const isMounted = ref(false);
+
+onMounted(() => {
+  isMounted.value = true;
+});
 
 const drawer = shallowRef(false)
 

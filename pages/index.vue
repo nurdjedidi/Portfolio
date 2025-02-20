@@ -1,35 +1,32 @@
 <template>
   <v-app>
-    <v-main class="position-relative" :min-height="$vuetify.display.mdAndUp ? 800 : 550">
-      <div class="v-bg position-absolute top-0 right-0 left-0 bottom-0" style="z-index: 1;">
-        <div aria-hidden="true" class="overflow-hidden opacity-20 w-100 h-100"></div>
-      </div>
-      <v-container class="h-100 d-flex align-center justify-center" style="z-index: 2;">
+    <v-main :min-height="$vuetify.display.mdAndUp ? 800 : 550">
+      <v-container class="h-100 d-flex align-center justify-center">
         <div class="w-100 w-md-50 text-center">
-          <h1 class="text-h6 text-md-h2 font-weight-bold my-6">
+
+          <h1 class="text-h4 text-md-h2 font-weight-bold my-6">
             Boost your online presence with tailor-made development.
           </h1>
+
           <div class="text-body-1 text-medium-emphasis mb-10">
             Get your business off the ground with web design and SEO expertise tailored to your needs.
           </div>
+
           <div class="d-flex ga-4 justify-center">
-            <v-btn class="text-none" color="primary" flat rounded="lg" to="/contact" nuxt>
-              Get started
-            </v-btn>
-            <v-btn append-icon="mdi-chevron-right" class="text-none" flat rounded="lg" to="/services" nuxt>
-              Learn more
-            </v-btn>
+            <v-btn class="text-none" color="primary" flat rounded="lg" text="Get started" to="/contact" nuxt />
+
+            <v-btn append-icon="mdi-chevron-right" class="text-none" flat rounded="lg" text="Learn more" to="/services"
+              nuxt />
           </div>
+        </div>
+
+        <div class="v-bg position-absolute top-0 right-0 left-0 bottom-0">
+          <div aria-hidden="true" class="overflow-hidden opacity-20 w-100 h-100" />
         </div>
       </v-container>
     </v-main>
-    <Footer></Footer>
   </v-app>
 </template>
-
-<script lang="ts" setup>
-import Footer from '~/public/components/footer.vue';
-</script>
 
 
 <style scoped>

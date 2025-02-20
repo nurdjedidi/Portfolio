@@ -6,13 +6,26 @@ const sources = [
         },
         "urls": [
             {
-                "loc": "/",
+                "loc": "/"
+            },
+            {
+                "loc": "/services",
                 "images": [
                     {
-                        "loc": "/images/Vignette.avif",
+                        "loc": "/images/nurdjedd.jpg",
                         "caption": "Full stack website",
-                        "title": "Create your website"
+                        "title": "I create your website"
                     },
+                    {
+                        "loc": "/images/seo.jpg",
+                        "caption": "SEO optimization",
+                        "title": "Optimize the SEO of your website"
+                    }
+                ]
+            },
+            {
+                "loc": "/projects",
+                "images": [
                     {
                         "loc": "/images/urban.avif",
                         "caption": "Shop project",
@@ -31,10 +44,10 @@ const sources = [
                 ]
             },
             {
-                "loc": "/skills"
+                "loc": "/about"
             },
             {
-                "loc": "/animation"
+                "loc": "/contact"
             }
         ],
         "sourceType": "user"
