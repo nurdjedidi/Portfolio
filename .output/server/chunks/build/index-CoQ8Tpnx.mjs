@@ -29,7 +29,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
               _push3(ssrRenderComponent(VContainer, { class: "h-100 d-flex align-center justify-center" }, {
                 default: withCtx((_3, _push4, _parent4, _scopeId3) => {
                   if (_push4) {
-                    _push4(`<div class="w-100 w-md-50 text-center" data-v-73c9e057${_scopeId3}><h1 class="text-h4 text-md-h2 font-weight-bold my-6" data-v-73c9e057${_scopeId3}> Boost your online presence with tailor-made development. </h1><div class="text-body-1 text-medium-emphasis mb-10" data-v-73c9e057${_scopeId3}> Get your business off the ground with web design and SEO expertise tailored to your needs. </div><div class="d-flex ga-4 justify-center" data-v-73c9e057${_scopeId3}>`);
+                    _push4(`<div class="w-100 w-md-50 text-center" data-v-969f388d${_scopeId3}><h1 class="text-h4 text-md-h2 font-weight-bold my-6" data-v-969f388d${_scopeId3}> Boost your online presence with tailor-made development. </h1><div class="text-body-1 text-medium-emphasis mb-10" data-v-969f388d${_scopeId3}> Get your business off the ground with web design and SEO expertise tailored to your needs. </div><div class="d-flex ga-4 justify-center" data-v-969f388d${_scopeId3}>`);
                     _push4(ssrRenderComponent(VBtn, {
                       class: "text-none",
                       color: "primary",
@@ -48,7 +48,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
                       to: "/services",
                       nuxt: ""
                     }, null, _parent4, _scopeId3));
-                    _push4(`</div></div><div class="v-bg position-absolute top-0 right-0 left-0 bottom-0" data-v-73c9e057${_scopeId3}><div aria-hidden="true" class="overflow-hidden opacity-20 w-100 h-100" data-v-73c9e057${_scopeId3}></div></div>`);
+                    _push4(`</div></div><div class="v-bg position-absolute top-0 right-0 left-0 bottom-0" data-v-969f388d${_scopeId3}><div aria-hidden="true" class="overflow-hidden opacity-20 w-100 h-100" data-v-969f388d${_scopeId3}></div></div>`);
                   } else {
                     return [
                       createVNode("div", { class: "w-100 w-md-50 text-center" }, [
@@ -184,7 +184,7 @@ _sfc_main.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("pages/index.vue");
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
-const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-73c9e057"]]);
+const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-969f388d"]]);
 
 export { index as default };
-//# sourceMappingURL=index-0odcmQ6u.mjs.map
+//# sourceMappingURL=index-CoQ8Tpnx.mjs.map

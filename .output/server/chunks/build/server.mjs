@@ -581,7 +581,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-0odcmQ6u.mjs')
+    component: () => import('./index-CoQ8Tpnx.mjs')
   },
   {
     name: "news",
@@ -3735,7 +3735,7 @@ const plugins = [
   vuetify_8NhHJigKc1
 ];
 const layouts = {
-  portfolio: defineAsyncComponent(() => import('./portfolio-Trr-wVY2.mjs').then((m) => m.default || m))
+  portfolio: defineAsyncComponent(() => import('./portfolio-DCo0j1pB.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent$1({
   name: "LayoutLoader",

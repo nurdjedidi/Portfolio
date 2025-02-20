@@ -3,14 +3,14 @@
     <v-app-bar class="d-sm-flex d-md-none" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer" />
 
-      <v-toolbar-title>My Portfolio</v-toolbar-title>
+      <v-toolbar-title>Web Portfolio</v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer v-if="isMounted" v-model="drawer" color="white" class="mt-6" temporary app>
+    <v-navigation-drawer v-if="isMounted" v-model="drawer" color="white" class="mt-4" temporary app>
       <v-list dense>
         <div class="mx-auto mb-5 bg-black" style="width: 40vw; height: 1px;" color="black"></div>
         <v-list-item v-for="item in items" :key="item.title">
-          <v-list-item-title class="text--primary">
+          <v-list-item-title class="text--primary" :to="item.link" nuxt>
             {{ item.title }}
           </v-list-item-title>
         </v-list-item>

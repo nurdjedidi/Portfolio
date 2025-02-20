@@ -775,10 +775,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   _push3(ssrRenderComponent(VToolbarTitle, null, {
                     default: withCtx((_3, _push4, _parent4, _scopeId3) => {
                       if (_push4) {
-                        _push4(`My Portfolio`);
+                        _push4(`Web Portfolio`);
                       } else {
                         return [
-                          createTextVNode("My Portfolio")
+                          createTextVNode("Web Portfolio")
                         ];
                       }
                     }),
@@ -791,7 +791,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     }, null, 8, ["onClick"]),
                     createVNode(VToolbarTitle, null, {
                       default: withCtx(() => [
-                        createTextVNode("My Portfolio")
+                        createTextVNode("Web Portfolio")
                       ]),
                       _: 1
                     })
@@ -805,7 +805,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 modelValue: drawer.value,
                 "onUpdate:modelValue": ($event) => drawer.value = $event,
                 color: "white",
-                class: "mt-6",
+                class: "mt-4",
                 temporary: "",
                 app: ""
               }, {
@@ -821,7 +821,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                             }, {
                               default: withCtx((_4, _push5, _parent5, _scopeId4) => {
                                 if (_push5) {
-                                  _push5(ssrRenderComponent(VListItemTitle, { class: "text--primary" }, {
+                                  _push5(ssrRenderComponent(VListItemTitle, {
+                                    class: "text--primary",
+                                    to: item.link,
+                                    nuxt: ""
+                                  }, {
                                     default: withCtx((_5, _push6, _parent6, _scopeId5) => {
                                       if (_push6) {
                                         _push6(`${ssrInterpolate(item.title)}`);
@@ -835,12 +839,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                   }, _parent5, _scopeId4));
                                 } else {
                                   return [
-                                    createVNode(VListItemTitle, { class: "text--primary" }, {
+                                    createVNode(VListItemTitle, {
+                                      class: "text--primary",
+                                      to: item.link,
+                                      nuxt: ""
+                                    }, {
                                       default: withCtx(() => [
                                         createTextVNode(toDisplayString(item.title), 1)
                                       ]),
                                       _: 2
-                                    }, 1024)
+                                    }, 1032, ["to"])
                                   ];
                                 }
                               }),
@@ -860,12 +868,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                 key: item.title
                               }, {
                                 default: withCtx(() => [
-                                  createVNode(VListItemTitle, { class: "text--primary" }, {
+                                  createVNode(VListItemTitle, {
+                                    class: "text--primary",
+                                    to: item.link,
+                                    nuxt: ""
+                                  }, {
                                     default: withCtx(() => [
                                       createTextVNode(toDisplayString(item.title), 1)
                                     ]),
                                     _: 2
-                                  }, 1024)
+                                  }, 1032, ["to"])
                                 ]),
                                 _: 2
                               }, 1024);
@@ -894,12 +906,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                               key: item.title
                             }, {
                               default: withCtx(() => [
-                                createVNode(VListItemTitle, { class: "text--primary" }, {
+                                createVNode(VListItemTitle, {
+                                  class: "text--primary",
+                                  to: item.link,
+                                  nuxt: ""
+                                }, {
                                   default: withCtx(() => [
                                     createTextVNode(toDisplayString(item.title), 1)
                                   ]),
                                   _: 2
-                                }, 1024)
+                                }, 1032, ["to"])
                               ]),
                               _: 2
                             }, 1024);
@@ -1023,7 +1039,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   }, null, 8, ["onClick"]),
                   createVNode(VToolbarTitle, null, {
                     default: withCtx(() => [
-                      createTextVNode("My Portfolio")
+                      createTextVNode("Web Portfolio")
                     ]),
                     _: 1
                   })
@@ -1035,7 +1051,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 modelValue: drawer.value,
                 "onUpdate:modelValue": ($event) => drawer.value = $event,
                 color: "white",
-                class: "mt-6",
+                class: "mt-4",
                 temporary: "",
                 app: ""
               }, {
@@ -1052,12 +1068,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                           key: item.title
                         }, {
                           default: withCtx(() => [
-                            createVNode(VListItemTitle, { class: "text--primary" }, {
+                            createVNode(VListItemTitle, {
+                              class: "text--primary",
+                              to: item.link,
+                              nuxt: ""
+                            }, {
                               default: withCtx(() => [
                                 createTextVNode(toDisplayString(item.title), 1)
                               ]),
                               _: 2
-                            }, 1024)
+                            }, 1032, ["to"])
                           ]),
                           _: 2
                         }, 1024);
@@ -1126,4 +1146,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=portfolio-Trr-wVY2.mjs.map
+//# sourceMappingURL=portfolio-DCo0j1pB.mjs.map
