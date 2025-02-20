@@ -930,6 +930,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                       key: item.title,
                       to: item.link,
                       title: item.title,
+                      "aria-label": "Navigation menu",
+                      class: "text-none",
                       nuxt: ""
                     }, {
                       default: withCtx((_3, _push4, _parent4, _scopeId3) => {
@@ -953,6 +955,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                           key: item.title,
                           to: item.link,
                           title: item.title,
+                          "aria-label": "Navigation menu",
+                          class: "text-none",
                           nuxt: ""
                         }, {
                           default: withCtx(() => [
@@ -1058,6 +1062,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         key: item.title,
                         to: item.link,
                         title: item.title,
+                        "aria-label": "Navigation menu",
+                        class: "text-none",
                         nuxt: ""
                       }, {
                         default: withCtx(() => [
@@ -1092,4 +1098,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=portfolio-D7Ejd7PV.mjs.map
+//# sourceMappingURL=portfolio-DtyYOzDb.mjs.map

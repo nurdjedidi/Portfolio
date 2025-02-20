@@ -19,7 +19,8 @@
 
     <v-app-bar color="transparent" class=" position-absolute d-sm-none d-md-flex" flat>
       <div class="d-md-flex d-none ga-4 mx-auto">
-        <v-btn v-for="item in items" :key="item.title" :to="item.link" :title="item.title" nuxt>
+        <v-btn v-for="item in items" :key="item.title" :to="item.link" :title="item.title" aria-label="Navigation menu"
+          class="text-none" nuxt>
           {{ item.title }}
         </v-btn>
       </div>
