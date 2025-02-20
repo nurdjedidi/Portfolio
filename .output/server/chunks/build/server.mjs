@@ -596,7 +596,7 @@ const _routes = [
   {
     name: "services",
     path: "/services",
-    component: () => import('./services-D1NOmq4C.mjs')
+    component: () => import('./services-Ck5kyLiV.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -3735,7 +3735,7 @@ const plugins = [
   vuetify_8NhHJigKc1
 ];
 const layouts = {
-  portfolio: defineAsyncComponent(() => import('./portfolio-BnepuYud.mjs').then((m) => m.default || m))
+  portfolio: defineAsyncComponent(() => import('./portfolio-D7ensliH.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent$1({
   name: "LayoutLoader",
@@ -3748,7 +3748,7 @@ const LayoutLoader = defineComponent$1({
     return () => h(layouts[props.name], props.layoutProps, context.slots);
   }
 });
-const __nuxt_component_0 = defineComponent$1({
+const __nuxt_component_0$1 = defineComponent$1({
   name: "NuxtLayout",
   inheritAttrs: false,
   props: {
@@ -3867,7 +3867,7 @@ const RouteProvider = defineComponent$1({
     };
   }
 });
-const __nuxt_component_1 = defineComponent$1({
+const __nuxt_component_0 = defineComponent$1({
   name: "NuxtPage",
   inheritAttrs: false,
   props: {
@@ -3964,8 +3964,8 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent$1({
     ref(null);
     ref("");
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLayout = __nuxt_component_0;
-      const _component_NuxtPage = __nuxt_component_1;
+      const _component_NuxtLayout = __nuxt_component_0$1;
+      const _component_NuxtPage = __nuxt_component_0;
       _push(`<main${ssrRenderAttrs(_attrs)}>`);
       _push(ssrRenderComponent(_component_NuxtLayout, { name: "portfolio" }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
@@ -4010,7 +4010,7 @@ const _sfc_main$1 = {
     const statusMessage = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-C9Col2FB.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-lj0XGFip.mjs'));
     const _Error = defineAsyncComponent(() => import('./error-500-Dis-nBMl.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
@@ -4092,5 +4092,5 @@ let entry;
 }
 const entry$1 = (ssrContext) => entry(ssrContext);
 
-export { useDisplay as $, useProxiedModel as A, deepEqual as B, wrapInArray as C, consoleWarn as D, useIcon as E, flattenFragments as F, useRtl as G, clamp as H, IconValue as I, hasEvent as J, isObject as K, keyCodes as L, consoleError as M, defineComponent as N, EventProp as O, deprecate as P, focusChild as Q, getPropertyFromItem as R, isPrimitive as S, omit as T, useLocale as U, callEvent as V, isOn as W, pick as X, only as Y, filterInputAttrs as Z, breakpoints as _, useNuxtApp as a, useGoTo as a0, makeDisplayProps as a1, focusableChildren as a2, defer as a3, __nuxt_component_1 as a4, useRuntimeConfig as b, nuxtLinkDefaults as c, resolveUnrefHeadInput as d, entry$1 as default, provideTheme as e, useToggleScope as f, genericComponent as g, convertToUnit as h, injectHead as i, includes as j, getCurrentInstance as k, findChildrenWithProvide as l, makeThemeProps as m, navigateTo as n, getUid as o, propsFactory as p, getCurrentInstanceName as q, resolveRouteObject as r, destructComputed as s, templateRef as t, useRouter as u, isCssColor as v, isParsableColor as w, parseColor as x, getForeground as y, provideDefaults as z };
+export { useDisplay as $, useProxiedModel as A, deepEqual as B, wrapInArray as C, consoleWarn as D, useIcon as E, flattenFragments as F, useRtl as G, clamp as H, IconValue as I, hasEvent as J, isObject as K, keyCodes as L, consoleError as M, defineComponent as N, EventProp as O, deprecate as P, focusChild as Q, getPropertyFromItem as R, isPrimitive as S, omit as T, useLocale as U, callEvent as V, isOn as W, pick as X, only as Y, filterInputAttrs as Z, breakpoints as _, useNuxtApp as a, useGoTo as a0, makeDisplayProps as a1, focusableChildren as a2, defer as a3, __nuxt_component_0 as a4, useRuntimeConfig as b, nuxtLinkDefaults as c, resolveUnrefHeadInput as d, entry$1 as default, provideTheme as e, useToggleScope as f, genericComponent as g, convertToUnit as h, injectHead as i, includes as j, getCurrentInstance as k, findChildrenWithProvide as l, makeThemeProps as m, navigateTo as n, getUid as o, propsFactory as p, getCurrentInstanceName as q, resolveRouteObject as r, destructComputed as s, templateRef as t, useRouter as u, isCssColor as v, isParsableColor as w, parseColor as x, getForeground as y, provideDefaults as z };
 //# sourceMappingURL=server.mjs.map

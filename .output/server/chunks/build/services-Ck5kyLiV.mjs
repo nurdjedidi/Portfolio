@@ -25,8 +25,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   __ssrInlineRender: true,
   setup(__props) {
     const services = [
-      { title: "Full stack website", img: "/images/nurdjedd.jpg", link: "https://www.fiverr.com/nurdjedd/do-full-stack-website-for-you" },
-      { title: "On page and technical SEO optimization", img: "/images/seo.jpg", link: "https://www.fiverr.com/nurdjedd/optimise-the-seo-of-your-website" }
+      { title: "Full stack website", img: "/images/nurdjedd.avif", link: "https://www.fiverr.com/nurdjedd/do-full-stack-website-for-you" },
+      { title: "On page and technical SEO optimization", img: "/images/seo.avif", link: "https://www.fiverr.com/nurdjedd/optimise-the-seo-of-your-website" }
     ];
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(VApp, _attrs, {
@@ -69,8 +69,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                 _push5(ssrRenderComponent(VCol, {
                                   key: i,
                                   class: "d-flex",
-                                  cols: "6",
-                                  sm: "12"
+                                  md: "6",
+                                  cols: "12"
                                 }, {
                                   default: withCtx((_5, _push6, _parent6, _scopeId5) => {
                                     if (_push6) {
@@ -84,7 +84,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                             _push7(ssrRenderComponent(VCard, null, {
                                               default: withCtx((_7, _push8, _parent8, _scopeId7) => {
                                                 if (_push8) {
-                                                  _push8(`<a${ssrRenderAttr("href", service.link)} target="_blank"${_scopeId7}>`);
+                                                  _push8(`<a${ssrRenderAttr("href", service.link)} target="_blank" calt="Services"${_scopeId7}>`);
                                                   _push8(ssrRenderComponent(VImg, {
                                                     class: "rounded-lg",
                                                     src: service.img
@@ -94,7 +94,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                                   return [
                                                     createVNode("a", {
                                                       href: service.link,
-                                                      target: "_blank"
+                                                      target: "_blank",
+                                                      calt: "Services"
                                                     }, [
                                                       createVNode(VImg, {
                                                         class: "rounded-lg",
@@ -112,7 +113,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                                 default: withCtx(() => [
                                                   createVNode("a", {
                                                     href: service.link,
-                                                    target: "_blank"
+                                                    target: "_blank",
+                                                    calt: "Services"
                                                   }, [
                                                     createVNode(VImg, {
                                                       class: "rounded-lg",
@@ -139,7 +141,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                               default: withCtx(() => [
                                                 createVNode("a", {
                                                   href: service.link,
-                                                  target: "_blank"
+                                                  target: "_blank",
+                                                  calt: "Services"
                                                 }, [
                                                   createVNode(VImg, {
                                                     class: "rounded-lg",
@@ -165,8 +168,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                   return createVNode(VCol, {
                                     key: i,
                                     class: "d-flex",
-                                    cols: "6",
-                                    sm: "12"
+                                    md: "6",
+                                    cols: "12"
                                   }, {
                                     default: withCtx(() => [
                                       createVNode(VResponsive, {
@@ -179,7 +182,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                             default: withCtx(() => [
                                               createVNode("a", {
                                                 href: service.link,
-                                                target: "_blank"
+                                                target: "_blank",
+                                                calt: "Services"
                                               }, [
                                                 createVNode(VImg, {
                                                   class: "rounded-lg",
@@ -222,8 +226,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                 return createVNode(VCol, {
                                   key: i,
                                   class: "d-flex",
-                                  cols: "6",
-                                  sm: "12"
+                                  md: "6",
+                                  cols: "12"
                                 }, {
                                   default: withCtx(() => [
                                     createVNode(VResponsive, {
@@ -236,7 +240,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                           default: withCtx(() => [
                                             createVNode("a", {
                                               href: service.link,
-                                              target: "_blank"
+                                              target: "_blank",
+                                              calt: "Services"
                                             }, [
                                               createVNode(VImg, {
                                                 class: "rounded-lg",
@@ -287,8 +292,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                               return createVNode(VCol, {
                                 key: i,
                                 class: "d-flex",
-                                cols: "6",
-                                sm: "12"
+                                md: "6",
+                                cols: "12"
                               }, {
                                 default: withCtx(() => [
                                   createVNode(VResponsive, {
@@ -301,7 +306,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                         default: withCtx(() => [
                                           createVNode("a", {
                                             href: service.link,
-                                            target: "_blank"
+                                            target: "_blank",
+                                            calt: "Services"
                                           }, [
                                             createVNode(VImg, {
                                               class: "rounded-lg",
@@ -359,8 +365,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                             return createVNode(VCol, {
                               key: i,
                               class: "d-flex",
-                              cols: "6",
-                              sm: "12"
+                              md: "6",
+                              cols: "12"
                             }, {
                               default: withCtx(() => [
                                 createVNode(VResponsive, {
@@ -373,7 +379,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                       default: withCtx(() => [
                                         createVNode("a", {
                                           href: service.link,
-                                          target: "_blank"
+                                          target: "_blank",
+                                          calt: "Services"
                                         }, [
                                           createVNode(VImg, {
                                             class: "rounded-lg",
@@ -416,4 +423,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=services-D1NOmq4C.mjs.map
+//# sourceMappingURL=services-Ck5kyLiV.mjs.map

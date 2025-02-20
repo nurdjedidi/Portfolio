@@ -17,10 +17,10 @@
         </v-responsive>
 
         <v-row class="mt-8">
-          <v-col v-for="(service, i) in services" :key="i" class="d-flex" cols="6" sm="12">
+          <v-col v-for="(service, i) in services" :key="i" class="d-flex" md="6" cols="12">
             <v-responsive class="mx-auto" max-width="500" width="100%">
               <v-card>
-                <a :href="service.link" target="_blank">
+                <a :href="service.link" target="_blank" calt="Services">
                   <v-img class="rounded-lg" :src="service.img"></v-img>
                 </a>
               </v-card>
@@ -38,8 +38,8 @@ import Background from '~/public/components/background.vue';
 import Footer from '~/public/components/footer.vue';
 
 const services = [
-  { title: 'Full stack website', img: '/images/nurdjedd.jpg', link: 'https://www.fiverr.com/nurdjedd/do-full-stack-website-for-you' },
-  { title: 'On page and technical SEO optimization', img: '/images/seo.jpg', link: 'https://www.fiverr.com/nurdjedd/optimise-the-seo-of-your-website' }
+  { title: 'Full stack website', img: '/images/nurdjedd.avif', link: 'https://www.fiverr.com/nurdjedd/do-full-stack-website-for-you' },
+  { title: 'On page and technical SEO optimization', img: '/images/seo.avif', link: 'https://www.fiverr.com/nurdjedd/optimise-the-seo-of-your-website' }
 ]
 
 </script>

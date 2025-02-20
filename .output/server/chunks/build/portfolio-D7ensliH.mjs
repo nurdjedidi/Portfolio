@@ -1,5 +1,4 @@
-import { _ as __nuxt_component_0 } from './nuxt-link-DxjINoOo.mjs';
-import { g as genericComponent, a4 as __nuxt_component_1, p as propsFactory, A as useProxiedModel, f as useToggleScope, G as useRtl, e as provideTheme, $ as useDisplay, z as provideDefaults, H as clamp, m as makeThemeProps, a1 as makeDisplayProps, k as getCurrentInstance, h as convertToUnit, a3 as defer } from './server.mjs';
+import { g as genericComponent, a4 as __nuxt_component_0, p as propsFactory, A as useProxiedModel, f as useToggleScope, G as useRtl, e as provideTheme, $ as useDisplay, z as provideDefaults, H as clamp, m as makeThemeProps, a1 as makeDisplayProps, k as getCurrentInstance, h as convertToUnit, a3 as defer } from './server.mjs';
 import { defineComponent, ref, shallowRef, withCtx, createTextVNode, createVNode, unref, toDisplayString, createBlock, openBlock, Fragment, renderList, createCommentVNode, computed, watchEffect, toRef, watch, nextTick, onScopeDispose, mergeProps, Transition, useSSRContext } from 'vue';
 import { ssrRenderComponent, ssrRenderStyle, ssrRenderList, ssrInterpolate } from 'vue/server-renderer';
 import { V as VApp, b as VBtn, a as VMain, O as useSsrBoot, M as useLayoutItem, u as useRender, q as useBorder, g as useBackgroundColor, s as useElevation, f as useRounded, P as useRouter, Q as toPhysical, N as makeLayoutItemProps, S as makeVBtnProps, z as makeTagProps, k as makeComponentProps, m as makeRoundedProps, F as makeElevationProps, G as makeBorderProps, i as VDefaultsProvider } from './VMain-C2JahtCb.mjs';
@@ -758,8 +757,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       { title: "Contact", link: "/contact" }
     ];
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0;
-      const _component_NuxtPage = __nuxt_component_1;
+      const _component_NuxtPage = __nuxt_component_0;
       _push(ssrRenderComponent(VApp, _attrs, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -770,6 +768,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                 if (_push3) {
                   _push3(ssrRenderComponent(VAppBarNavIcon, {
+                    role: "menu",
+                    "aria-label": "button-menu",
                     onClick: ($event) => drawer.value = !drawer.value
                   }, null, _parent3, _scopeId2));
                   _push3(ssrRenderComponent(VToolbarTitle, null, {
@@ -787,6 +787,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 } else {
                   return [
                     createVNode(VAppBarNavIcon, {
+                      role: "menu",
+                      "aria-label": "button-menu",
                       onClick: ($event) => drawer.value = !drawer.value
                     }, null, 8, ["onClick"]),
                     createVNode(VToolbarTitle, null, {
@@ -811,12 +813,17 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               }, {
                 default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                   if (_push3) {
-                    _push3(ssrRenderComponent(VList, { dense: "" }, {
+                    _push3(ssrRenderComponent(VList, {
+                      role: "listbox",
+                      dense: ""
+                    }, {
                       default: withCtx((_3, _push4, _parent4, _scopeId3) => {
                         if (_push4) {
                           _push4(`<div class="mx-auto mb-5 bg-black" style="${ssrRenderStyle({ "width": "40vw", "height": "1px" })}" color="black"${_scopeId3}></div><!--[-->`);
                           ssrRenderList(items, (item) => {
                             _push4(ssrRenderComponent(VListItem, {
+                              "aria-label": "navigations items",
+                              role: "option",
                               class: "text--primary",
                               key: item.title,
                               to: item.link,
@@ -844,6 +851,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                             }),
                             (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                               return createVNode(VListItem, {
+                                "aria-label": "navigations items",
+                                role: "option",
                                 class: "text--primary",
                                 key: item.title,
                                 to: item.link,
@@ -867,7 +876,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     }, _parent3, _scopeId2));
                   } else {
                     return [
-                      createVNode(VList, { dense: "" }, {
+                      createVNode(VList, {
+                        role: "listbox",
+                        dense: ""
+                      }, {
                         default: withCtx(() => [
                           createVNode("div", {
                             class: "mx-auto mb-5 bg-black",
@@ -876,6 +888,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                           }),
                           (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                             return createVNode(VListItem, {
+                              "aria-label": "navigations items",
+                              role: "option",
                               class: "text--primary",
                               key: item.title,
                               to: item.link,
@@ -914,38 +928,17 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   ssrRenderList(items, (item) => {
                     _push3(ssrRenderComponent(VBtn, {
                       key: item.title,
-                      class: "text-none"
+                      to: item.link,
+                      title: item.title,
+                      class: "text-none",
+                      nuxt: ""
                     }, {
                       default: withCtx((_3, _push4, _parent4, _scopeId3) => {
                         if (_push4) {
-                          _push4(ssrRenderComponent(_component_NuxtLink, {
-                            to: item.link,
-                            title: item.title,
-                            nuxt: ""
-                          }, {
-                            default: withCtx((_4, _push5, _parent5, _scopeId4) => {
-                              if (_push5) {
-                                _push5(`${ssrInterpolate(item.title)}`);
-                              } else {
-                                return [
-                                  createTextVNode(toDisplayString(item.title), 1)
-                                ];
-                              }
-                            }),
-                            _: 2
-                          }, _parent4, _scopeId3));
+                          _push4(`${ssrInterpolate(item.title)}`);
                         } else {
                           return [
-                            createVNode(_component_NuxtLink, {
-                              to: item.link,
-                              title: item.title,
-                              nuxt: ""
-                            }, {
-                              default: withCtx(() => [
-                                createTextVNode(toDisplayString(item.title), 1)
-                              ]),
-                              _: 2
-                            }, 1032, ["to", "title"])
+                            createTextVNode(toDisplayString(item.title), 1)
                           ];
                         }
                       }),
@@ -959,22 +952,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                       (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                         return createVNode(VBtn, {
                           key: item.title,
-                          class: "text-none"
+                          to: item.link,
+                          title: item.title,
+                          class: "text-none",
+                          nuxt: ""
                         }, {
                           default: withCtx(() => [
-                            createVNode(_component_NuxtLink, {
-                              to: item.link,
-                              title: item.title,
-                              nuxt: ""
-                            }, {
-                              default: withCtx(() => [
-                                createTextVNode(toDisplayString(item.title), 1)
-                              ]),
-                              _: 2
-                            }, 1032, ["to", "title"])
+                            createTextVNode(toDisplayString(item.title), 1)
                           ]),
                           _: 2
-                        }, 1024);
+                        }, 1032, ["to", "title"]);
                       }), 64))
                     ])
                   ];
@@ -1002,6 +989,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               }, {
                 default: withCtx(() => [
                   createVNode(VAppBarNavIcon, {
+                    role: "menu",
+                    "aria-label": "button-menu",
                     onClick: ($event) => drawer.value = !drawer.value
                   }, null, 8, ["onClick"]),
                   createVNode(VToolbarTitle, null, {
@@ -1023,7 +1012,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 app: ""
               }, {
                 default: withCtx(() => [
-                  createVNode(VList, { dense: "" }, {
+                  createVNode(VList, {
+                    role: "listbox",
+                    dense: ""
+                  }, {
                     default: withCtx(() => [
                       createVNode("div", {
                         class: "mx-auto mb-5 bg-black",
@@ -1032,6 +1024,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                       }),
                       (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                         return createVNode(VListItem, {
+                          "aria-label": "navigations items",
+                          role: "option",
                           class: "text--primary",
                           key: item.title,
                           to: item.link,
@@ -1064,22 +1058,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                       return createVNode(VBtn, {
                         key: item.title,
-                        class: "text-none"
+                        to: item.link,
+                        title: item.title,
+                        class: "text-none",
+                        nuxt: ""
                       }, {
                         default: withCtx(() => [
-                          createVNode(_component_NuxtLink, {
-                            to: item.link,
-                            title: item.title,
-                            nuxt: ""
-                          }, {
-                            default: withCtx(() => [
-                              createTextVNode(toDisplayString(item.title), 1)
-                            ]),
-                            _: 2
-                          }, 1032, ["to", "title"])
+                          createTextVNode(toDisplayString(item.title), 1)
                         ]),
                         _: 2
-                      }, 1024);
+                      }, 1032, ["to", "title"]);
                     }), 64))
                   ])
                 ]),
@@ -1107,4 +1095,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=portfolio-BnepuYud.mjs.map
+//# sourceMappingURL=portfolio-D7ensliH.mjs.map

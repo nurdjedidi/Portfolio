@@ -34,8 +34,6 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/portfolio.ico' },
-        { rel: 'preload', href: '/images/urbanstyle.avif', as: 'image' },
-        { rel: 'preload', href: '/images/Vignette.avif', as: 'image' },
       ],
       script: [
         {
