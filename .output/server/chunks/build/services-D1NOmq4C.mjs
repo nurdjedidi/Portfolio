@@ -69,7 +69,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                 _push5(ssrRenderComponent(VCol, {
                                   key: i,
                                   class: "d-flex",
-                                  cols: "6"
+                                  cols: "6",
+                                  sm: "12"
                                 }, {
                                   default: withCtx((_5, _push6, _parent6, _scopeId5) => {
                                     if (_push6) {
@@ -164,7 +165,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                   return createVNode(VCol, {
                                     key: i,
                                     class: "d-flex",
-                                    cols: "6"
+                                    cols: "6",
+                                    sm: "12"
                                   }, {
                                     default: withCtx(() => [
                                       createVNode(VResponsive, {
@@ -220,7 +222,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                 return createVNode(VCol, {
                                   key: i,
                                   class: "d-flex",
-                                  cols: "6"
+                                  cols: "6",
+                                  sm: "12"
                                 }, {
                                   default: withCtx(() => [
                                     createVNode(VResponsive, {
@@ -284,7 +287,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                               return createVNode(VCol, {
                                 key: i,
                                 class: "d-flex",
-                                cols: "6"
+                                cols: "6",
+                                sm: "12"
                               }, {
                                 default: withCtx(() => [
                                   createVNode(VResponsive, {
@@ -355,7 +359,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                             return createVNode(VCol, {
                               key: i,
                               class: "d-flex",
-                              cols: "6"
+                              cols: "6",
+                              sm: "12"
                             }, {
                               default: withCtx(() => [
                                 createVNode(VResponsive, {
@@ -411,4 +416,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=services-upr_XyVW.mjs.map
+//# sourceMappingURL=services-D1NOmq4C.mjs.map

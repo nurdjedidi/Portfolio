@@ -59,7 +59,7 @@ const _sfc_main = {
                         }, _parent4, _scopeId3));
                         _push4(ssrRenderComponent(VResponsive, {
                           class: "mx-auto",
-                          width: "50%"
+                          width: "75%"
                         }, {
                           default: withCtx((_4, _push5, _parent5, _scopeId4) => {
                             if (_push5) {
@@ -89,7 +89,7 @@ const _sfc_main = {
                           }),
                           createVNode(VResponsive, {
                             class: "mx-auto",
-                            width: "50%"
+                            width: "75%"
                           }, {
                             default: withCtx(() => [
                               createVNode("canvas", { id: "myChart" })
@@ -123,7 +123,7 @@ const _sfc_main = {
                         }),
                         createVNode(VResponsive, {
                           class: "mx-auto",
-                          width: "50%"
+                          width: "75%"
                         }, {
                           default: withCtx(() => [
                             createVNode("canvas", { id: "myChart" })
@@ -164,7 +164,7 @@ const _sfc_main = {
                       }),
                       createVNode(VResponsive, {
                         class: "mx-auto",
-                        width: "50%"
+                        width: "75%"
                       }, {
                         default: withCtx(() => [
                           createVNode("canvas", { id: "myChart" })
@@ -194,4 +194,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=about-C6iWnYbr.mjs.map
+//# sourceMappingURL=about-B-J9KZy2.mjs.map

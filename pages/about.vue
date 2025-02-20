@@ -18,9 +18,10 @@
 
         </v-responsive>
 
-        <v-responsive class="mx-auto" width="50%">
+        <v-responsive class="mx-auto" width="75%">
           <canvas id="myChart"></canvas>
         </v-responsive>
+
       </v-container>
     </v-main>
     <Footer></Footer>
@@ -62,6 +63,11 @@ onMounted(() => {
       ]
     },
     options: {
+      layout: {
+        padding: {
+          right: 20
+        }
+      },
       plugins: {
         tooltip: {
           enabled: false

@@ -17,7 +17,7 @@
         </v-responsive>
 
         <v-row class="mt-8">
-          <v-col v-for="(service, i) in services" :key="i" class="d-flex" cols="6">
+          <v-col v-for="(service, i) in services" :key="i" class="d-flex" cols="6" sm="12">
             <v-responsive class="mx-auto" max-width="500" width="100%">
               <v-card>
                 <a :href="service.link" target="_blank">
