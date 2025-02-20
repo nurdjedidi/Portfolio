@@ -49,7 +49,10 @@ const sources = [
         },
         "urls": [
             {
-                "loc": "/animation"
+                "loc": "/about"
+            },
+            {
+                "loc": "/contact"
             },
             {
                 "loc": "/"
@@ -58,7 +61,10 @@ const sources = [
                 "loc": "/news"
             },
             {
-                "loc": "/skills"
+                "loc": "/projects"
+            },
+            {
+                "loc": "/services"
             }
         ],
         "sourceType": "app"

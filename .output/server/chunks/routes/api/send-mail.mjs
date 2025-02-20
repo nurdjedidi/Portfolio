@@ -14,7 +14,7 @@ dotenv.config();
 const resend = new Resend("re_McfbyRo5_EGaL6bZHPt8DFA6yzUp54PSx");
 const sendMail = defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const { name, lastName, email, message } = body;
+  const { firstName, lastName, industry, email, message } = body;
   try {
     await resend.emails.send({
       from: "noreply@portfolionurdjedd.com",
@@ -26,9 +26,15 @@ const sendMail = defineEventHandler(async (event) => {
       from: "noreply@portfolionurdjedd.com",
       to: "djedidinur@gmail.com",
       subject: "[portfolionurdjedd.com]: New Message from Portfolio",
-      text: `${name} ${lastName}  ${email} wrote:
+      text: `Vous avez re\xE7u un nouveau message via le formulaire de contact :
 
-${message}`
+      Nom : ${firstName} ${lastName}
+      Email : ${email}
+      Industry : ${industry}
+
+      Message :
+
+      ${message}`
     });
     return { status: "success" };
   } catch (err) {

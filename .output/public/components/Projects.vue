@@ -34,12 +34,13 @@ export default {
       projects: [
         {
           img: urbanstyle,
-          title: 'Urbanstyle',
+          title: 'Urbanstyle (desktop only)',
           description: 'Below is the link to a fictitious online shop that I designed.',
           skills: [
             { name: 'HTML', icon: 'mdi-language-html5' },
             { name: 'CSS', icon: 'mdi-language-css3' },
-            { name: 'JS', icon: 'mdi-language-javascript' },
+            { name: 'Vue.js', icon: 'mdi-vuejs' },
+            { name: 'Vuetify', icon: 'mdi-vuetify' },
             { name: 'Node.js', icon: 'mdi-nodejs' }
           ],
           link: 'https://urbanstyle-mvwkc.ondigitalocean.app/'
@@ -51,7 +52,7 @@ export default {
           skills: [
             { name: 'HTML', icon: 'mdi-language-html5' },
             { name: 'CSS', icon: 'mdi-language-css3' },
-            { name: 'JS', icon: 'mdi-language-javascript' },
+            { name: 'Vue.js', icon: 'mdi-vuejs' },
             { name: 'Node.js', icon: 'mdi-nodejs' },
             { name: 'API', icon: 'mdi-access-point' }
           ],
@@ -59,12 +60,14 @@ export default {
         },
         {
           img: fitness,
-          title: 'NutriWeb',
+          title: 'NutriWeb (prototype)',
           description: 'Below is the link to a fitness and health monitoring project.',
           skills: [
             { name: 'HTML', icon: 'mdi-language-html5' },
             { name: 'CSS', icon: 'mdi-language-css3' },
-            { name: 'Vue.js', icon: 'mdi-nodejs' },
+            { name: 'Vue.js', icon: 'mdi-vuejs' },
+            { name: 'Vuetify', icon: 'mdi-vuetify' },
+            { name: 'Nuxt.js', icon: 'mdi-nuxt' },
             { name: 'Node.js', icon: 'mdi-nodejs' },
             { name: 'MySQL', icon: 'mdi-database' },
             { name: 'API', icon: 'mdi-access-point' }

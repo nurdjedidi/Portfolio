@@ -1,4 +1,4 @@
-<template>
+<template> <!--
   <v-app class="app-layout">
     <header>
       <v-container fluid class="title d-flex justify-space-between align-center" color="grey-darken-4">
@@ -63,11 +63,16 @@
     </v-container>
   </v-footer>
   </v-app>
+-->
+  <main>
+    <NuxtLayout name="portfolio">
+      <NuxtPage />
+    </NuxtLayout>
+  </main>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue';
-import Navigation from './public/components/Navigation.vue';
 
 const navVisible = ref(false);
 const form = ref({
@@ -91,30 +96,24 @@ const sendMail = async () => {
     });
 
     if (response.status === 'success') {
-      status.value = 'success';
       statusMessage.value = 'Votre message a été envoyé avec succès !';
-      form.value = { name: '', lastName: '', email: '', message: '' }; 
-      window.location.href = '/'; 
-    } else {
-      status.value = 'error';
-      statusMessage.value = 'Une erreur est survenue lors de l\'envoi du message.';
+      form.value = { name: '', lastName: '', email: '', message: '' };
+      window.location.href = '/';
     }
   } catch (error) {
     console.error('Erreur lors de l\'envoi du mail:', error);
-    status.value = 'error';
-    statusMessage.value = 'Une erreur est survenue lors de l\'envoi du message.';
   }
 };
 </script>
 
 <style>
-.desktop-nav { 
+.desktop-nav {
   float: right;
 }
 
 .v-list-item.router-link-active {
-    color: #007bff; 
-    font-weight: bold; 
+  color: #007bff;
+  font-weight: bold;
 }
 
 .desktop-nav ul {
@@ -127,56 +126,56 @@ const sendMail = async () => {
   display: none;
 }
 .v-icon {
-  position: relative; 
-  z-index: 1100; 
+  position: relative;
+  z-index: 1100;
   transition: color 0.3s ease;
 }
 .v-icon.icon-active {
-  color: black; 
+  color: black;
 }
 
-a { 
+a {
   list-style-type: none;
   text-decoration: none;
 }
 
 header {
-display: flex;
-align-items: center; 
-justify-content: space-between;
-padding: 0.5rem 1rem;
-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 header nav ul li a.router-link-active {
-font-weight: bold;
-color: blue;
+  font-weight: bold;
+  color: blue;
 }
-.title { 
+.title {
   display: flex;
 }
 
-.nav { 
+.nav {
   display: none;
 }
 
 @media (max-width: 768px) {
-  .icon-nav { 
+  .icon-nav {
     display: block;
   }
 
-  .title { 
+  .title {
     display: flex;
     gap: 20px;
   }
 
-.sidebar { 
-display: block;
-cursor: pointer;
-z-index: 1001;
-}
+  .sidebar {
+    display: block;
+    cursor: pointer;
+    z-index: 1001;
+  }
 
-.nav {
+  .nav {
     display: block;
     height: 100vh;
     width: 60vw;
@@ -184,9 +183,9 @@ z-index: 1001;
     z-index: 1000;
     top: 0;
     left: 0;
-}
+  }
 
-.v-list {
+  .v-list {
     height: 100%;
     width: 50vw;
     display: flex;
@@ -194,56 +193,56 @@ z-index: 1001;
     justify-content: center;
     align-items: center;
     list-style-type: none;
-}
-.v-navigation-drawer * { 
+  }
+  .v-navigation-drawer * {
     color: black;
-}
-.nav li { 
-    margin: 10px; 
-}
-.nav a { 
+  }
+  .nav li {
+    margin: 10px;
+  }
+  .nav a {
     text-decoration: none;
-}
+  }
 
-.line-bottom { 
-    height: 1px; 
-    width: 40vw; 
-    background-color: black; 
+  .line-bottom {
+    height: 1px;
+    width: 40vw;
+    background-color: black;
     margin-top: 20px;
-}
-.line-top { 
-    height: 1px; 
-    width: 40vw; 
-    background-color: black; 
+  }
+  .line-top {
+    height: 1px;
+    width: 40vw;
+    background-color: black;
     margin-bottom: 20px;
-}
+  }
 
-@media (max-width: 768px) {
-.sidebar { 
-  display: block;
-}
+  @media (max-width: 768px) {
+    .sidebar {
+      display: block;
+    }
 
-.icon {
-  display: none;
-}
+    .icon {
+      display: none;
+    }
 
-.nav {
-  display: none;
-}
+    .nav {
+      display: none;
+    }
 
-.nav.visible {
-  display: block;
-}
+    .nav.visible {
+      display: block;
+    }
 
-.sidebar {
-  position: relative;
-  margin-left: 0;
-  z-index: 1001;
-}
+    .sidebar {
+      position: relative;
+      margin-left: 0;
+      z-index: 1001;
+    }
 
-.desktop-nav {
-  display: none;
-}
-}
+    .desktop-nav {
+      display: none;
+    }
+  }
 }
 </style>
