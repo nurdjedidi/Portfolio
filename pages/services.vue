@@ -6,7 +6,7 @@
         <v-responsive class="text-center mx-auto" max-width="700">
 
           <p id="services" class="mt-2 text-h5 font-weight-bold text-md-h4">
-            Everything you need to build a great buisness.
+            Everything you need to build a great business.
           </p>
 
           <p class="mt-4 text-body-1 text-medium-emphasis">

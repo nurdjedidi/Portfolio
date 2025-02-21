@@ -49,13 +49,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         }, {
                           default: withCtx((_4, _push5, _parent5, _scopeId4) => {
                             if (_push5) {
-                              _push5(`<p id="services" class="mt-2 text-h5 font-weight-bold text-md-h4"${_scopeId4}> Everything you need to build a great buisness. </p><p class="mt-4 text-body-1 text-medium-emphasis"${_scopeId4}> If you don&#39;t have a website or your search engine rankings are non-existent, let me build you a site that will boost your business, combined with SEO for ubiquitous search rankings. </p>`);
+                              _push5(`<p id="services" class="mt-2 text-h5 font-weight-bold text-md-h4"${_scopeId4}> Everything you need to build a great business. </p><p class="mt-4 text-body-1 text-medium-emphasis"${_scopeId4}> If you don&#39;t have a website or your search engine rankings are non-existent, let me build you a site that will boost your business, combined with SEO for ubiquitous search rankings. </p>`);
                             } else {
                               return [
                                 createVNode("p", {
                                   id: "services",
                                   class: "mt-2 text-h5 font-weight-bold text-md-h4"
-                                }, " Everything you need to build a great buisness. "),
+                                }, " Everything you need to build a great business. "),
                                 createVNode("p", { class: "mt-4 text-body-1 text-medium-emphasis" }, " If you don't have a website or your search engine rankings are non-existent, let me build you a site that will boost your business, combined with SEO for ubiquitous search rankings. ")
                               ];
                             }
@@ -220,7 +220,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                               createVNode("p", {
                                 id: "services",
                                 class: "mt-2 text-h5 font-weight-bold text-md-h4"
-                              }, " Everything you need to build a great buisness. "),
+                              }, " Everything you need to build a great business. "),
                               createVNode("p", { class: "mt-4 text-body-1 text-medium-emphasis" }, " If you don't have a website or your search engine rankings are non-existent, let me build you a site that will boost your business, combined with SEO for ubiquitous search rankings. ")
                             ]),
                             _: 1
@@ -287,7 +287,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                             createVNode("p", {
                               id: "services",
                               class: "mt-2 text-h5 font-weight-bold text-md-h4"
-                            }, " Everything you need to build a great buisness. "),
+                            }, " Everything you need to build a great business. "),
                             createVNode("p", { class: "mt-4 text-body-1 text-medium-emphasis" }, " If you don't have a website or your search engine rankings are non-existent, let me build you a site that will boost your business, combined with SEO for ubiquitous search rankings. ")
                           ]),
                           _: 1
@@ -361,7 +361,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                           createVNode("p", {
                             id: "services",
                             class: "mt-2 text-h5 font-weight-bold text-md-h4"
-                          }, " Everything you need to build a great buisness. "),
+                          }, " Everything you need to build a great business. "),
                           createVNode("p", { class: "mt-4 text-body-1 text-medium-emphasis" }, " If you don't have a website or your search engine rankings are non-existent, let me build you a site that will boost your business, combined with SEO for ubiquitous search rankings. ")
                         ]),
                         _: 1
@@ -431,4 +431,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=services-Cdst0b3Z.mjs.map
+//# sourceMappingURL=services-Do2TZfRd.mjs.map
