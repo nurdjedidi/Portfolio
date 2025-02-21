@@ -84,7 +84,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                             _push7(ssrRenderComponent(VCard, null, {
                                               default: withCtx((_7, _push8, _parent8, _scopeId7) => {
                                                 if (_push8) {
-                                                  _push8(`<a${ssrRenderAttr("href", service.link)} target="_blank" calt="Services"${_scopeId7}>`);
+                                                  _push8(`<a${ssrRenderAttr("href", service.link)} target="_blank" rel="noopener" calt="Services"${_scopeId7}>`);
                                                   _push8(ssrRenderComponent(VImg, {
                                                     class: "rounded-lg",
                                                     src: service.img
@@ -95,6 +95,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                                     createVNode("a", {
                                                       href: service.link,
                                                       target: "_blank",
+                                                      rel: "noopener",
                                                       calt: "Services"
                                                     }, [
                                                       createVNode(VImg, {
@@ -114,6 +115,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                                   createVNode("a", {
                                                     href: service.link,
                                                     target: "_blank",
+                                                    rel: "noopener",
                                                     calt: "Services"
                                                   }, [
                                                     createVNode(VImg, {
@@ -142,6 +144,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                                 createVNode("a", {
                                                   href: service.link,
                                                   target: "_blank",
+                                                  rel: "noopener",
                                                   calt: "Services"
                                                 }, [
                                                   createVNode(VImg, {
@@ -183,6 +186,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                               createVNode("a", {
                                                 href: service.link,
                                                 target: "_blank",
+                                                rel: "noopener",
                                                 calt: "Services"
                                               }, [
                                                 createVNode(VImg, {
@@ -241,6 +245,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                             createVNode("a", {
                                               href: service.link,
                                               target: "_blank",
+                                              rel: "noopener",
                                               calt: "Services"
                                             }, [
                                               createVNode(VImg, {
@@ -307,6 +312,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                           createVNode("a", {
                                             href: service.link,
                                             target: "_blank",
+                                            rel: "noopener",
                                             calt: "Services"
                                           }, [
                                             createVNode(VImg, {
@@ -380,6 +386,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                         createVNode("a", {
                                           href: service.link,
                                           target: "_blank",
+                                          rel: "noopener",
                                           calt: "Services"
                                         }, [
                                           createVNode(VImg, {
@@ -423,4 +430,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=services-B26mljCD.mjs.map
+//# sourceMappingURL=services-C4hpVw-M.mjs.map

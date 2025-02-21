@@ -20,7 +20,7 @@
           <v-col v-for="(service, i) in services" :key="i" class="d-flex" md="6" cols="12">
             <v-responsive class="mx-auto" max-width="500" width="100%">
               <v-card>
-                <a :href="service.link" target="_blank" calt="Services">
+                <a :href="service.link" target="_blank" rel="noopener" calt="Services">
                   <v-img class="rounded-lg" :src="service.img"></v-img>
                 </a>
               </v-card>
