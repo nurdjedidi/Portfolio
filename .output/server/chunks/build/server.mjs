@@ -571,12 +571,12 @@ const _routes = [
   {
     name: "about",
     path: "/about",
-    component: () => import('./about-B-J9KZy2.mjs')
+    component: () => import('./about-DOl6q734.mjs')
   },
   {
     name: "contact",
     path: "/contact",
-    component: () => import('./contact-BTzuS6Pm.mjs')
+    component: () => import('./contact-6uldRW9m.mjs')
   },
   {
     name: "index",
@@ -591,12 +591,12 @@ const _routes = [
   {
     name: "projects",
     path: "/projects",
-    component: () => import('./projects-CHLF1kFM.mjs')
+    component: () => import('./projects-CVFwkVpe.mjs')
   },
   {
     name: "services",
     path: "/services",
-    component: () => import('./services-Ck5kyLiV.mjs')
+    component: () => import('./services-B26mljCD.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {

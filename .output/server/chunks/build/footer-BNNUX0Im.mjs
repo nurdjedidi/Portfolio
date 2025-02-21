@@ -102,8 +102,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       { title: "Contact", link: "/contact" }
     ];
     const socialIcons = [
-      { icon: "mdi-code-tags", link: "https://github.com/nurdjedidi" },
-      { icon: "mdi-github", link: "https://www.codecademy.com/profiles/Nur_djedd" },
+      { icon: "mdi-code-tags", link: "https://www.codecademy.com/profiles/Nur_djedd" },
+      { icon: "mdi-github", link: "https://github.com/nurdjedidi" },
       { icon: "mdi-linkedin", link: "https://www.linkedin.com/in/nur-djedidi/" },
       { icon: "mdi-twitter", link: "https://x.com/DjedidiNur" }
     ];
@@ -320,4 +320,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { Background as B, _sfc_main as _ };
-//# sourceMappingURL=footer-DS8_Ppo8.mjs.map
+//# sourceMappingURL=footer-BNNUX0Im.mjs.map

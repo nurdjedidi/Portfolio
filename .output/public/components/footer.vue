@@ -31,8 +31,8 @@ const pages = [
 ];
 
 const socialIcons = [
-  { icon: 'mdi-code-tags', link: 'https://github.com/nurdjedidi' },
-  { icon: 'mdi-github', link: 'https://www.codecademy.com/profiles/Nur_djedd' },
+  { icon: 'mdi-code-tags', link: 'https://www.codecademy.com/profiles/Nur_djedd' },
+  { icon: 'mdi-github', link: 'https://github.com/nurdjedidi' },
   { icon: 'mdi-linkedin', link: 'https://www.linkedin.com/in/nur-djedidi/' },
   { icon: 'mdi-twitter', link: 'https://x.com/DjedidiNur' },
 ];

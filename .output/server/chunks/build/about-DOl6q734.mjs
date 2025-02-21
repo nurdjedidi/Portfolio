@@ -1,7 +1,7 @@
 import { withCtx, createVNode, useSSRContext } from 'vue';
 import { ssrRenderComponent } from 'vue/server-renderer';
 import { Chart, DoughnutController, ArcElement, Tooltip, Legend } from 'chart.js';
-import { B as Background, _ as _sfc_main$1 } from './footer-DS8_Ppo8.mjs';
+import { B as Background, _ as _sfc_main$1 } from './footer-BNNUX0Im.mjs';
 import { V as VApp, a as VMain } from './VMain-C2JahtCb.mjs';
 import { V as VContainer } from './VContainer-DPDpy6NR.mjs';
 import { V as VResponsive } from './VList-DZJLyHZ4.mjs';
@@ -194,4 +194,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=about-B-J9KZy2.mjs.map
+//# sourceMappingURL=about-DOl6q734.mjs.map
