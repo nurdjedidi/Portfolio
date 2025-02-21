@@ -16,7 +16,8 @@ const news = defineEventHandler(async (event) => {
     const response = await axios.get("https://api.currentsapi.services/v1/search", {
       params: {
         apiKey: currentsapi,
-        language: language.substring(0, 2)
+        language: language.substring(0, 2),
+        category: "technology"
       }
     });
     if (response.data && response.data.news) {

@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
       params: {
         apiKey: currentsapi,
         language: language.substring(0, 2),
+        category: 'technology'
       },
     });
 
