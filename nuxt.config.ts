@@ -26,7 +26,7 @@ export default defineNuxtConfig({
         { property: 'og:url', content: 'https://portfolionurdjedd.com' },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Portfolio | Nûr' },
-        { property: 'og:image', content: '/images/Vignette.avif' },
+        { property: 'og:image', content: '/images/nurdjedd.avif' },
         { property: 'og:image:type', content: 'image/jpeg' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
