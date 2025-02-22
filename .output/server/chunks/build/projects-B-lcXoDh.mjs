@@ -21,7 +21,6 @@ import 'unhead';
 import '@unhead/shared';
 import 'vue-router';
 
-const urbanstyle = "" + buildAssetsURL("urbanstyle.QgN-5x_1.avif");
 const news = "" + buildAssetsURL("news.TMP8sPdg.avif");
 const fitness = "" + buildAssetsURL("portfolio-nutriweb.DCO15oTY.avif");
 function calculateUpdatedTarget(_ref) {
@@ -686,15 +685,17 @@ const _sfc_main$1 = {
     return {
       projects: [
         {
-          img: urbanstyle,
-          title: "Urbanstyle (desktop only)",
-          description: "Below is the link to a fictitious online shop that I designed.",
+          img: "https://placehold.co/600x400?text=?",
+          title: "Devroid",
+          description: "SaaS will be available soon !",
           skills: [
             { name: "HTML", icon: "mdi-language-html5" },
             { name: "CSS", icon: "mdi-language-css3" },
+            { name: "Typescript", icon: "mdi-language-typescript" },
             { name: "Vue.js", icon: "mdi-vuejs" },
-            { name: "Vuetify", icon: "mdi-vuetify" },
-            { name: "Node.js", icon: "mdi-nodejs" }
+            { name: "Nuxt.js", icon: "mdi-nuxt" },
+            { name: "Node.js", icon: "mdi-nodejs" },
+            { name: "MySQL", icon: "mdi-database-outline" }
           ],
           link: "https://urbanstyle-mvwkc.ondigitalocean.app/"
         },
@@ -1201,4 +1202,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=projects-DM0DT5Mh.mjs.map
+//# sourceMappingURL=projects-B-lcXoDh.mjs.map
