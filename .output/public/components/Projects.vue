@@ -44,7 +44,7 @@ export default {
             { name: 'Node.js', icon: 'mdi-nodejs' },
             { name: 'MySQL', icon: 'mdi-database-outline' },
           ],
-          link: 'https://urbanstyle-mvwkc.ondigitalocean.app/'
+          link: '#'
         },
         {
           img: news,
