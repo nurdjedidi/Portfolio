@@ -808,7 +808,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 modelValue: drawer.value,
                 "onUpdate:modelValue": ($event) => drawer.value = $event,
                 color: "white",
-                class: "mt-4",
+                class: "mt-1",
                 temporary: "",
                 app: ""
               }, {
@@ -990,7 +990,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 modelValue: drawer.value,
                 "onUpdate:modelValue": ($event) => drawer.value = $event,
                 color: "white",
-                class: "mt-4",
+                class: "mt-1",
                 temporary: "",
                 app: ""
               }, {
@@ -1069,4 +1069,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=portfolio-BtVbDHPK.mjs.map
+//# sourceMappingURL=portfolio-C4lKXNew.mjs.map

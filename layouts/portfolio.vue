@@ -6,7 +6,7 @@
       <v-toolbar-title>Web Portfolio</v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer v-if="isMounted" v-model="drawer" color="white" class="mt-4" temporary app>
+    <v-navigation-drawer v-if="isMounted" v-model="drawer" color="white" class="mt-1" temporary app>
       <v-list role="listbox" dense>
         <v-list-item aria-label="navigations items" role="option" v-for="item in items" class="text--primary"
           :key="item.title" :to="item.link" nuxt>
