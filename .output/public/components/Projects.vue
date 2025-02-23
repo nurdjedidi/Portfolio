@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import urbanstyle from '../images/urbanstyle.avif';
 import news from '../images/news.avif';
 import fitness from '../images/portfolio-nutriweb.avif';
 
