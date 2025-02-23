@@ -1,19 +1,17 @@
 <template>
   <v-app>
     <v-app-bar class="d-sm-flex d-md-none" dark>
-      <v-app-bar-nav-icon role="menu" aria-label="button-menu" @click="drawer = !drawer" />
+      <v-app-bar-nav-icon aria-haspopup="true" aria-label="button-menu" @click="drawer = !drawer" />
 
       <v-toolbar-title>Web Portfolio</v-toolbar-title>
     </v-app-bar>
 
     <v-navigation-drawer v-if="isMounted" v-model="drawer" color="white" class="mt-4" temporary app>
       <v-list role="listbox" dense>
-        <div class="mx-auto mb-5 bg-black" style="width: 40vw; height: 1px;" color="black"></div>
         <v-list-item aria-label="navigations items" role="option" v-for="item in items" class="text--primary"
           :key="item.title" :to="item.link" nuxt>
           {{ item.title }}
         </v-list-item>
-        <div class="mx-auto mt-5 bg-black" style="width: 40vw; height: 1px;" color="black"></div>
       </v-list>
     </v-navigation-drawer>
 

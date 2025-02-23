@@ -1,6 +1,6 @@
 import { g as genericComponent, a5 as __nuxt_component_0, p as propsFactory, A as useProxiedModel, f as useToggleScope, G as useRtl, e as provideTheme, a0 as useDisplay, z as provideDefaults, H as clamp, m as makeThemeProps, a2 as makeDisplayProps, k as getCurrentInstance, h as convertToUnit, a4 as defer } from './server.mjs';
 import { defineComponent, ref, shallowRef, withCtx, createTextVNode, createVNode, unref, toDisplayString, createBlock, openBlock, Fragment, renderList, createCommentVNode, computed, watchEffect, toRef, watch, nextTick, onScopeDispose, mergeProps, Transition, useSSRContext } from 'vue';
-import { ssrRenderComponent, ssrRenderStyle, ssrRenderList, ssrInterpolate } from 'vue/server-renderer';
+import { ssrRenderComponent, ssrRenderList, ssrInterpolate } from 'vue/server-renderer';
 import { V as VApp, b as VBtn, a as VMain, O as useSsrBoot, H as useLayoutItem, u as useRender, q as useBorder, g as useBackgroundColor, s as useElevation, f as useRounded, P as useRouter, Q as toPhysical, I as makeLayoutItemProps, S as makeVBtnProps, z as makeTagProps, k as makeComponentProps, m as makeRoundedProps, F as makeElevationProps, G as makeBorderProps, i as VDefaultsProvider } from './VMain-C1CmiDK_.mjs';
 import { c as VList, d as VListItem, e as VExpandTransition } from './VList-C17lKoQa.mjs';
 import { a as VImg } from './VAvatar-fb85QHBQ.mjs';
@@ -769,7 +769,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                 if (_push3) {
                   _push3(ssrRenderComponent(VAppBarNavIcon, {
-                    role: "menu",
+                    "aria-haspopup": "true",
                     "aria-label": "button-menu",
                     onClick: ($event) => drawer.value = !drawer.value
                   }, null, _parent3, _scopeId2));
@@ -788,7 +788,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 } else {
                   return [
                     createVNode(VAppBarNavIcon, {
-                      role: "menu",
+                      "aria-haspopup": "true",
                       "aria-label": "button-menu",
                       onClick: ($event) => drawer.value = !drawer.value
                     }, null, 8, ["onClick"]),
@@ -820,7 +820,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     }, {
                       default: withCtx((_3, _push4, _parent4, _scopeId3) => {
                         if (_push4) {
-                          _push4(`<div class="mx-auto mb-5 bg-black" style="${ssrRenderStyle({ "width": "40vw", "height": "1px" })}" color="black"${_scopeId3}></div><!--[-->`);
+                          _push4(`<!--[-->`);
                           ssrRenderList(items, (item) => {
                             _push4(ssrRenderComponent(VListItem, {
                               "aria-label": "navigations items",
@@ -842,14 +842,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                               _: 2
                             }, _parent4, _scopeId3));
                           });
-                          _push4(`<!--]--><div class="mx-auto mt-5 bg-black" style="${ssrRenderStyle({ "width": "40vw", "height": "1px" })}" color="black"${_scopeId3}></div>`);
+                          _push4(`<!--]-->`);
                         } else {
                           return [
-                            createVNode("div", {
-                              class: "mx-auto mb-5 bg-black",
-                              style: { "width": "40vw", "height": "1px" },
-                              color: "black"
-                            }),
                             (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                               return createVNode(VListItem, {
                                 "aria-label": "navigations items",
@@ -864,12 +859,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                 ]),
                                 _: 2
                               }, 1032, ["to"]);
-                            }), 64)),
-                            createVNode("div", {
-                              class: "mx-auto mt-5 bg-black",
-                              style: { "width": "40vw", "height": "1px" },
-                              color: "black"
-                            })
+                            }), 64))
                           ];
                         }
                       }),
@@ -882,11 +872,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         dense: ""
                       }, {
                         default: withCtx(() => [
-                          createVNode("div", {
-                            class: "mx-auto mb-5 bg-black",
-                            style: { "width": "40vw", "height": "1px" },
-                            color: "black"
-                          }),
                           (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                             return createVNode(VListItem, {
                               "aria-label": "navigations items",
@@ -901,12 +886,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                               ]),
                               _: 2
                             }, 1032, ["to"]);
-                          }), 64)),
-                          createVNode("div", {
-                            class: "mx-auto mt-5 bg-black",
-                            style: { "width": "40vw", "height": "1px" },
-                            color: "black"
-                          })
+                          }), 64))
                         ]),
                         _: 1
                       })
@@ -992,7 +972,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               }, {
                 default: withCtx(() => [
                   createVNode(VAppBarNavIcon, {
-                    role: "menu",
+                    "aria-haspopup": "true",
                     "aria-label": "button-menu",
                     onClick: ($event) => drawer.value = !drawer.value
                   }, null, 8, ["onClick"]),
@@ -1020,11 +1000,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     dense: ""
                   }, {
                     default: withCtx(() => [
-                      createVNode("div", {
-                        class: "mx-auto mb-5 bg-black",
-                        style: { "width": "40vw", "height": "1px" },
-                        color: "black"
-                      }),
                       (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                         return createVNode(VListItem, {
                           "aria-label": "navigations items",
@@ -1039,12 +1014,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                           ]),
                           _: 2
                         }, 1032, ["to"]);
-                      }), 64)),
-                      createVNode("div", {
-                        class: "mx-auto mt-5 bg-black",
-                        style: { "width": "40vw", "height": "1px" },
-                        color: "black"
-                      })
+                      }), 64))
                     ]),
                     _: 1
                   })
@@ -1099,4 +1069,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=portfolio-DxOdrHIn.mjs.map
+//# sourceMappingURL=portfolio-BtVbDHPK.mjs.map
