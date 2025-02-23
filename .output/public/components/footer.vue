@@ -1,7 +1,7 @@
 <template>
   <v-footer dark>
     <v-responsive>
-      <v-container class=" d-flex flex-column ">
+      <v-container class=" d-flex flex-column align-center justify-center text-center">
         <div class="pt-0 d-none d-md-flex">
           <v-list class="d-flex">
             <v-list-item class="mx-1" v-for="page in pages" :key="page.title" :to="page.link" nuxt>{{ page.title

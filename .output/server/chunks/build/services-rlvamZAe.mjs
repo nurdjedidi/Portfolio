@@ -1,6 +1,6 @@
 import { defineComponent, withCtx, createVNode, createBlock, openBlock, Fragment, renderList, useSSRContext } from 'vue';
 import { ssrRenderComponent, ssrRenderList, ssrRenderAttr } from 'vue/server-renderer';
-import { B as Background, _ as _sfc_main$1 } from './footer-lSsKBIIe.mjs';
+import { B as Background, _ as _sfc_main$1 } from './footer-CWrmtMII.mjs';
 import { V as VApp, a as VMain } from './VMain-C1CmiDK_.mjs';
 import { V as VContainer } from './VContainer-C8upTZrU.mjs';
 import { V as VResponsive, a as VImg } from './VAvatar-fb85QHBQ.mjs';
@@ -430,4 +430,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=services-Oxg1UK29.mjs.map
+//# sourceMappingURL=services-rlvamZAe.mjs.map

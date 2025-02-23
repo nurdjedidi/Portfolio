@@ -6,10 +6,10 @@
       <v-toolbar-title>Web Portfolio</v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer v-if="isMounted" v-model="drawer" color="white" class="mt-1" temporary app>
+    <v-navigation-drawer v-if="isMounted" v-model="drawer" temporary app>
       <v-list role="listbox" dense>
         <v-list-item aria-label="navigations items" role="option" v-for="item in items" class="text--primary"
-          :key="item.title" :to="item.link" nuxt>
+          :key="item.title" :prepend-icon="item.icon" :to="item.link" nuxt>
           {{ item.title }}
         </v-list-item>
       </v-list>
@@ -41,9 +41,9 @@ onMounted(() => {
 const drawer = shallowRef(false)
 
 const items = [
-  { title: 'Services', link: '/services' },
-  { title: 'Projects', link: '/projects' },
-  { title: 'About', link: '/about' },
-  { title: 'Contact', link: '/contact' }
+  { title: 'Services', icon: 'mdi-briefcase-outline', link: '/services' },
+  { title: 'Projects', icon: 'mdi-file-code-outline', link: '/projects' },
+  { title: 'About', icon: 'mdi-information-outline', link: '/about' },
+  { title: 'Contact', icon: 'mdi-phone', link: '/contact' }
 ]
 </script>

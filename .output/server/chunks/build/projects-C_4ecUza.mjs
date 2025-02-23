@@ -1,7 +1,7 @@
 import { f as buildAssetsURL } from '../_/nitro.mjs';
 import { defineComponent, withCtx, createVNode, createTextVNode, toDisplayString, createBlock, openBlock, Fragment, renderList, toRef, mergeProps, computed, withDirectives, vShow, resolveDirective, shallowRef, useSSRContext } from 'vue';
 import { ssrRenderComponent, ssrRenderAttrs, ssrRenderList, ssrInterpolate, ssrRenderAttr } from 'vue/server-renderer';
-import { B as Background, _ as _sfc_main$2 } from './footer-lSsKBIIe.mjs';
+import { B as Background, _ as _sfc_main$2 } from './footer-CWrmtMII.mjs';
 import { _ as _export_sfc, g as genericComponent, p as propsFactory, e as provideTheme, z as provideDefaults, U as useLocale, A as useProxiedModel, m as makeThemeProps, B as deepEqual, G as useRtl, a0 as useDisplay, a1 as useGoTo, O as EventProp, I as IconValue, a2 as makeDisplayProps, a3 as focusableChildren } from './server.mjs';
 import { V as VRow, a as VCol } from './VRow-CO7bP95K.mjs';
 import { V as VCard, b as VCardText } from './VCard-D72yKgqE.mjs';
@@ -1201,4 +1201,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=projects-BKik4edX.mjs.map
+//# sourceMappingURL=projects-C_4ecUza.mjs.map

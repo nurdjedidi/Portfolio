@@ -114,7 +114,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             _push2(ssrRenderComponent(VResponsive, null, {
               default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                 if (_push3) {
-                  _push3(ssrRenderComponent(VContainer, { class: "d-flex flex-column" }, {
+                  _push3(ssrRenderComponent(VContainer, { class: "d-flex flex-column align-center justify-center text-center" }, {
                     default: withCtx((_3, _push4, _parent4, _scopeId3) => {
                       if (_push4) {
                         _push4(`<div class="pt-0 d-none d-md-flex"${_scopeId3}>`);
@@ -216,7 +216,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   }, _parent3, _scopeId2));
                 } else {
                   return [
-                    createVNode(VContainer, { class: "d-flex flex-column" }, {
+                    createVNode(VContainer, { class: "d-flex flex-column align-center justify-center text-center" }, {
                       default: withCtx(() => [
                         createVNode("div", { class: "pt-0 d-none d-md-flex" }, [
                           createVNode(VList, { class: "d-flex" }, {
@@ -263,7 +263,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             return [
               createVNode(VResponsive, null, {
                 default: withCtx(() => [
-                  createVNode(VContainer, { class: "d-flex flex-column" }, {
+                  createVNode(VContainer, { class: "d-flex flex-column align-center justify-center text-center" }, {
                     default: withCtx(() => [
                       createVNode("div", { class: "pt-0 d-none d-md-flex" }, [
                         createVNode(VList, { class: "d-flex" }, {
@@ -320,4 +320,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { Background as B, _sfc_main as _ };
-//# sourceMappingURL=footer-lSsKBIIe.mjs.map
+//# sourceMappingURL=footer-CWrmtMII.mjs.map

@@ -752,10 +752,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const isMounted = ref(false);
     const drawer = shallowRef(false);
     const items = [
-      { title: "Services", link: "/services" },
-      { title: "Projects", link: "/projects" },
-      { title: "About", link: "/about" },
-      { title: "Contact", link: "/contact" }
+      { title: "Services", icon: "mdi-briefcase-outline", link: "/services" },
+      { title: "Projects", icon: "mdi-file-code-outline", link: "/projects" },
+      { title: "About", icon: "mdi-information-outline", link: "/about" },
+      { title: "Contact", icon: "mdi-phone", link: "/contact" }
     ];
     return (_ctx, _push, _parent, _attrs) => {
       const _component_NuxtPage = __nuxt_component_0;
@@ -807,8 +807,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               _push2(ssrRenderComponent(VNavigationDrawer, {
                 modelValue: drawer.value,
                 "onUpdate:modelValue": ($event) => drawer.value = $event,
-                color: "white",
-                class: "mt-1",
                 temporary: "",
                 app: ""
               }, {
@@ -827,6 +825,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                               role: "option",
                               class: "text--primary",
                               key: item.title,
+                              "prepend-icon": item.icon,
                               to: item.link,
                               nuxt: ""
                             }, {
@@ -851,6 +850,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                 role: "option",
                                 class: "text--primary",
                                 key: item.title,
+                                "prepend-icon": item.icon,
                                 to: item.link,
                                 nuxt: ""
                               }, {
@@ -858,7 +858,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                   createTextVNode(toDisplayString(item.title), 1)
                                 ]),
                                 _: 2
-                              }, 1032, ["to"]);
+                              }, 1032, ["prepend-icon", "to"]);
                             }), 64))
                           ];
                         }
@@ -878,6 +878,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                               role: "option",
                               class: "text--primary",
                               key: item.title,
+                              "prepend-icon": item.icon,
                               to: item.link,
                               nuxt: ""
                             }, {
@@ -885,7 +886,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                                 createTextVNode(toDisplayString(item.title), 1)
                               ]),
                               _: 2
-                            }, 1032, ["to"]);
+                            }, 1032, ["prepend-icon", "to"]);
                           }), 64))
                         ]),
                         _: 1
@@ -989,8 +990,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 key: 0,
                 modelValue: drawer.value,
                 "onUpdate:modelValue": ($event) => drawer.value = $event,
-                color: "white",
-                class: "mt-1",
                 temporary: "",
                 app: ""
               }, {
@@ -1006,6 +1005,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                           role: "option",
                           class: "text--primary",
                           key: item.title,
+                          "prepend-icon": item.icon,
                           to: item.link,
                           nuxt: ""
                         }, {
@@ -1013,7 +1013,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                             createTextVNode(toDisplayString(item.title), 1)
                           ]),
                           _: 2
-                        }, 1032, ["to"]);
+                        }, 1032, ["prepend-icon", "to"]);
                       }), 64))
                     ]),
                     _: 1
@@ -1069,4 +1069,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=portfolio-C4lKXNew.mjs.map
+//# sourceMappingURL=portfolio-Du2U7Lz5.mjs.map

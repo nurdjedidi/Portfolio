@@ -571,12 +571,12 @@ const _routes = [
   {
     name: "about",
     path: "/about",
-    component: () => import('./about-DC2sSz1v.mjs')
+    component: () => import('./about-DCawWBtn.mjs')
   },
   {
     name: "contact",
     path: "/contact",
-    component: () => import('./contact-DYBkCDoJ.mjs')
+    component: () => import('./contact-DEzHfkzg.mjs')
   },
   {
     name: "index",
@@ -591,12 +591,12 @@ const _routes = [
   {
     name: "projects",
     path: "/projects",
-    component: () => import('./projects-BKik4edX.mjs')
+    component: () => import('./projects-C_4ecUza.mjs')
   },
   {
     name: "services",
     path: "/services",
-    component: () => import('./services-Oxg1UK29.mjs')
+    component: () => import('./services-rlvamZAe.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -3735,7 +3735,7 @@ const plugins = [
   vuetify_8NhHJigKc1
 ];
 const layouts = {
-  portfolio: defineAsyncComponent(() => import('./portfolio-C4lKXNew.mjs').then((m) => m.default || m))
+  portfolio: defineAsyncComponent(() => import('./portfolio-Du2U7Lz5.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent$1({
   name: "LayoutLoader",
