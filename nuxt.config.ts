@@ -47,7 +47,7 @@ export default defineNuxtConfig({
     routeRules: {
       '/**': {
         headers: {
-          'X-Frame-Options': 'DENY',
+          'Content-Security-Policy': "frame-ancestors 'self' https://developers.google.com",
           'X-Content-Type-Options': 'nosniff',
           'X-XSS-Protection': '1; mode=block'
         }
