@@ -3735,7 +3735,7 @@ const plugins = [
   vuetify_8NhHJigKc1
 ];
 const layouts = {
-  portfolio: defineAsyncComponent(() => import('./portfolio-Du2U7Lz5.mjs').then((m) => m.default || m))
+  portfolio: defineAsyncComponent(() => import('./portfolio-B-xISxWO.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent$1({
   name: "LayoutLoader",

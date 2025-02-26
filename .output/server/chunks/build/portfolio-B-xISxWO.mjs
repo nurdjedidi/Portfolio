@@ -821,7 +821,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                           _push4(`<!--[-->`);
                           ssrRenderList(items, (item) => {
                             _push4(ssrRenderComponent(VListItem, {
-                              "aria-label": "navigations items",
+                              "aria-label": "navigations mobile",
                               role: "option",
                               class: "text--primary",
                               key: item.title,
@@ -846,7 +846,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                           return [
                             (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                               return createVNode(VListItem, {
-                                "aria-label": "navigations items",
+                                "aria-label": "navigations mobile",
                                 role: "option",
                                 class: "text--primary",
                                 key: item.title,
@@ -874,7 +874,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         default: withCtx(() => [
                           (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                             return createVNode(VListItem, {
-                              "aria-label": "navigations items",
+                              "aria-label": "navigations mobile",
                               role: "option",
                               class: "text--primary",
                               key: item.title,
@@ -912,7 +912,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                       key: item.title,
                       to: item.link,
                       title: item.title,
-                      "aria-label": "Navigation menu",
+                      "aria-label": "Navigation web",
                       class: "text-none",
                       nuxt: ""
                     }, {
@@ -937,7 +937,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                           key: item.title,
                           to: item.link,
                           title: item.title,
-                          "aria-label": "Navigation menu",
+                          "aria-label": "Navigation web",
                           class: "text-none",
                           nuxt: ""
                         }, {
@@ -1001,7 +1001,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     default: withCtx(() => [
                       (openBlock(), createBlock(Fragment, null, renderList(items, (item) => {
                         return createVNode(VListItem, {
-                          "aria-label": "navigations items",
+                          "aria-label": "navigations mobile",
                           role: "option",
                           class: "text--primary",
                           key: item.title,
@@ -1033,7 +1033,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         key: item.title,
                         to: item.link,
                         title: item.title,
-                        "aria-label": "Navigation menu",
+                        "aria-label": "Navigation web",
                         class: "text-none",
                         nuxt: ""
                       }, {
@@ -1069,4 +1069,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=portfolio-Du2U7Lz5.mjs.map
+//# sourceMappingURL=portfolio-B-xISxWO.mjs.map

@@ -8,7 +8,7 @@
 
     <v-navigation-drawer v-if="isMounted" v-model="drawer" temporary app>
       <v-list role="listbox" dense>
-        <v-list-item aria-label="navigations items" role="option" v-for="item in items" class="text--primary"
+        <v-list-item aria-label="navigations mobile" role="option" v-for="item in items" class="text--primary"
           :key="item.title" :prepend-icon="item.icon" :to="item.link" nuxt>
           {{ item.title }}
         </v-list-item>
@@ -17,7 +17,7 @@
 
     <v-app-bar color="transparent" class=" position-absolute d-sm-none d-md-flex" flat>
       <div class="d-md-flex d-none ga-4 mx-auto">
-        <v-btn v-for="item in items" :key="item.title" :to="item.link" :title="item.title" aria-label="Navigation menu"
+        <v-btn v-for="item in items" :key="item.title" :to="item.link" :title="item.title" aria-label="Navigation web"
           class="text-none" nuxt>
           {{ item.title }}
         </v-btn>
