@@ -27,9 +27,6 @@ export default defineNuxtConfig({
         { property: 'og:image', content: 'https://portfolionurdjedd.com/images/nurdjedd.jpg' },
         { property: 'og:image:secure_url', content: 'https://portfolionurdjedd.com/images/nurdjedd.jpg' },
         { property: 'og:image:type', content: 'image/jpeg' },
-        { property: 'og:image:width', content: '1200' },
-        { property: 'og:image:height', content: '630' },
-        { property: 'og:image:height', content: '630' },
         { property: 'og:locale', content: 'fr_FR' },
       ],
       link: [
