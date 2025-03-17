@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const resend = new Resend("re_McfbyRo5_EGaL6bZHPt8DFA6yzUp54PSx");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
